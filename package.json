@@ -1,0 +1,11 @@
+{
+  "name": "fedapay",
+  "version": "1.0.0",
+  "description": "Fedapay NodeJS Library",
+  "main": "lib/fedapay.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Fedapay and contributors",
+  "license": "ISC"
+}
