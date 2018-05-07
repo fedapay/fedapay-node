@@ -11,8 +11,8 @@ See the [Node API docs](https://fedapay.com/docs/api/node).
 
 Install the package with:
 
-```
-    npm install fedapay --save
+``` bash
+npm install fedapay --save
 ```
 
 ## Usage
@@ -22,6 +22,8 @@ available in your [Fedapay Dashboard][api-keys]. Require it with the key's
 value:
 
 ``` js
-var fedapay = require('fedapay');
+let fedapay = require('fedapay');
+fedapay.accounts.create({
 
+});
 ```
