@@ -1,5 +1,5 @@
 import { Fedapay } from './Fedapay';
-let request = require('request');
+import request = require('request');
 
 export class Requestor {
     readonly SANDBOX_BASE = 'https://sdx-api.fedapay.com';
@@ -12,15 +12,19 @@ export class Requestor {
     protected accountId = '';
 
     constructor() {
-        this.apiKey = new Fedapay().apiKey;
-        this.token = new Fedapay().token;
-        this.environment = new Fedapay().environment;
-        this.apiVersion = new Fedapay().apiVersion;
-        this.accountId = new Fedapay().accountId;
+        this.apiKey = Fedapay.apiKey;
+        this.token = Fedapay.token;
+        this.environment = Fedapay.getEnvironment();
+        this.apiVersion = Fedapay.getApiVersion();
+        this.accountId = Fedapay.accountId;
+    }
+
+    httpClient() {
+        let options = [];
+        if (Fedapay.getVerifySslCerts()) {}
     }
 
     request(method: string, path: any, params = [], headers = []) {
-
         try {
             if (!headers) {
                 headers = [];
@@ -37,13 +41,12 @@ export class Requestor {
                 uri: url,
                 headers: headers,
             }, function (error?: any, response?: any, body?: any) {
-                console.log(error, response, body);
+                return response;
             });
 
         } catch (error) {
-            
+            this.handleRequestException(error);
         }
-
     }
 
     protected baseUrl() {
@@ -57,6 +60,10 @@ export class Requestor {
             case 'live':
                 return this.PRODUCTION_BASE;
         }
+    }
+
+    protected handleRequestException(e: any) {
+
     }
 
     protected url(path = '') {
