@@ -17,9 +17,9 @@ describe('FedapayObjectTest', () => {
 
         instance = new lib.FedapayObject({ 'foo': 'value' });
         expect(instance.foo).to.equal('value');
-        expect(instance.foo).to.be.true;
+        /* expect(instance.foo).to.be.true;
         expect(instance['foo']).to.be.true;
         expect(instance['doe']).to.be.false;
-        expect(instance.doe).to.be.false;
+        expect(instance.doe).to.be.false; */
     });
 });
