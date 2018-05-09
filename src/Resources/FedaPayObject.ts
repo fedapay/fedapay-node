@@ -1,12 +1,12 @@
 import { ArrayFactory } from './utils';
 
-export class FedapayObject {
+export class FedaPayObject {
     protected values: any;
     id: any;
     name: any;
     key: any;
 
-    constructor(id: any, opts: any) {
+    constructor(id = null, opts = null) {
         this.values = [];
         if (Array.isArray(id)) {
             this.refreshFrom(id, opts);
