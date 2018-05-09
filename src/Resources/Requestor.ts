@@ -1,4 +1,4 @@
-import { Fedapay } from './Fedapay';
+import { FedaPay } from './FedaPay';
 import request = require('request');
 
 export class Requestor {
@@ -12,16 +12,16 @@ export class Requestor {
     protected accountId = '';
 
     constructor() {
-        this.apiKey = Fedapay.apiKey;
-        this.token = Fedapay.token;
-        this.environment = Fedapay.getEnvironment();
-        this.apiVersion = Fedapay.getApiVersion();
-        this.accountId = Fedapay.accountId;
+        this.apiKey = FedaPay.apiKey;
+        this.token = FedaPay.token;
+        this.environment = FedaPay.getEnvironment();
+        this.apiVersion = FedaPay.getApiVersion();
+        this.accountId = FedaPay.accountId;
     }
 
     httpClient() {
         let options = [];
-        if (Fedapay.getVerifySslCerts()) {}
+        if (FedaPay.getVerifySslCerts()) {}
     }
 
     request(method: string, path: any, params = [], headers = []) {

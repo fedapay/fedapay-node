@@ -1,7 +1,7 @@
-import { FedapayObject } from './FedapayObject';
+import { FedaPayObject } from './FedaPayObject';
 import { Requestor } from './Requestor';
 
-export class Resource extends FedapayObject{
+export class Resource extends FedaPayObject{
     protected static requestor: Requestor;
 
     static setRequestor(req: Requestor) {
