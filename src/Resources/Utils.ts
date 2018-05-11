@@ -24,3 +24,5 @@ export function isList(array: any) {
 function isNumeric(n: any) {
     return !isNaN(parseFloat(n)) && isFinite(n);
 }
+
+
