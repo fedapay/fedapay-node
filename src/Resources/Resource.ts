@@ -1,6 +1,8 @@
 import { FedaPayObject } from './FedaPayObject';
 import { Requestor } from './Requestor';
 import { Inflector } from './Inflector';
+import { FedaPay } from './FedaPay';
+import { arrayToFedaPayObject } from './Utils';
 
 export class Resource extends FedaPayObject{
     protected static requestor: Requestor;
@@ -41,5 +43,86 @@ export class Resource extends FedaPayObject{
 
     instanceUrl() {
         return Resource.resourcePath(this.id);
+    }
+
+    static retrieve(id: any, headers = []) {
+        let url = this.resourcePath(id);
+        let className = this.className();
+
+        let response, opts = this.staticRequest('get', url);
+        let object = arrayToFedaPayObject(response, opts);
+
+        return object.toString();
+    }
+
+    static staticRequest(method: any, url: any, params: any = null, headers: any = null) {
+        let requestor = this.requestor;
+        let response = requestor.request(method, url, params, headers);
+        
+        let options = {
+            'apiVersion': FedaPay.getApiVersion(),
+            'environment': FedaPay.getEnvironment()
+        };
+
+        return {
+            response,
+            options
+        };
+    }
+
+    protected static all(params: any, headers: any) {
+        this.validateParams(params);
+        let path = this.classPath();
+
+        let response, opts = this.staticRequest('get', path, params, headers);
+        return arrayToFedaPayObject(response, opts);
+    }
+
+    static validateParams(params = null) {
+        if (params && !Array.isArray(params)) {
+            let message = `You must pass an array as the first argument to FedaPay API 
+            method calls.  (HINT: an example call to create a customer 
+            would be: \"FedaPay\\Customer::create(array('firstname' => toto, 
+            'lastname' => 'zoro', 'email' => 'admin@gmail.com', 'phone' => '66666666'))\")`;
+            throw new Error(message);
+        }
+    }
+
+    static create(params: any, headers: any) {
+        this.validateParams(params);
+        let url = this.classPath();
+
+        let response, opts = this.staticRequest('post', url, params, headers);
+        let object = arrayToFedaPayObject(response, opts);
+
+        return object;
+    }
+
+    static update(params: any, headers: any) {
+        this.validateParams(params);
+        let url = this.classPath();
+
+        let response, opts = this.staticRequest('put', url, params, headers);
+        let object = arrayToFedaPayObject(response, opts);
+
+        return object;
+    }
+
+    delete(headers: any) {
+        let url = this.instanceUrl();
+        Resource.staticRequest('delete', url, [], headers);
+        return this;
+    }
+
+    protected save(headers: any) {
+        let params = this.serializeParameters();
+        let className = Resource.className();
+        let url = this.instanceUrl();
+
+        let response, opts = Resource.staticRequest('PUT', url, params, headers);
+        let klass = `${opts} / ${className}`; // TODO
+
+        return this;
+
     }
 }

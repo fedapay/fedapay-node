@@ -63,7 +63,7 @@ export class Requestor {
     }
 
     protected handleRequestException(e: any) {
-
+        throw new Error(e);
     }
 
     protected url(path = '') {

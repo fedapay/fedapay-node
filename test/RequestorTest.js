@@ -14,8 +14,6 @@ describe('RequestorTest', () => {
             expect(httpStatus).to.equal(500);
             expect(httpResponse).to.not.be.null;
             expect(httpRequest).to.not.be.null;
-
-            console.log('kkdklds', e);
         }
     });
 });
