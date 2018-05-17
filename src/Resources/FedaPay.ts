@@ -15,11 +15,11 @@ export class FedaPay {
         FedaPay.token = '';
     }
 
-    static setToken(token: any) {
+    static setToken(token: string) {
         FedaPay.token = token;
     }
     
-    static setEnvironment(value: any) {
+    static setEnvironment(value: string) {
         FedaPay.environment = value;
     }
 

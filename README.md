@@ -23,7 +23,7 @@ value:
 
 ``` js
 let fedapay = require('fedapay');
-fedapay.accounts.create({
 
-});
+let currencies = await fedapay.currencies.all();
+
 ```

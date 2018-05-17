@@ -1,4 +1,4 @@
-import { FedaPayObject } from "..";
+import { FedaPayObject, Currency, Customer } from '..';
 
 export function stripApiVersion(key: any, opts: any) {
     let apiPart = '';
@@ -19,6 +19,17 @@ export function arrayToFedaPayObject(array: any, opts: any) {
     } else {
         return convertToFedaPayObject(array, opts);
     }
+}
+
+export function objectToFedaPayObject(attrs: any = {}, opts: any = {}, className: string) {
+    // klass
+    // if array make a loop
+    let objects: Array<Currency> = [];
+    switch (className) {
+        case 'currency':
+            objects.push(new Currency(attrs));
+    }
+    return objects;
 }
 
 export function convertToFedaPayObject(resp: any, opts: any) {

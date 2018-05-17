@@ -1,5 +1,5 @@
 import { FedaPay } from './FedaPay';
-import request = require('request');
+import axios, { AxiosRequestConfig, AxiosPromise } from 'axios';
 
 export class Requestor {
     readonly SANDBOX_BASE = 'https://sdx-api.fedapay.com';
@@ -24,26 +24,38 @@ export class Requestor {
         if (FedaPay.getVerifySslCerts()) {}
     }
 
-    request(method: string, path: any, params = [], headers = []) {
+    request(method: string, path: any, params = {}, headers = {}) {
         try {
             if (!headers) {
-                headers = [];
+                headers = {};
             }
             if (!params) {
-                params = [];
+                params = {};
             }
-            let url = this.url(path);
+            let url = this._url(path);
             method = method.toUpperCase();
-            let options = {'headers': headers};
+            let options: { [key: string]: any } = {}
+            options.headers = headers;
 
-            request({
+            switch (method) {
+                case 'GET':
+                case 'HEAD':
+                case 'DELETE':
+                    options.query = params;
+                    break;
+                default:
+                    options.json = params;
+                    break;
+            }
+            let res = axios({
                 method: method,
-                uri: url,
-                headers: headers,
-            }, function (error?: any, response?: any, body?: any) {
-                return response;
+                url: url,
+                headers: options.headers
+            })
+            .then(function (response) {
+                return response.data;
             });
-
+            return res;
         } catch (error) {
             this.handleRequestException(error);
         }
@@ -66,8 +78,8 @@ export class Requestor {
         throw new Error(e);
     }
 
-    protected url(path = '') {
-        return `${this.baseUrl()}/${this.apiVersion}`;
+    protected _url(path = '') {
+        return `${this.baseUrl()}/${this.apiVersion}${path}`;
     }
 
 }

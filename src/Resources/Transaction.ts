@@ -1,11 +1,11 @@
 import { Resource } from './Resource';
+import { arrayToFedaPayObject } from './Utils';
 
 export class Transaction extends Resource{
-    static retrieve(id: any, headers = []) { }
-    static all(params = [], headers = []) { }
-    static create(params = [], headers = []) { }
-    static update(id: any, params = [], headers = []) { }
-    static save(headers = []) { }
-    static delete(headers = []) { }
-    generateToken(params = [], headers = []) {}
+    generateToken(params = [], headers = []) : any {
+        let url = `${this.instanceUrl()}/token`;
+        let response, opts = Resource.staticRequest('post', url, params, headers);
+
+        return arrayToFedaPayObject(response, opts);
+    }
 }

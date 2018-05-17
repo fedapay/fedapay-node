@@ -2,10 +2,11 @@ import { FedaPayObject } from './FedaPayObject';
 import { Requestor } from './Requestor';
 import { Inflector } from './Inflector';
 import { FedaPay } from './FedaPay';
-import { arrayToFedaPayObject } from './Utils';
+import { Currency } from './Currency';
+import { arrayToFedaPayObject, objectToFedaPayObject } from './Utils';
 
-export class Resource extends FedaPayObject{
-    protected static requestor: Requestor;
+export class Resource extends FedaPayObject {
+    protected static requestor: Requestor = new Requestor();
 
     static setRequestor(req: Requestor) {
         Resource.requestor = req;
@@ -19,7 +20,7 @@ export class Resource extends FedaPayObject{
         return (<any>this).constructor.name;
     }
 
-    static className() {
+    static className(): string {
         let instance = new this;
         return instance.getName().toLowerCase();
     }
@@ -55,35 +56,39 @@ export class Resource extends FedaPayObject{
         return object.toString();
     }
 
-    static staticRequest(method: any, url: any, params: any = null, headers: any = null) {
+    static async staticRequest(method: any, url: any, params: any = null, headers: any = null) {
         let requestor = this.requestor;
-        let response = requestor.request(method, url, params, headers);
-        
+        let response = null;
+        let res = await requestor.request(method, url, params, headers);
+
         let options = {
             'apiVersion': FedaPay.getApiVersion(),
             'environment': FedaPay.getEnvironment()
         };
-
         return {
-            response,
+            res,
             options
         };
     }
 
-    protected static all(params: any, headers: any) {
+    static async all(params: any = {}, headers: any = {}) {
         this.validateParams(params);
         let path = this.classPath();
-
-        let response, opts = this.staticRequest('get', path, params, headers);
-        return arrayToFedaPayObject(response, opts);
+        let data = await this.staticRequest('get', path, params, headers)
+            .then(({ res, options}) => {
+                return {
+                    res, options
+                };
+            });
+        return await objectToFedaPayObject(data.res, data.options, this.className());
     }
 
     static validateParams(params = null) {
-        if (params && !Array.isArray(params)) {
-            let message = `You must pass an array as the first argument to FedaPay API 
+        if (typeof params != 'object') {
+            let message = `You must pass an object as the first argument to FedaPay API 
             method calls.  (HINT: an example call to create a customer 
-            would be: \"FedaPay\\Customer::create(array('firstname' => toto, 
-            'lastname' => 'zoro', 'email' => 'admin@gmail.com', 'phone' => '66666666'))\")`;
+            would be: FedaPay.Customer.create({'firstname': toto, 
+            'lastname': 'zoro', 'email': 'admin@gmail.com', 'phone': '66666666'})`;
             throw new Error(message);
         }
     }
