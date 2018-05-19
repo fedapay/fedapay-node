@@ -1,8 +1,7 @@
-import { FedaPayObject } from './FedaPayObject';
-import { Requestor } from './Requestor';
-import { Inflector } from './Inflector';
 import { FedaPay } from './FedaPay';
-import { Currency } from './Currency';
+import { FedaPayObject } from './FedaPayObject';
+import { Inflector } from './Inflector';
+import { Requestor } from './Requestor';
 import { arrayToFedaPayObject, objectToFedaPayObject } from './Utils';
 
 export class Resource extends FedaPayObject {
@@ -85,9 +84,9 @@ export class Resource extends FedaPayObject {
 
     static validateParams(params = null) {
         if (typeof params != 'object') {
-            let message = `You must pass an object as the first argument to FedaPay API 
-            method calls.  (HINT: an example call to create a customer 
-            would be: FedaPay.Customer.create({'firstname': toto, 
+            let message = `You must pass an object as the first argument to FedaPay API
+            method calls.  (HINT: an example call to create a customer
+            would be: FedaPay.Customer.create({'firstname': toto,
             'lastname': 'zoro', 'email': 'admin@gmail.com', 'phone': '66666666'})`;
             throw new Error(message);
         }

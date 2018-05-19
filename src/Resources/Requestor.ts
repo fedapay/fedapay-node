@@ -81,5 +81,4 @@ export class Requestor {
     protected _url(path = '') {
         return `${this.baseUrl()}/${this.apiVersion}${path}`;
     }
-
 }

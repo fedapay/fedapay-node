@@ -2,9 +2,9 @@ let path = require('path');
 
 export class FedaPay {
     readonly VERSION = '0.1.1';
-    public static apiKey = '';
-    public static token = '';
-    public static accountId = '';
+    protected static apiKey = '';
+    protected static token = '';
+    protected static accountId = '';
     protected static environment = 'sandbox';
     protected static apiVersion = 'v1';
     protected static verifySslCerts = true;
@@ -18,7 +18,7 @@ export class FedaPay {
     static setToken(token: string) {
         FedaPay.token = token;
     }
-    
+
     static setEnvironment(value: string) {
         FedaPay.environment = value;
     }
@@ -30,7 +30,7 @@ export class FedaPay {
     static getApiVersion() {
         return FedaPay.apiVersion;
     }
-    
+
     static setVerifySslCerts(value: any) {
         FedaPay.verifySslCerts = value;
     }
@@ -45,8 +45,9 @@ export class FedaPay {
 
     static getCaBundlePath() {
         if(!FedaPay.caBundlePath) {
-            FedaPay.caBundlePath = path.join(__dirname, './../data/ca-certificates.crt');
+            FedaPay.caBundlePath = path.join(__dirname, '/../data/ca-certificates.crt');
         }
+
         return FedaPay.caBundlePath;
     }
 }
