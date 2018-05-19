@@ -29,23 +29,24 @@ export function objectToFedaPayObject(attrs: any = {}, opts: any = {}, className
         case 'currency':
             objects.push(new Currency(attrs));
     }
+
     return objects;
 }
 
 export function convertToFedaPayObject(resp: any, opts: any) {
     let types = {
-        'v1/api_key': 'FedaPay\\ApiKey',
-        'v1/account': 'FedaPay\\Account',
-        'v1/currency': 'FedaPay\\Currency',
-        'v1/customer': 'FedaPay\\Customer',
-        'v1/event': 'FedaPay\\Event',
-        'v1/event_type': 'FedaPay\\EventType',
-        'v1/invitation': 'FedaPay\\Invitation',
-        'v1/log': 'FedaPay\\Log',
-        'v1/role': 'FedaPay\\Role',
-        'v1/setting': 'FedaPay\\Setting',
-        'v1/transaction': 'FedaPay\\Transaction',
-        'v1/user': 'FedaPay\\User',
+        // 'v1/api_key': 'FedaPay\\ApiKey',
+        // 'v1/account': 'FedaPay\\Account',
+        // 'v1/currency': 'FedaPay\\Currency',
+        // 'v1/customer': 'FedaPay\\Customer',
+        // 'v1/event': 'FedaPay\\Event',
+        // 'v1/event_type': 'FedaPay\\EventType',
+        // 'v1/invitation': 'FedaPay\\Invitation',
+        // 'v1/log': 'FedaPay\\Log',
+        // 'v1/role': 'FedaPay\\Role',
+        // 'v1/setting': 'FedaPay\\Setting',
+        // 'v1/transaction': 'FedaPay\\Transaction',
+        // 'v1/user': 'FedaPay\\User',
     };
     let kklass = FedaPayObject;
 
