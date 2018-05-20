@@ -21,7 +21,7 @@ export class Base {
     }
 
     hasErrors() {
-        return !this.errors;
+        return this.errors !== undefined && this.errors !== null;
     }
 
     fetchErrors() {

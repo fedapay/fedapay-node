@@ -59,8 +59,8 @@ export class Resource extends FedaPayObject {
     protected static _staticRequest(
         method: any,
         url: any,
-        params: any = null,
-        headers: any = null
+        params: any = {},
+        headers: any = {}
     ) {
         return this.requestor.request(method, url, params, headers)
             .then(response => {
@@ -73,11 +73,14 @@ export class Resource extends FedaPayObject {
             });
     }
 
-    protected static _retrieve(id: any, headers = []): Promise<FedaPayObject> {
+    protected static _retrieve(
+        id: any,
+        headers: any = {}
+    ): Promise<FedaPayObject> {
         let url = this.resourcePath(id);
         let className = this.className();
 
-        return this._staticRequest('get', url)
+        return this._staticRequest('get', url, null, headers)
             .then(({ data, options }) => {
                 return <FedaPayObject>arrayToFedaPayObject(data, options);
             });
@@ -86,18 +89,21 @@ export class Resource extends FedaPayObject {
     protected static _all(
         params: any = {},
         headers: any = {}
-    ): Promise<FedaPayObject[]> {
+    ): Promise<FedaPayObject|FedaPayObject[]> {
         this._validateParams(params);
 
         let path = this.classPath();
 
         return this._staticRequest('get', path, params, headers)
             .then(({ data, options }) => {
-                return <FedaPayObject[]>arrayToFedaPayObject(data, options);
+                return arrayToFedaPayObject(data, options);
             })
     }
 
-    protected static _create(params: any, headers: any): Promise<FedaPayObject> {
+    protected static _create(
+        params: any,
+        headers: any
+    ): Promise<FedaPayObject> {
         this._validateParams(params);
         let url = this.classPath();
 
@@ -107,22 +113,32 @@ export class Resource extends FedaPayObject {
             });
     }
 
-    protected static _update(params: any, headers: any): Promise<FedaPayObject> {
+    protected static _update(
+        id,
+        params: any,
+        headers: any
+    ): Promise<FedaPayObject> {
         this._validateParams(params);
-        let url = this.classPath();
+        let url = this.resourcePath(id);
+        let className = this.className();
 
         return this._staticRequest('put', url, params, headers)
             .then(({ data, options }) => {
-                return <FedaPayObject>arrayToFedaPayObject(data, options);
+                let object = <FedaPayObject>arrayToFedaPayObject(data, options);
+
+                return <FedaPayObject>object[className];
             });
     }
 
-    protected _delete(headers: any) {
+    protected _delete(headers: any): Promise<FedaPayObject> {
         let url = this.instanceUrl();
-        return Resource._staticRequest('delete', url, [], headers);
+        return Resource._staticRequest('delete', url, [], headers)
+            .then(({ data, options }) => {
+                return this;
+            });
     }
 
-    protected _save(headers: any) {
+    protected _save(headers: any): Promise<FedaPayObject> {
         let params = this.serializeParameters();
         let className = Resource.className();
         let url = this.instanceUrl();

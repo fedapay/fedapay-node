@@ -1,5 +1,7 @@
-import { FedaPayObject, Currency, Customer } from '..';
+import { FedaPayObject } from './FedaPayObject';
+// import Customer from './Customer';
 
+// console.log(Customer);
 export function convertToFedaPayObject(
     resp: any,
     opts: any
@@ -8,7 +10,7 @@ export function convertToFedaPayObject(
         // 'v1/api_key': 'FedaPay\\ApiKey',
         // 'v1/account': 'FedaPay\\Account',
         // 'v1/currency': 'FedaPay\\Currency',
-        // 'v1/customer': 'FedaPay\\Customer',
+        'v1/customer': require('./Customer').Customer,
         // 'v1/event': 'FedaPay\\Event',
         // 'v1/event_type': 'FedaPay\\EventType',
         // 'v1/invitation': 'FedaPay\\Invitation',
@@ -23,8 +25,8 @@ export function convertToFedaPayObject(
     if (resp['klass']) {
         let klass = resp['klass'];
 
-        if (types.klass) {
-            let object = new types[klass]();
+        if (types[klass]) {
+            object = new types[klass]();
         }
     }
 
@@ -38,7 +40,7 @@ export function arrayToFedaPayObject(
     opts: any
 ): FedaPayObject | FedaPayObject[] {
     if (Array.isArray(array)) {
-        let mapped: any[];
+        let mapped: FedaPayObject[] = [];
 
         array.forEach(i => {
             mapped.push(convertToFedaPayObject(i, opts));

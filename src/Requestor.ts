@@ -1,7 +1,12 @@
 import { FedaPay } from './FedaPay';
-import { ApiConnectionError } from './Error';
+import { ApiConnectionError, InvalidRequest } from './Error';
 
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, AxiosPromise } from 'axios';
+
+export interface RequestInterceptor {
+    callback: (value: AxiosRequestConfig) => AxiosRequestConfig | Promise<AxiosRequestConfig>;
+    onRejected?: (error: any) => any
+};
 
 export class Requestor {
     readonly SANDBOX_BASE = 'https://sdx-api.fedapay.com';
@@ -13,6 +18,7 @@ export class Requestor {
     protected apiVersion: string;
     protected accountId: string | number = '';
     protected static httpClient: AxiosInstance;
+    protected static requestInterceptors: RequestInterceptor[] = [];
 
     constructor() {
         this.apiKey = FedaPay.getApiKey();
@@ -42,9 +48,31 @@ export class Requestor {
             }
 
             Requestor.httpClient = axios.create(options);
+            this.applyRequestInterceptors(Requestor.httpClient);
         }
 
         return Requestor.httpClient;
+    }
+
+
+    /**
+     * Set the http client isntance
+     * @param client AxiosInstance
+     */
+    static addRequestInterceptor(interceptor: RequestInterceptor) {
+        this.requestInterceptors.push(interceptor);
+    }
+
+    /**
+     * Apply request interceptor
+     * @param httpClient AxiosInstance
+     */
+    private applyRequestInterceptors(httpClient: AxiosInstance) {
+        Requestor.requestInterceptors.forEach(interceptor => {
+            httpClient.interceptors.request.use(
+                interceptor.callback, interceptor.onRejected
+            );
+        })
     }
 
     request(
@@ -61,10 +89,7 @@ export class Requestor {
             method,
             url,
             headers,
-            transformResponse: [(data) => {
-                // console.log(data);
-                return data;
-            }],
+            responseType: 'json'
         }
 
         if (['GET', 'HEAD', 'DELETE'].includes(method)) {
