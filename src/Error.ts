@@ -1,4 +1,5 @@
 export class Base {
+    message: string;
     httpStatus: any;
     httpRequest: any;
     httpResponse: any;
@@ -11,6 +12,7 @@ export class Base {
         httpRequest = null,
         httpResponse = null
     ) {
+        this.message = message;
         this.httpStatus = httpStatus;
         this.httpRequest = httpRequest;
         this.httpResponse = httpResponse;
@@ -38,3 +40,5 @@ export class Base {
 }
 
 export class ApiConnectionError extends Base { }
+
+export class InvalidRequest extends Base { }

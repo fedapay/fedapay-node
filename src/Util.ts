@@ -1,6 +1,9 @@
 import { FedaPayObject, Currency, Customer } from '..';
 
-export function convertToFedaPayObject(resp: any, opts: any) {
+export function convertToFedaPayObject(
+    resp: any,
+    opts: any
+): FedaPayObject {
     let types: any = {
         // 'v1/api_key': 'FedaPay\\ApiKey',
         // 'v1/account': 'FedaPay\\Account',
@@ -30,7 +33,10 @@ export function convertToFedaPayObject(resp: any, opts: any) {
     return object;
 }
 
-export function arrayToFedaPayObject(array: any, opts: any) : any {
+export function arrayToFedaPayObject(
+    array: any,
+    opts: any
+): FedaPayObject | FedaPayObject[] {
     if (Array.isArray(array)) {
         let mapped: any[];
 
@@ -44,7 +50,7 @@ export function arrayToFedaPayObject(array: any, opts: any) : any {
     }
 }
 
-export function stripApiVersion(key: any, opts: any) {
+export function stripApiVersion(key: any, opts: any): string {
     let apiPart = '';
 
     if (opts.apiVersion) {

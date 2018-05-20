@@ -52,7 +52,7 @@ export class Requestor {
         path: any,
         params = {},
         headers = {}
-    ): Promise<ApiConnectionError | AxiosResponse<any>> {
+    ) {
         let url = this.url(path);
         method = method.toUpperCase();
         headers = Object.assign(this.defaultHeaders(), headers);
