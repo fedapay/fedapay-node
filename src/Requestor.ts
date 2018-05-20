@@ -1,7 +1,6 @@
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
+import { ApiConnectionError } from './Error';
 import { FedaPay } from './FedaPay';
-import { ApiConnectionError, InvalidRequest } from './Error';
-
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, AxiosPromise } from 'axios';
 
 export interface RequestInterceptor {
     callback: (value: AxiosRequestConfig) => AxiosRequestConfig | Promise<AxiosRequestConfig>;
@@ -80,7 +79,7 @@ export class Requestor {
         path: any,
         params = {},
         headers = {}
-    ) {
+    ): Promise<AxiosResponse<any>> {
         let url = this.url(path);
         method = method.toUpperCase();
         headers = Object.assign(this.defaultHeaders(), headers);

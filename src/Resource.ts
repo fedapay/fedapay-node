@@ -1,6 +1,5 @@
-import { AxiosResponse } from 'axios';
 import * as pluralize from 'pluralize';
-import { ApiConnectionError, InvalidRequest } from './Error';
+import { InvalidRequest } from './Error';
 import { FedaPay } from './FedaPay';
 import { FedaPayObject } from './FedaPayObject';
 import { Requestor } from './Requestor';

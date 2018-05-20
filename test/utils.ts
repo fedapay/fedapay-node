@@ -1,6 +1,5 @@
-import * as nock from 'nock';
+import { AxiosRequestConfig } from 'axios';
 import { expect } from 'chai';
-import axios, { AxiosRequestConfig } from 'axios';
 import { FedaPay, Requestor } from '../src';
 
 const API_KEY = 'sk_test_123';
@@ -27,7 +26,6 @@ export function tearDown() {
     FedaPay.setVerifySslCerts(true);
     Requestor.setHttpClient(null);
 }
-
 
 export function exceptRequest(config: AxiosRequestConfig) {
     expect(lastRequestConfig).to.include(config);

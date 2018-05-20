@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import * as nock from 'nock';
-import { FedaPay, Requestor, ApiConnectionError } from '../src';
+import { ApiConnectionError, FedaPay, Requestor } from '../src';
 
 describe('RequestorTest', () => {
     beforeEach(() => {

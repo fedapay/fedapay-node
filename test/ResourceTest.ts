@@ -1,10 +1,8 @@
 import { expect } from 'chai';
-import * as nock from 'nock';
-import { Resource, InvalidRequest } from '../src';
-import { Foo, FooTest, FooPerson, FooCurrency } from './fixtures';
+import { InvalidRequest } from '../src';
+import { Foo, FooCurrency, FooPerson, FooTest } from './fixtures';
 
 describe('ResourceTest', () => {
-
     it('should return class name', () => {
         expect(Foo.className()).to.equal('foo');
         expect(FooTest.className()).to.equal('footest');

@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import * as nock from 'nock';
-import { setUp, tearDown, exceptRequest } from './utils';
-import { Customer, FedaPay, FedaPayObject, ApiConnectionError } from '../src';
+import { ApiConnectionError, Customer, FedaPayObject } from '../src';
+import { exceptRequest, setUp, tearDown } from './utils';
 
 describe('CustomerTest', () => {
 

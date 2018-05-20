@@ -1,7 +1,5 @@
 import { FedaPayObject } from './FedaPayObject';
-// import Customer from './Customer';
 
-// console.log(Customer);
 export function convertToFedaPayObject(
     resp: any,
     opts: any

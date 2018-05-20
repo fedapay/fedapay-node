@@ -1,4 +1,4 @@
-import { stripApiVersion, arrayToFedaPayObject } from './Util';
+import { arrayToFedaPayObject, stripApiVersion } from './Util';
 
 export class FedaPayObject {
     [key: string]: any;

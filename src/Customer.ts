@@ -1,5 +1,5 @@
-import { Resource } from './Resource';
 import { FedaPayObject } from './FedaPayObject';
+import { Resource } from './Resource';
 
 export class Customer extends Resource {
     /**
