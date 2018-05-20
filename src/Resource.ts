@@ -46,7 +46,7 @@ export class Resource extends FedaPayObject {
         return (<any>this).constructor.resourcePath(this.id);
     }
 
-    protected static validateParams(params = null) {
+    protected static _validateParams(params = null) {
         if (params && typeof params != 'object') {
             let message = `You must pass an object as the first argument to FedaPay API
             method calls.  (HINT: an example call to create a customer
@@ -56,7 +56,7 @@ export class Resource extends FedaPayObject {
         }
     }
 
-    protected static staticRequest(
+    protected static _staticRequest(
         method: any,
         url: any,
         params: any = null,
@@ -73,61 +73,61 @@ export class Resource extends FedaPayObject {
             });
     }
 
-    protected static retrieve(id: any, headers = []): Promise<FedaPayObject> {
+    protected static _retrieve(id: any, headers = []): Promise<FedaPayObject> {
         let url = this.resourcePath(id);
         let className = this.className();
 
-        return this.staticRequest('get', url)
+        return this._staticRequest('get', url)
             .then(({ data, options }) => {
                 return <FedaPayObject>arrayToFedaPayObject(data, options);
             });
     }
 
-    protected static all(
+    protected static _all(
         params: any = {},
         headers: any = {}
     ): Promise<FedaPayObject[]> {
-        this.validateParams(params);
+        this._validateParams(params);
 
         let path = this.classPath();
 
-        return this.staticRequest('get', path, params, headers)
+        return this._staticRequest('get', path, params, headers)
             .then(({ data, options }) => {
                 return <FedaPayObject[]>arrayToFedaPayObject(data, options);
             })
     }
 
-    protected static create(params: any, headers: any): Promise<FedaPayObject> {
-        this.validateParams(params);
+    protected static _create(params: any, headers: any): Promise<FedaPayObject> {
+        this._validateParams(params);
         let url = this.classPath();
 
-        return this.staticRequest('post', url, params, headers)
+        return this._staticRequest('post', url, params, headers)
             .then(({ data, options }) => {
                 return <FedaPayObject>arrayToFedaPayObject(data, options);
             });
     }
 
-    protected static update(params: any, headers: any): Promise<FedaPayObject> {
-        this.validateParams(params);
+    protected static _update(params: any, headers: any): Promise<FedaPayObject> {
+        this._validateParams(params);
         let url = this.classPath();
 
-        return this.staticRequest('put', url, params, headers)
+        return this._staticRequest('put', url, params, headers)
             .then(({ data, options }) => {
                 return <FedaPayObject>arrayToFedaPayObject(data, options);
             });
     }
 
-    protected delete(headers: any) {
+    protected _delete(headers: any) {
         let url = this.instanceUrl();
-        return Resource.staticRequest('delete', url, [], headers);
+        return Resource._staticRequest('delete', url, [], headers);
     }
 
-    protected save(headers: any) {
+    protected _save(headers: any) {
         let params = this.serializeParameters();
         let className = Resource.className();
         let url = this.instanceUrl();
 
-        return Resource.staticRequest('PUT', url, params, headers)
+        return Resource._staticRequest('PUT', url, params, headers)
             .then(({ data, options }) => {
                 let klass = `${options.apiVersion} / ${className}`;
                 let json = data[klass];
