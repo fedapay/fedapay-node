@@ -81,7 +81,9 @@ export class Resource extends FedaPayObject {
 
         return this._staticRequest('get', url, null, headers)
             .then(({ data, options }) => {
-                return <FedaPayObject>arrayToFedaPayObject(data, options);
+                let object = <FedaPayObject>arrayToFedaPayObject(data, options);
+
+                return <FedaPayObject>object[className];
             });
     }
 
@@ -105,10 +107,13 @@ export class Resource extends FedaPayObject {
     ): Promise<FedaPayObject> {
         this._validateParams(params);
         let url = this.classPath();
+        let className = this.className();
 
         return this._staticRequest('post', url, params, headers)
             .then(({ data, options }) => {
-                return <FedaPayObject>arrayToFedaPayObject(data, options);
+                let object = <FedaPayObject>arrayToFedaPayObject(data, options);
+
+                return <FedaPayObject>object[className];
             });
     }
 

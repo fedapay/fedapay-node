@@ -1,5 +1,6 @@
 import { expect } from 'chai';
 import * as nock from 'nock';
+import * as faker from 'faker';
 import { ApiConnectionError, Customer, FedaPayObject } from '../src';
 import { exceptRequest, setUp, tearDown } from './utils';
 
@@ -44,6 +45,7 @@ describe('CustomerTest', () => {
     });
 
     it('should fail customer creation', async () => {
+        let data = {'firstname': 'Myfirstname' };
         let body = {
             'message': 'Account creation failed',
             'errors': {
@@ -56,11 +58,11 @@ describe('CustomerTest', () => {
             .reply(500, body);
 
         try {
-            await Customer.create({'firstname': 'Myfirstname' });
+            await Customer.create(data);
         } catch (e) {
             exceptRequest({
                 url: 'https://sdx-api.fedapay.com/v1/customers',
-                data: '{"firstname":"Myfirstname"}',
+                data: JSON.stringify(data),
                 method: 'post'
             });
             expect(e).to.be.instanceof(ApiConnectionError);
@@ -69,4 +71,244 @@ describe('CustomerTest', () => {
             expect(e.errors).to.have.keys('lastname');
         }
     });
+
+    it('should create a customer', async () => {
+        let data = {
+            'firstname': faker.name.firstName(),
+            'lastname': faker.name.lastName(),
+            'email': faker.internet.email(),
+            'phone': faker.phone.phoneNumber()
+        };
+
+        let body = {
+            'v1/customer': {
+                'id': 1,
+                'klass': 'v1/customer',
+                'firstname': data.firstname,
+                'lastname': data.lastname,
+                'email': data.email,
+                'phone': data.phone,
+                'created_at': '2018-03-12T09:09:03.969Z',
+                'updated_at': '2018-03-12T09:09:03.969Z'
+            }
+        };
+
+        nock(/fedapay\.com/)
+            .post('/v1/customers')
+            .reply(200, body);
+
+        let customer = await Customer.create(data);
+
+        exceptRequest({
+            url: 'https://sdx-api.fedapay.com/v1/customers',
+            data: JSON.stringify(data),
+            method: 'post'
+        });
+        expect(customer).to.be.instanceof(Customer);
+        expect(customer.firstname).to.equal(data.firstname);
+        expect(customer.lastname).to.equal(data.lastname);
+        expect(customer.email).to.equal(data.email);
+        expect(customer.phone).to.equal(data.phone);
+        expect(customer.id).to.equal(1);
+    });
+
+    it('should retrieve a customer', async () => {
+        let data = {
+            'firstname': faker.name.firstName(),
+            'lastname': faker.name.lastName(),
+            'email': faker.internet.email(),
+            'phone': faker.phone.phoneNumber()
+        };
+
+        let body = {
+            'v1/customer': {
+                'id': 1,
+                'klass': 'v1/customer',
+                'firstname': data.firstname,
+                'lastname': data.lastname,
+                'email': data.email,
+                'phone': data.phone,
+                'created_at': '2018-03-12T09:09:03.969Z',
+                'updated_at': '2018-03-12T09:09:03.969Z'
+            }
+        };
+
+        nock(/fedapay\.com/)
+            .get('/v1/customers/1')
+            .reply(200, body);
+
+        let customer = await Customer.retrieve(1);
+
+        exceptRequest({
+            url: 'https://sdx-api.fedapay.com/v1/customers/1',
+            method: 'get'
+        });
+        expect(customer).to.be.instanceof(Customer);
+        expect(customer.firstname).to.equal(data.firstname);
+        expect(customer.lastname).to.equal(data.lastname);
+        expect(customer.email).to.equal(data.email);
+        expect(customer.phone).to.equal(data.phone);
+        expect(customer.id).to.equal(1);
+    });
+
+    it('should update a customer', async () => {
+        let data = {
+            'firstname': faker.name.firstName(),
+            'lastname': faker.name.lastName(),
+            'email': faker.internet.email(),
+            'phone': faker.phone.phoneNumber()
+        };
+
+        let body = {
+            'v1/customer': {
+                'id': 1,
+                'klass': 'v1/customer',
+                'firstname': data.firstname,
+                'lastname': data.lastname,
+                'email': data.email,
+                'phone': data.phone,
+                'created_at': '2018-03-12T09:09:03.969Z',
+                'updated_at': '2018-03-12T09:09:03.969Z'
+            }
+        };
+
+        nock(/fedapay\.com/)
+            .put('/v1/customers/1')
+            .reply(200, body);
+
+        let customer = await Customer.update(1, data);
+
+        exceptRequest({
+            url: 'https://sdx-api.fedapay.com/v1/customers/1',
+            data: JSON.stringify(data),
+            method: 'put'
+        });
+        expect(customer).to.be.instanceof(Customer);
+        expect(customer.firstname).to.equal(data.firstname);
+        expect(customer.lastname).to.equal(data.lastname);
+        expect(customer.email).to.equal(data.email);
+        expect(customer.phone).to.equal(data.phone);
+        expect(customer.id).to.equal(1);
+    });
+
+    it('should update a customer with save', async () => {
+        let data = {
+            'firstname': faker.name.firstName(),
+            'lastname': faker.name.lastName(),
+            'email': faker.internet.email(),
+            'phone': faker.phone.phoneNumber()
+        };
+
+        let body = {
+            'v1/customer': {
+                'id': 1,
+                'klass': 'v1/customer',
+                'firstname': data.firstname,
+                'lastname': data.lastname,
+                'email': data.email,
+                'phone': data.phone,
+                'created_at': '2018-03-12T09:09:03.969Z',
+                'updated_at': '2018-03-12T09:09:03.969Z'
+            }
+        };
+
+        nock(/fedapay\.com/)
+            .post('/v1/customers')
+            .reply(200, body);
+
+        let customer = await Customer.create(data);
+        let updateData = customer.serializeParameters();
+
+        customer.firstname = 'First Name';
+
+        nock(/fedapay\.com/)
+            .put('/v1/customers/1')
+            .reply(200, body);
+
+        await customer.save();
+
+        updateData.firstname = 'First Name'
+
+        exceptRequest({
+            url: 'https://sdx-api.fedapay.com/v1/customers/1',
+            data: JSON.stringify(updateData),
+            method: 'put'
+        });
+    });
+
+    it('should delete customer', async () => {
+        let data = {
+            'firstname': faker.name.firstName(),
+            'lastname': faker.name.lastName(),
+            'email': faker.internet.email(),
+            'phone': faker.phone.phoneNumber()
+        };
+
+        let body = {
+            'v1/customer': {
+                'id': 1,
+                'klass': 'v1/customer',
+                'firstname': data.firstname,
+                'lastname': data.lastname,
+                'email': data.email,
+                'phone': data.phone,
+                'created_at': '2018-03-12T09:09:03.969Z',
+                'updated_at': '2018-03-12T09:09:03.969Z'
+            }
+        };
+
+        nock(/fedapay\.com/)
+            .post('/v1/customers')
+            .reply(200, body);
+
+        let customer = await Customer.create(data);
+
+        nock(/fedapay\.com/)
+            .delete('/v1/customers/1')
+            .reply(200);
+
+        await customer.delete();
+
+        exceptRequest({
+            url: 'https://sdx-api.fedapay.com/v1/customers/1',
+            method: 'delete'
+        });
+    });
+
+    /**
+     public function testShouldDeleteACustomer()
+    {
+        $faker = Factory::create();
+        $data = [
+            'firstname' => $faker->firstName,
+            'lastname' => $faker->lastName,
+            'email' => $faker->unique()->email,
+            'phone' => $faker->phoneNumber
+        ];
+
+        $body = [
+            'v1/customer' => [
+                'id' => 1,
+                'klass' => 'v1/customer',
+                'firstname' => $data['firstname'],
+                'lastname' => $data['lastname'],
+                'email' => $data['email'],
+                'phone' => $data['phone'],
+                'created_at' => '2018-03-12T09:09:03.969Z',
+                'updated_at' => '2018-03-12T09:09:03.969Z'
+            ]
+        ];
+
+        $client = $this->createMockClient(200, $body);
+        \FedaPay\Requestor::setHttpClient($client);
+
+        $customer = \FedaPay\Customer::create($data);
+
+        $client = $this->createMockClient(200);
+        \FedaPay\Requestor::setHttpClient($client);
+        $customer->delete();
+
+        $this->exceptRequest('/v1/customers/1', 'DELETE');
+    }
+     */
 });
