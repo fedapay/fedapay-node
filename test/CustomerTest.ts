@@ -274,41 +274,4 @@ describe('CustomerTest', () => {
             method: 'delete'
         });
     });
-
-    /**
-     public function testShouldDeleteACustomer()
-    {
-        $faker = Factory::create();
-        $data = [
-            'firstname' => $faker->firstName,
-            'lastname' => $faker->lastName,
-            'email' => $faker->unique()->email,
-            'phone' => $faker->phoneNumber
-        ];
-
-        $body = [
-            'v1/customer' => [
-                'id' => 1,
-                'klass' => 'v1/customer',
-                'firstname' => $data['firstname'],
-                'lastname' => $data['lastname'],
-                'email' => $data['email'],
-                'phone' => $data['phone'],
-                'created_at' => '2018-03-12T09:09:03.969Z',
-                'updated_at' => '2018-03-12T09:09:03.969Z'
-            ]
-        ];
-
-        $client = $this->createMockClient(200, $body);
-        \FedaPay\Requestor::setHttpClient($client);
-
-        $customer = \FedaPay\Customer::create($data);
-
-        $client = $this->createMockClient(200);
-        \FedaPay\Requestor::setHttpClient($client);
-        $customer->delete();
-
-        $this->exceptRequest('/v1/customers/1', 'DELETE');
-    }
-     */
 });
