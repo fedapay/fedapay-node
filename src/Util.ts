@@ -7,7 +7,7 @@ export function convertToFedaPayObject(
     let types: any = {
         // 'v1/api_key': 'FedaPay\\ApiKey',
         // 'v1/account': 'FedaPay\\Account',
-        // 'v1/currency': 'FedaPay\\Currency',
+        'v1/currency': require('./Currency').Currency,
         'v1/customer': require('./Customer').Customer,
         // 'v1/event': 'FedaPay\\Event',
         // 'v1/event_type': 'FedaPay\\EventType',
@@ -19,7 +19,6 @@ export function convertToFedaPayObject(
         // 'v1/user': 'FedaPay\\User',
     };
     let object = new FedaPayObject;
-
     if (resp['klass']) {
         let klass = resp['klass'];
 

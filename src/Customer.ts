@@ -15,7 +15,7 @@ export class Customer extends Resource {
      * @param params object|null
      * @param headers object|null
      *
-     * @returns Promise<Customer[]>
+     * @returns Promise<FedaPayObject>
      */
     static all(params = {}, headers = {}): Promise<FedaPayObject> {
         return <Promise<FedaPayObject>> this._all(params, headers);

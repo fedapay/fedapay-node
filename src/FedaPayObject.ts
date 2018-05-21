@@ -1,3 +1,4 @@
+import * as isPlainObject from 'lodash.isplainobject';
 import { arrayToFedaPayObject, stripApiVersion } from './Util';
 
 export class FedaPayObject {
@@ -14,7 +15,8 @@ export class FedaPayObject {
     refreshFrom(values: any, opts: any) {
         for (let k in values) {
             let value = values[k];
-            if (typeof value === 'object') {
+
+            if (isPlainObject(value) || Array.isArray(value)) {
                 k = stripApiVersion(k, opts);
                 this[k] = arrayToFedaPayObject(value, opts);
             } else {

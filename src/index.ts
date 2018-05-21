@@ -4,3 +4,4 @@ export * from './Requestor';
 export * from './Error';
 export * from './Resource';
 export * from './Customer';
+export * from './Currency';
