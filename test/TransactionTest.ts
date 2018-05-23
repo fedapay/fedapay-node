@@ -41,7 +41,6 @@ describe('TransactionTests', () => {
             method: 'get'
         });
 
-/* 
         expect(object).to.be.instanceof(FedaPayObject);
         expect(object.meta).to.be.instanceof(FedaPayObject);
         expect(object.transactions[0]).to.be.instanceof(Transaction);
@@ -58,7 +57,7 @@ describe('TransactionTests', () => {
         expect(object.transactions[0].mode).to.equal('mtn');
         expect(object.transactions[0].created_at).to.equal('2018-03-12T09:09:03.969Z');
         expect(object.transactions[0].updated_at).to.equal('2018-03-12T09:09:03.969Z');
-        expect(object.transactions[0].paid_at).to.equal('2018-03-12T09:09:03.969Z'); */
+        expect(object.transactions[0].paid_at).to.equal('2018-03-12T09:09:03.969Z');
     });
 
     it('should retrieve a transaction', async () => {
