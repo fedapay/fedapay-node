@@ -4,12 +4,12 @@ import * as faker from 'faker';
 import { ApiConnectionError, Transaction, FedaPayObject } from '../src';
 import { exceptRequest, setUp, tearDown } from './utils';
 
-describe('TransactionTests', () => {
+describe('TransactionTest', () => {
 
     beforeEach(setUp);
     afterEach(tearDown);
 
-    it('should return transactions', async () => {
+    it('should return transaction', async () => {
         let body = {
             'v1/transactions': [{
                 'id': 1,

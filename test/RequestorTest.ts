@@ -1,11 +1,12 @@
 import { expect } from 'chai';
 import * as nock from 'nock';
 import { ApiConnectionError, FedaPay, Requestor } from '../src';
+import { setUp, tearDown } from './utils';
 
 describe('RequestorTest', () => {
-    beforeEach(() => {
-        FedaPay.setApiKey('sk_test_123')
-    });
+
+    beforeEach(setUp);
+    afterEach(tearDown);
 
     it('should have request default params', async () => {
         nock(/fedapay\.com/)
