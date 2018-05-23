@@ -36,8 +36,6 @@ describe('TransactionTests', () => {
 
         let object = await Transaction.all();
 
-        console.log(object);
-
         exceptRequest({
             url: 'https://sdx-api.fedapay.com/v1/transactions',
             method: 'get'
@@ -88,7 +86,6 @@ describe('TransactionTests', () => {
             .reply(200, body);
 
         let transaction = await Transaction.retrieve(1);
-        console.log(transaction.id);
         exceptRequest({
             url: 'https://sdx-api.fedapay.com/v1/transactions/1',
             method: 'get'
@@ -111,5 +108,245 @@ describe('TransactionTests', () => {
         expect(transaction.created_at).to.equal('2018-03-12T09:09:03.969Z');
         expect(transaction.updated_at).to.equal('2018-03-12T09:09:03.969Z');
         expect(transaction.paid_at).to.equal('2018-03-12T09:09:03.969Z');
+    });
+
+    it('should create transaction', async () => {
+        let data = {
+            'customer': {
+                'id': 1
+            },
+            'currency': {
+                'iso': 'XOF'
+            },
+            'description': 'description',
+            'callback_url': 'http://e-shop.com',
+            'amount': 1000,
+            'include': 'customer,currency'
+        };
+
+        let body = {
+            'v1/transaction': {
+                'id': 1,
+                'klass': 'v1/transaction',
+                'transaction_key': '0KJAU01',
+                'reference': '109329828',
+                'amount': data.amount,
+                'description': data.description,
+                'callback_url': data.callback_url,
+                'status': 'pending',
+                'customer_id': data.customer.id,
+                'currency_id': 1,
+                'mode': 'mtn',
+                'created_at': '2018-03-12T09:09:03.969Z',
+                'updated_at': '2018-03-12T09:09:03.969Z',
+                'paid_at': '2018-03-12T09:09:03.969Z'
+            }
+        };
+
+        nock(/fedapay\.com/)
+            .post('/v1/transactions')
+            .reply(200, body);
+
+        let transaction = await Transaction.create(data);
+
+        exceptRequest({
+            url: 'https://sdx-api.fedapay.com/v1/transactions',
+            data: JSON.stringify(data),
+            method: 'post'
+        });
+
+        expect(transaction).to.be.instanceof(FedaPayObject);
+        expect(transaction).to.be.instanceof(Transaction);
+        expect(transaction.id).to.equal(1);
+        expect(transaction.klass).to.equal('v1/transaction');
+        expect(transaction.transaction_key).to.equal('0KJAU01');
+        expect(transaction.reference).to.equal('109329828');
+        expect(transaction.amount).to.equal(1000);
+        expect(transaction.description).to.equal('description');
+        expect(transaction.callback_url).to.equal('http://e-shop.com');
+        expect(transaction.status).to.equal('pending');
+        expect(transaction.customer_id).to.equal(1);
+        expect(transaction.currency_id).to.equal(1);
+        expect(transaction.mode).to.equal('mtn');
+        expect(transaction.created_at).to.equal('2018-03-12T09:09:03.969Z');
+        expect(transaction.updated_at).to.equal('2018-03-12T09:09:03.969Z');
+        expect(transaction.paid_at).to.equal('2018-03-12T09:09:03.969Z');
+    });
+
+    it('should delete transaction', async () => {
+        let data = {
+            'customer': {
+                'id': 1
+            },
+            'currency': {
+                'iso': 'XOF'
+            },
+            'description': 'description',
+            'callback_url': 'http://e-shop.com',
+            'amount': 1000,
+            'include': 'customer,currency'
+        };
+
+        let body = {
+            'v1/transaction': {
+                'id': 1,
+                'klass': 'v1/transaction',
+                'transaction_key': '0KJAU01',
+                'reference': '109329828',
+                'amount': data.amount,
+                'description': data.description,
+                'callback_url': data.callback_url,
+                'status': 'pending',
+                'customer_id': data.customer.id,
+                'currency_id': 1,
+                'mode': 'mtn',
+                'created_at': '2018-03-12T09:09:03.969Z',
+                'updated_at': '2018-03-12T09:09:03.969Z',
+                'paid_at': '2018-03-12T09:09:03.969Z'
+            }
+        };
+
+        nock(/fedapay\.com/)
+            .post('/v1/transactions')
+            .reply(200, body);
+
+        let transaction = await Transaction.create(data);
+
+        exceptRequest({
+            url: 'https://sdx-api.fedapay.com/v1/transactions',
+            data: JSON.stringify(data),
+            method: 'post'
+        });
+
+        nock(/fedapay\.com/)
+            .delete('/v1/transactions/1')
+            .reply(200);
+
+        await transaction.delete();
+
+        exceptRequest({
+            url: 'https://sdx-api.fedapay.com/v1/transactions/1',
+            method: 'delete'
+        });
+    });
+
+    it('should update transaction', async () => {
+        let data = {
+            'customer': {
+                'id': 1
+            },
+            'currency': {
+                'iso': 'XOF'
+            },
+            'description': 'description',
+            'callback_url': 'http://e-shop.com',
+            'amount': 1000,
+            'include': 'customer,currency'
+        };
+
+        let body = {
+            'v1/transaction': {
+                'id': 1,
+                'klass': 'v1/transaction',
+                'transaction_key': '0KJAU01',
+                'reference': '109329828',
+                'amount': data.amount,
+                'description': data.description,
+                'callback_url': data.callback_url,
+                'status': 'pending',
+                'customer_id': data.customer.id,
+                'currency_id': 1,
+                'mode': 'mtn',
+                'created_at': '2018-03-12T09:09:03.969Z',
+                'updated_at': '2018-03-12T09:09:03.969Z',
+                'paid_at': '2018-03-12T09:09:03.969Z'
+            }
+        };
+
+        nock(/fedapay\.com/)
+            .put('/v1/transactions/1')
+            .reply(200, body);
+
+        let transaction = await Transaction.update(1, data);
+
+        exceptRequest({
+            url: 'https://sdx-api.fedapay.com/v1/transactions/1',
+            data: JSON.stringify(data),
+            method: 'put'
+        });
+
+        expect(transaction).to.be.instanceof(FedaPayObject);
+        expect(transaction).to.be.instanceof(Transaction);
+        expect(transaction.id).to.equal(1);
+        expect(transaction.klass).to.equal('v1/transaction');
+        expect(transaction.transaction_key).to.equal('0KJAU01');
+        expect(transaction.reference).to.equal('109329828');
+        expect(transaction.amount).to.equal(1000);
+        expect(transaction.description).to.equal('description');
+        expect(transaction.callback_url).to.equal('http://e-shop.com');
+        expect(transaction.status).to.equal('pending');
+        expect(transaction.customer_id).to.equal(1);
+        expect(transaction.currency_id).to.equal(1);
+        expect(transaction.mode).to.equal('mtn');
+        expect(transaction.created_at).to.equal('2018-03-12T09:09:03.969Z');
+        expect(transaction.updated_at).to.equal('2018-03-12T09:09:03.969Z');
+        expect(transaction.paid_at).to.equal('2018-03-12T09:09:03.969Z');
+    });
+
+    it('should update transaction with save', async () => {
+        let data = {
+            'customer': {
+                'id': 1
+            },
+            'currency': {
+                'iso': 'XOF'
+            },
+            'description': 'description',
+            'callback_url': 'http://e-shop.com',
+            'amount': 1000,
+            'include': 'customer,currency'
+        };
+
+        let body = {
+            'v1/transaction': {
+                'id': 1,
+                'klass': 'v1/transaction',
+                'transaction_key': '0KJAU01',
+                'reference': '109329828',
+                'amount': data.amount,
+                'description': data.description,
+                'callback_url': data.callback_url,
+                'status': 'pending',
+                'customer_id': data.customer.id,
+                'currency_id': 1,
+                'mode': 'mtn',
+                'created_at': '2018-03-12T09:09:03.969Z',
+                'updated_at': '2018-03-12T09:09:03.969Z',
+                'paid_at': '2018-03-12T09:09:03.969Z'
+            }
+        };
+
+        nock(/fedapay\.com/)
+            .post('/v1/transactions')
+            .reply(200, body);
+
+        let transaction = await Transaction.create(data);
+        let updateData = transaction.serializeParameters();
+
+        transaction.amount = 18500;
+
+        nock(/fedapay\.com/)
+            .put('/v1/transactions/1')
+            .reply(200, body);
+
+        await transaction.save();
+
+        updateData.amount = 18500;
+
+        exceptRequest({
+            url: 'https://sdx-api.fedapay.com/v1/transactions/1',
+            data: JSON.stringify(updateData),
+            method: 'put'
+        });
     });
 });
