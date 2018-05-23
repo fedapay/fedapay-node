@@ -91,7 +91,7 @@ export class Requestor {
             responseType: 'json'
         }
 
-        if (['GET', 'HEAD', 'DELETE'].includes(method)) {
+        if (['GET', 'HEAD', 'DELETE'].indexOf(method) > -1) {
             requestConfig['params'] = params;
         } else {
             requestConfig['data'] = params;
