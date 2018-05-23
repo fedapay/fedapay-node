@@ -64,7 +64,7 @@ var Requestor = /** @class */ (function () {
             headers: headers,
             responseType: 'json'
         };
-        if (['GET', 'HEAD', 'DELETE'].includes(method)) {
+        if (['GET', 'HEAD', 'DELETE'].indexOf(method) > -1) {
             requestConfig['params'] = params;
         }
         else {
