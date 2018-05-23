@@ -34,7 +34,6 @@ describe('CustomerTest', () => {
             url: 'https://sdx-api.fedapay.com/v1/customers',
             method: 'get'
         });
-
         expect(object).to.be.instanceof(FedaPayObject);
         expect(object.meta).to.be.instanceof(FedaPayObject);
         expect(object.customers[0]).to.be.instanceof(Customer);

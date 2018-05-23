@@ -5,3 +5,7 @@ export * from './Error';
 export * from './Resource';
 export * from './Customer';
 export * from './Currency';
+export * from './Account';
+export * from './Event';
+export * from './Log';
+export * from './Transaction';
