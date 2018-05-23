@@ -90,7 +90,6 @@ describe('TransactionTest', () => {
             method: 'get'
         });
 
-
         expect(transaction).to.be.instanceof(FedaPayObject);
         expect(transaction).to.be.instanceof(Transaction);
         expect(transaction.id).to.equal(1);
