@@ -1,5 +1,5 @@
 {
-    "name": "nodejs-lib-typescript",
+    "name": "fedapay",
     "version": "1.0.0",
     "description": "",
     "main": "dist/index.js",
@@ -11,7 +11,13 @@
         "spec": "mocha -r ts-node/register",
         "test": "mocha -r ts-node/register test/*.ts"
     },
-    "keywords": [],
+    "keywords": [
+        "fedapay",
+        "payment processing",
+        "mobile money",
+        "credit cards",
+        "api"
+    ],
     "author": "",
     "license": "ISC",
     "devDependencies": {
