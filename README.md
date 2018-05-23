@@ -1,4 +1,4 @@
-# Fedapay NodeJS Library
+# Fedapay NodeJS Library [![Build Status](https://travis-ci.org/fedapay/fedapay-node.svg?branch=master)](https://travis-ci.org/fedapay/fedapay-node)
 
 The Fedapay Node library provides convenient access to the Fedapay API from
 applications written in server-side JavaScript.
