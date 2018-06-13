@@ -3,6 +3,7 @@ import * as path from 'path';
 export class FedaPay {
     static readonly VERSION = '0.1.0';
     protected static apiKey = 'v1';
+    protected static apiBase: string;
     protected static token = '';
     protected static accountId: string|number = '';
     protected static environment = 'sandbox';
@@ -26,6 +27,23 @@ export class FedaPay {
     static setApiKey(apiKey: string) {
         FedaPay.apiKey = apiKey;
         FedaPay.token = '';
+    }
+
+    /**
+     * Return the api key
+     * @return string
+     */
+    static getApiBase()
+    {
+        return FedaPay.apiBase;
+    }
+
+    /**
+     * Set api key
+     * @param apiBase string
+     */
+    static setApiBase(apiBase: string) {
+        FedaPay.apiBase = apiBase;
     }
 
     /**

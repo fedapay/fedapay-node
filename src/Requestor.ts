@@ -12,6 +12,7 @@ export class Requestor {
     readonly PRODUCTION_BASE = 'https://api.fedapay.com';
 
     protected apiKey: string;
+    protected apiBase: string;
     protected token: string;
     protected environment: string;
     protected apiVersion: string;
@@ -21,6 +22,7 @@ export class Requestor {
 
     constructor() {
         this.apiKey = FedaPay.getApiKey();
+        this.apiBase = FedaPay.getApiBase();
         this.token = FedaPay.getToken();
         this.environment = FedaPay.getEnvironment();
         this.apiVersion = FedaPay.getApiVersion();
@@ -102,6 +104,10 @@ export class Requestor {
     }
 
     protected baseUrl() {
+        if (this.apiBase) {
+            return this.apiBase;
+        }
+
         switch (this.environment) {
             case 'development':
             case 'sandbox':

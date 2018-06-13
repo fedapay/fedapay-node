@@ -64,4 +64,23 @@ describe('RequestorTest', () => {
             expect(e.httpRequest.getHeader('FedaPay-Account')).to.equal(898);
         }
     });
+
+    it('should set request api base', async () => {
+        FedaPay.setApiVersion('v1');
+        FedaPay.setApiBase('https://test.fedapay.com');
+
+        nock(/fedapay\.com/)
+            .get('/v1/path')
+            .query({ 'foo': '2' })
+            .reply(500, {});
+
+        let requestor = new Requestor();
+
+        try {
+            await requestor.request('get', '/path', { 'foo': '2' }, { 'X-Custom': 'foo' });
+        } catch (e) {
+            expect(e).to.be.an.instanceof(ApiConnectionError)
+            expect(e.httpResponse.config.url).to.equal('https://test.fedapay.com/v1/path');
+        }
+    });
 });
