@@ -6,14 +6,14 @@ import { Requestor } from './Requestor';
 import { arrayToFedaPayObject } from './Util';
 
 export class Resource extends FedaPayObject {
-    protected static requestor: Requestor = new Requestor();
+    protected static requestor: Requestor;
 
     static setRequestor(req: Requestor) {
         Resource.requestor = req;
     }
 
-    static getRequestor(req: Requestor) {
-        return Resource.requestor;
+    static getRequestor() {
+        return Resource.requestor || new Requestor();
     }
 
     static className(): string {
@@ -61,7 +61,7 @@ export class Resource extends FedaPayObject {
         params: any = {},
         headers: any = {}
     ) {
-        return this.requestor.request(method, url, params, headers)
+        return Resource.getRequestor().request(method, url, params, headers)
             .then(response => {
                 let options = {
                     'apiVersion': FedaPay.getApiVersion(),
