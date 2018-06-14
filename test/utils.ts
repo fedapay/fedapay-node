@@ -19,6 +19,7 @@ export function setUp() {
 
 export function tearDown() {
     FedaPay.setApiKey(null);
+    FedaPay.setApiBase(null);
     FedaPay.setApiVersion('v1');
     FedaPay.setEnvironment('sandbox');
     FedaPay.setToken(null);
