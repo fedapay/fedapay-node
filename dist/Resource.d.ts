@@ -3,7 +3,7 @@ import { Requestor } from './Requestor';
 export declare class Resource extends FedaPayObject {
     protected static requestor: Requestor;
     static setRequestor(req: Requestor): void;
-    static getRequestor(req: Requestor): Requestor;
+    static getRequestor(): Requestor;
     static className(): string;
     static classPath(): string;
     static resourcePath(id: number | string): string;

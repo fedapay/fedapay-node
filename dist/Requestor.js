@@ -10,6 +10,7 @@ var Requestor = /** @class */ (function () {
         this.PRODUCTION_BASE = 'https://api.fedapay.com';
         this.accountId = '';
         this.apiKey = FedaPay_1.FedaPay.getApiKey();
+        this.apiBase = FedaPay_1.FedaPay.getApiBase();
         this.token = FedaPay_1.FedaPay.getToken();
         this.environment = FedaPay_1.FedaPay.getEnvironment();
         this.apiVersion = FedaPay_1.FedaPay.getApiVersion();
@@ -74,6 +75,9 @@ var Requestor = /** @class */ (function () {
             .catch(this.handleRequestException);
     };
     Requestor.prototype.baseUrl = function () {
+        if (this.apiBase) {
+            return this.apiBase;
+        }
         switch (this.environment) {
             case 'development':
             case 'sandbox':

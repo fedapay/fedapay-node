@@ -7,6 +7,7 @@ export declare class Requestor {
     readonly SANDBOX_BASE: string;
     readonly PRODUCTION_BASE: string;
     protected apiKey: string;
+    protected apiBase: string;
     protected token: string;
     protected environment: string;
     protected apiVersion: string;
@@ -34,7 +35,7 @@ export declare class Requestor {
      */
     private applyRequestInterceptors(httpClient);
     request(method: string, path: any, params?: {}, headers?: {}): Promise<AxiosResponse<any>>;
-    protected baseUrl(): "https://sdx-api.fedapay.com" | "https://api.fedapay.com";
+    protected baseUrl(): string;
     protected handleRequestException(e: any): Promise<never>;
     protected url(path?: string): string;
     protected defaultHeaders(): any;

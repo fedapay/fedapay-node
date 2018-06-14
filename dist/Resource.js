@@ -24,8 +24,8 @@ var Resource = /** @class */ (function (_super) {
     Resource.setRequestor = function (req) {
         Resource.requestor = req;
     };
-    Resource.getRequestor = function (req) {
-        return Resource.requestor;
+    Resource.getRequestor = function () {
+        return Resource.requestor || new Requestor_1.Requestor();
     };
     Resource.className = function () {
         return this.name.toLowerCase();
@@ -58,7 +58,7 @@ var Resource = /** @class */ (function (_super) {
     Resource._staticRequest = function (method, url, params, headers) {
         if (params === void 0) { params = {}; }
         if (headers === void 0) { headers = {}; }
-        return this.requestor.request(method, url, params, headers)
+        return Resource.getRequestor().request(method, url, params, headers)
             .then(function (response) {
             var options = {
                 'apiVersion': FedaPay_1.FedaPay.getApiVersion(),
@@ -134,7 +134,6 @@ var Resource = /** @class */ (function (_super) {
             return _this;
         });
     };
-    Resource.requestor = new Requestor_1.Requestor();
     return Resource;
 }(FedaPayObject_1.FedaPayObject));
 exports.Resource = Resource;

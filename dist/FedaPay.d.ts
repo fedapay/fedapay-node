@@ -1,6 +1,7 @@
 export declare class FedaPay {
     static readonly VERSION: string;
     protected static apiKey: string;
+    protected static apiBase: string;
     protected static token: string;
     protected static accountId: string | number;
     protected static environment: string;
@@ -17,6 +18,16 @@ export declare class FedaPay {
      * @param apiKey string
      */
     static setApiKey(apiKey: string): void;
+    /**
+     * Return the api key
+     * @return string
+     */
+    static getApiBase(): string;
+    /**
+     * Set api key
+     * @param apiBase string
+     */
+    static setApiBase(apiBase: string): void;
     /**
      * Return the token
      * @returns string

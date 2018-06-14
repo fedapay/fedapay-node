@@ -20,6 +20,20 @@ var FedaPay = /** @class */ (function () {
         FedaPay.token = '';
     };
     /**
+     * Return the api key
+     * @return string
+     */
+    FedaPay.getApiBase = function () {
+        return FedaPay.apiBase;
+    };
+    /**
+     * Set api key
+     * @param apiBase string
+     */
+    FedaPay.setApiBase = function (apiBase) {
+        FedaPay.apiBase = apiBase;
+    };
+    /**
      * Return the token
      * @returns string
      */
