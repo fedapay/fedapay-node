@@ -1,8 +1,8 @@
 import * as path from 'path';
 
 export class FedaPay {
-    static readonly VERSION = '0.1.0';
-    protected static apiKey = 'v1';
+    static readonly VERSION = '1.0.2';
+    protected static apiKey: string;
     protected static apiBase: string;
     protected static token = '';
     protected static accountId: string|number = '';
