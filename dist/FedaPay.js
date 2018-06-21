@@ -119,8 +119,7 @@ var FedaPay = /** @class */ (function () {
         }
         return FedaPay.caBundlePath;
     };
-    FedaPay.VERSION = '0.1.0';
-    FedaPay.apiKey = 'v1';
+    FedaPay.VERSION = '1.0.2';
     FedaPay.token = '';
     FedaPay.accountId = '';
     FedaPay.environment = 'sandbox';
