@@ -1,16 +1,16 @@
 import { Resource, FedaPayObject } from '.';
 export declare class Event extends Resource {
     /**
-     * @param id string|number
-     * @param headers object|null
-     * @returns Promise<Event>
+     * @param {string|number} id The event id
+     * @param {Object|null} headers
+     * @returns {Promise<Event>}
      */
-    static retrieve(id: any, headers?: {}): Promise<Event>;
+    static retrieve(id: string | number, headers?: {}): Promise<Event>;
     /**
-     * @param params object|null
-     * @param headers object|null
+     * @param {Object|null} params
+     * @param {Object|null} headers
      *
-     * @returns Promise<FedaPayObject>
+     * @returns {Promise<FedaPayObject>}
      */
     static all(params?: {}, headers?: {}): Promise<FedaPayObject>;
 }

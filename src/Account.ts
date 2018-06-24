@@ -3,58 +3,58 @@ import { Resource } from './Resource';
 
 export class Account extends Resource {
     /**
-     * @param id string|number
-     * @param headers object|null
-     * @returns Promise<Account>
+     * @param {string|number} id
+     * @param {Object|null} headers
+     * @returns {Promise<Account>}
      */
     static retrieve(id, headers = {}): Promise<Account> {
         return <Promise<Account>> this._retrieve(id, headers);
     }
 
     /**
-     * @param params object|null
-     * @param headers object|null
+     * @param {Object|null} params
+     * @param {Object|null} headers
      *
-     * @returns Promise<FedaPayObject>
+     * @returns {Promise<FedaPayObject>}
      */
     static all(params = {}, headers = {}): Promise<FedaPayObject> {
         return <Promise<FedaPayObject>> this._all(params, headers);
     }
 
     /**
-     * @param params object|null
-     * @param headers object|null
+     * @param {Object|null} params
+     * @param {Object|null} headers
      *
-     * @returns Promise<Account>
+     * @returns {Promise<Account>}
      */
     static create(params = {}, headers = {}): Promise<Account> {
         return <Promise<Account>> this._create(params, headers);
     }
 
     /**
-     * @param id string The ID of the acount to update.
-     * @param params object|null
-     * @param headers object|null
+     * @param {string} id The ID of the acount to update.
+     * @param {Object|null} params
+     * @param {Object|null} headers
      *
-     * @returns Promise<Account>
+     * @returns {Promise<Account>}
      */
     static update(id, params = {}, headers = {}): Promise<Account> {
         return <Promise<Account>> this._update(id, params, headers);
     }
 
     /**
-     * @param array|string|null $headers
+     * @param {Object|string|null} headers
      *
-     * @returns Promise<Account> The saved account.
+     * @returns {Promise<Account>} The saved account.
      */
     save(headers = {}): Promise<Account> {
         return <Promise<Account>> this._save(headers);
     }
 
     /**
-     * @param array $headers
+     * @param {Object} headers
      *
-     * @returns Account The deleted account.
+     * @returns {<Promise<Account>>} Account The deleted account.
      */
     delete(headers = {}): Promise<Account> {
         return <Promise<Account>> this._delete(headers);

@@ -3,58 +3,58 @@ import { Resource } from './Resource';
 
 export class Customer extends Resource {
     /**
-     * @param id string|number
-     * @param headers object|null
-     * @returns Promise<Customer>
+     * @param {string|number} id The customer id
+     * @param {Object|null} headers
+     * @returns {Promise<Customer>}
      */
     static retrieve(id, headers = {}): Promise<Customer> {
         return <Promise<Customer>> this._retrieve(id, headers);
     }
 
     /**
-     * @param params object|null
-     * @param headers object|null
+     * @param {Object|null} params
+     * @param {Object|null} headers
      *
-     * @returns Promise<FedaPayObject>
+     * @returns {Promise<FedaPayObject>}
      */
     static all(params = {}, headers = {}): Promise<FedaPayObject> {
         return <Promise<FedaPayObject>> this._all(params, headers);
     }
 
     /**
-     * @param params object|null
-     * @param headers object|null
+     * @param {Object|null} params
+     * @param {Object|null} headers
      *
-     * @returns Promise<Customer>
+     * @returns {Promise<Customer>}
      */
     static create(params = {}, headers = {}): Promise<Customer> {
         return <Promise<Customer>> this._create(params, headers);
     }
 
     /**
-     * @param id string The ID of the customer to update.
-     * @param params object|null
-     * @param headers object|null
+     * @param {string|number} id The ID of the customer to update.
+     * @param {Object|null} params
+     * @param {Object|null} headers
      *
-     * @returns Promise<Customer>
+     * @returns {Promise<Customer>}
      */
     static update(id, params = {}, headers = {}): Promise<Customer> {
         return <Promise<Customer>> this._update(id, params, headers);
     }
 
     /**
-     * @param array|string|null $headers
+     * @param {Object|null} headers
      *
-     * @returns Promise<Customer> The saved customer.
+     * @returns {Promise<Customer>} The saved customer.
      */
     save(headers = {}): Promise<Customer> {
         return <Promise<Customer>> this._save(headers);
     }
 
     /**
-     * @param array $headers
+     * @param {Object|null} headers
      *
-     * @returns Customer The deleted customer.
+     * @returns {Promise<Customer>} Customer The deleted customer.
      */
     delete(headers = {}): Promise<Customer> {
         return <Promise<Customer>> this._delete(headers);

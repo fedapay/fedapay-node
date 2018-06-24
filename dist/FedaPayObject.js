@@ -13,6 +13,11 @@ var FedaPayObject = /** @class */ (function () {
             this.id = id;
         }
     }
+    /**
+     * Refresh object from values
+     * @param {any} values
+     * @param {any} opts
+     */
     FedaPayObject.prototype.refreshFrom = function (values, opts) {
         for (var k in values) {
             var value = values[k];
@@ -25,6 +30,10 @@ var FedaPayObject = /** @class */ (function () {
             }
         }
     };
+    /**
+     * Serialize object
+     * @returns {Object}
+     */
     FedaPayObject.prototype.serializeParameters = function () {
         var params = {};
         for (var key in this) {

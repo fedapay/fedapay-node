@@ -6,14 +6,14 @@ var FedaPay = /** @class */ (function () {
     }
     /**
      * Return the api key
-     * @return string
+     * @return {string}
      */
     FedaPay.getApiKey = function () {
         return FedaPay.apiKey;
     };
     /**
      * Set api key
-     * @param apiKey string
+     * @param {string} apiKey
      */
     FedaPay.setApiKey = function (apiKey) {
         FedaPay.apiKey = apiKey;
@@ -21,97 +21,97 @@ var FedaPay = /** @class */ (function () {
     };
     /**
      * Return the api key
-     * @return string
+     * @return {string}
      */
     FedaPay.getApiBase = function () {
         return FedaPay.apiBase;
     };
     /**
      * Set api key
-     * @param apiBase string
+     * @param {string} apiBase
      */
     FedaPay.setApiBase = function (apiBase) {
         FedaPay.apiBase = apiBase;
     };
     /**
      * Return the token
-     * @returns string
+     * @returns {string}
      */
     FedaPay.getToken = function () {
         return FedaPay.token;
     };
     /**
      * Set token
-     * @param token
+     * @param {string} token
      */
     FedaPay.setToken = function (token) {
         FedaPay.token = token;
     };
     /**
      * Return the token
-     * @returns string
+     * @returns {string}
      */
     FedaPay.getAccountId = function () {
         return FedaPay.accountId;
     };
     /**
      * Set the account id
-     * @param accountId string|number
+     * @param {string|number} accountId
      */
     FedaPay.setAccountId = function (accountId) {
         FedaPay.accountId = accountId;
     };
     /**
      * Set the environment
-     * @param value string
+     * @param {string} value
      */
     FedaPay.setEnvironment = function (value) {
         FedaPay.environment = value;
     };
     /**
      * Get the environment
-     * @return string
+     * @return {string}
      */
     FedaPay.getEnvironment = function () {
         return FedaPay.environment;
     };
     /**
      * Retutn the api version
-     * @return string
+     * @return {string}
      */
     FedaPay.getApiVersion = function () {
         return FedaPay.apiVersion;
     };
     /**
      * Set api version
-     * @param version string
+     * @param {string} version
      */
     FedaPay.setApiVersion = function (version) {
         FedaPay.apiVersion = version;
     };
     /**
-     * @param value boolean The verify ssl certificates value.
-     * @return void
+     * @param {boolean} value The verify ssl certificates value.
+     * @return {void}
      */
     FedaPay.setVerifySslCerts = function (value) {
         FedaPay.verifySslCerts = value;
     };
     /**
-     * @return boolean Determine if the request should verify SSL certificate.
+     * @return {boolean} Determine if the request should verify SSL certificate.
      */
     FedaPay.getVerifySslCerts = function () {
         return FedaPay.verifySslCerts;
     };
     /**
      * Set the ca bundle path
-     * @param value string
+     * @param {string} value
      */
     FedaPay.setCaBundlePath = function (value) {
         FedaPay.caBundlePath = value;
     };
     /**
      * Get the ca bundle path
-     * @return string
+     * @return {string}
      */
     FedaPay.getCaBundlePath = function () {
         if (!FedaPay.caBundlePath) {

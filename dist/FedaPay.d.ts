@@ -10,81 +10,81 @@ export declare class FedaPay {
     protected static caBundlePath: string;
     /**
      * Return the api key
-     * @return string
+     * @return {string}
      */
     static getApiKey(): string;
     /**
      * Set api key
-     * @param apiKey string
+     * @param {string} apiKey
      */
     static setApiKey(apiKey: string): void;
     /**
      * Return the api key
-     * @return string
+     * @return {string}
      */
     static getApiBase(): string;
     /**
      * Set api key
-     * @param apiBase string
+     * @param {string} apiBase
      */
     static setApiBase(apiBase: string): void;
     /**
      * Return the token
-     * @returns string
+     * @returns {string}
      */
     static getToken(): string;
     /**
      * Set token
-     * @param token
+     * @param {string} token
      */
     static setToken(token: string): void;
     /**
      * Return the token
-     * @returns string
+     * @returns {string}
      */
     static getAccountId(): string | number;
     /**
      * Set the account id
-     * @param accountId string|number
+     * @param {string|number} accountId
      */
     static setAccountId(accountId: string | number): void;
     /**
      * Set the environment
-     * @param value string
+     * @param {string} value
      */
     static setEnvironment(value: string): void;
     /**
      * Get the environment
-     * @return string
+     * @return {string}
      */
     static getEnvironment(): string;
     /**
      * Retutn the api version
-     * @return string
+     * @return {string}
      */
     static getApiVersion(): string;
     /**
      * Set api version
-     * @param version string
+     * @param {string} version
      */
     static setApiVersion(version: string): void;
     /**
-     * @param value boolean The verify ssl certificates value.
-     * @return void
+     * @param {boolean} value The verify ssl certificates value.
+     * @return {void}
      */
     static setVerifySslCerts(value: boolean): void;
     /**
-     * @return boolean Determine if the request should verify SSL certificate.
+     * @return {boolean} Determine if the request should verify SSL certificate.
      */
     static getVerifySslCerts(): boolean;
     /**
      * Set the ca bundle path
-     * @param value string
+     * @param {string} value
      */
     static setCaBundlePath(value: string): void;
     /**
      * Get the ca bundle path
-     * @return string
+     * @return {string}
      */
     static getCaBundlePath(): string;
 }

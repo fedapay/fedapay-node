@@ -13,7 +13,7 @@ export class FedaPay {
 
     /**
      * Return the api key
-     * @return string
+     * @return {string}
      */
     static getApiKey()
     {
@@ -22,7 +22,7 @@ export class FedaPay {
 
     /**
      * Set api key
-     * @param apiKey string
+     * @param {string} apiKey
      */
     static setApiKey(apiKey: string) {
         FedaPay.apiKey = apiKey;
@@ -31,7 +31,7 @@ export class FedaPay {
 
     /**
      * Return the api key
-     * @return string
+     * @return {string}
      */
     static getApiBase()
     {
@@ -40,7 +40,7 @@ export class FedaPay {
 
     /**
      * Set api key
-     * @param apiBase string
+     * @param {string} apiBase
      */
     static setApiBase(apiBase: string) {
         FedaPay.apiBase = apiBase;
@@ -48,7 +48,7 @@ export class FedaPay {
 
     /**
      * Return the token
-     * @returns string
+     * @returns {string}
      */
     static getToken()
     {
@@ -57,7 +57,7 @@ export class FedaPay {
 
     /**
      * Set token
-     * @param token
+     * @param {string} token
      */
     static setToken(token: string) {
         FedaPay.token = token;
@@ -65,7 +65,7 @@ export class FedaPay {
 
     /**
      * Return the token
-     * @returns string
+     * @returns {string}
      */
     static getAccountId()
     {
@@ -74,7 +74,7 @@ export class FedaPay {
 
     /**
      * Set the account id
-     * @param accountId string|number
+     * @param {string|number} accountId
      */
     static setAccountId(accountId: string | number) {
         FedaPay.accountId = accountId;
@@ -82,7 +82,7 @@ export class FedaPay {
 
     /**
      * Set the environment
-     * @param value string
+     * @param {string} value
      */
     static setEnvironment(value: string) {
         FedaPay.environment = value;
@@ -90,7 +90,7 @@ export class FedaPay {
 
     /**
      * Get the environment
-     * @return string
+     * @return {string}
      */
     static getEnvironment() {
         return FedaPay.environment;
@@ -98,7 +98,7 @@ export class FedaPay {
 
     /**
      * Retutn the api version
-     * @return string
+     * @return {string}
      */
     static getApiVersion() : string {
         return FedaPay.apiVersion;
@@ -106,22 +106,22 @@ export class FedaPay {
 
     /**
      * Set api version
-     * @param version string
+     * @param {string} version
      */
     static setApiVersion(version: string) {
         FedaPay.apiVersion = version;
     }
 
     /**
-     * @param value boolean The verify ssl certificates value.
-     * @return void
+     * @param {boolean} value The verify ssl certificates value.
+     * @return {void}
      */
     static setVerifySslCerts(value: boolean) {
         FedaPay.verifySslCerts = value;
     }
 
     /**
-     * @return boolean Determine if the request should verify SSL certificate.
+     * @return {boolean} Determine if the request should verify SSL certificate.
      */
     static getVerifySslCerts() : boolean {
         return FedaPay.verifySslCerts;
@@ -129,7 +129,7 @@ export class FedaPay {
 
     /**
      * Set the ca bundle path
-     * @param value string
+     * @param {string} value
      */
     static setCaBundlePath(value: string) {
         FedaPay.caBundlePath = value;
@@ -137,7 +137,7 @@ export class FedaPay {
 
     /**
      * Get the ca bundle path
-     * @return string
+     * @return {string}
      */
     static getCaBundlePath(): string {
         if(!FedaPay.caBundlePath) {

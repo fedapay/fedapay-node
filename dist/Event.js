@@ -17,19 +17,19 @@ var Event = /** @class */ (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     /**
-     * @param id string|number
-     * @param headers object|null
-     * @returns Promise<Event>
+     * @param {string|number} id The event id
+     * @param {Object|null} headers
+     * @returns {Promise<Event>}
      */
     Event.retrieve = function (id, headers) {
         if (headers === void 0) { headers = {}; }
         return this._retrieve(id, headers);
     };
     /**
-     * @param params object|null
-     * @param headers object|null
+     * @param {Object|null} params
+     * @param {Object|null} headers
      *
-     * @returns Promise<FedaPayObject>
+     * @returns {Promise<FedaPayObject>}
      */
     Event.all = function (params, headers) {
         if (params === void 0) { params = {}; }

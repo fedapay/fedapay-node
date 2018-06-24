@@ -21,9 +21,17 @@ var Base = /** @class */ (function () {
         this.httpResponse = httpResponse;
         this.fetchErrors();
     }
+    /**
+     * Return true if response has error
+     * @returns {boolean}
+     */
     Base.prototype.hasErrors = function () {
         return this.errors !== undefined && this.errors !== null;
     };
+    /**
+     * Fetch error from response body
+     * @returns {void}
+     */
     Base.prototype.fetchErrors = function () {
         if (this.httpResponse) {
             var data = this.httpResponse.data;

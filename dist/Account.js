@@ -17,19 +17,19 @@ var Account = /** @class */ (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     /**
-     * @param id string|number
-     * @param headers object|null
-     * @returns Promise<Account>
+     * @param {string|number} id
+     * @param {Object|null} headers
+     * @returns {Promise<Account>}
      */
     Account.retrieve = function (id, headers) {
         if (headers === void 0) { headers = {}; }
         return this._retrieve(id, headers);
     };
     /**
-     * @param params object|null
-     * @param headers object|null
+     * @param {Object|null} params
+     * @param {Object|null} headers
      *
-     * @returns Promise<FedaPayObject>
+     * @returns {Promise<FedaPayObject>}
      */
     Account.all = function (params, headers) {
         if (params === void 0) { params = {}; }
@@ -37,10 +37,10 @@ var Account = /** @class */ (function (_super) {
         return this._all(params, headers);
     };
     /**
-     * @param params object|null
-     * @param headers object|null
+     * @param {Object|null} params
+     * @param {Object|null} headers
      *
-     * @returns Promise<Account>
+     * @returns {Promise<Account>}
      */
     Account.create = function (params, headers) {
         if (params === void 0) { params = {}; }
@@ -48,11 +48,11 @@ var Account = /** @class */ (function (_super) {
         return this._create(params, headers);
     };
     /**
-     * @param id string The ID of the acount to update.
-     * @param params object|null
-     * @param headers object|null
+     * @param {string} id The ID of the acount to update.
+     * @param {Object|null} params
+     * @param {Object|null} headers
      *
-     * @returns Promise<Account>
+     * @returns {Promise<Account>}
      */
     Account.update = function (id, params, headers) {
         if (params === void 0) { params = {}; }
@@ -60,18 +60,18 @@ var Account = /** @class */ (function (_super) {
         return this._update(id, params, headers);
     };
     /**
-     * @param array|string|null $headers
+     * @param {Object|string|null} headers
      *
-     * @returns Promise<Account> The saved account.
+     * @returns {Promise<Account>} The saved account.
      */
     Account.prototype.save = function (headers) {
         if (headers === void 0) { headers = {}; }
         return this._save(headers);
     };
     /**
-     * @param array $headers
+     * @param {Object} headers
      *
-     * @returns Account The deleted account.
+     * @returns {<Promise<Account>>} Account The deleted account.
      */
     Account.prototype.delete = function (headers) {
         if (headers === void 0) { headers = {}; }

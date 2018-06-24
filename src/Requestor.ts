@@ -31,14 +31,15 @@ export class Requestor {
 
     /**
      * Set the http client isntance
-     * @param client AxiosInstance
+     * @param {AxiosInstance} client
      */
     static setHttpClient(client: AxiosInstance) {
         Requestor.httpClient = client;
     }
 
     /**
-     * @returns
+     * Return the httpClient
+     * @returns {AxiosInstance}
      */
     private httpClient(): AxiosInstance {
         if (!Requestor.httpClient) {
@@ -58,7 +59,7 @@ export class Requestor {
 
     /**
      * Set the http client isntance
-     * @param client AxiosInstance
+     * @param {AxiosInstance} client
      */
     static addRequestInterceptor(interceptor: RequestInterceptor) {
         this.requestInterceptors.push(interceptor);
@@ -66,7 +67,7 @@ export class Requestor {
 
     /**
      * Apply request interceptor
-     * @param httpClient AxiosInstance
+     * @param {AxiosInstance} httpClient
      */
     private applyRequestInterceptors(httpClient: AxiosInstance) {
         Requestor.requestInterceptors.forEach(interceptor => {
@@ -76,9 +77,18 @@ export class Requestor {
         })
     }
 
+    /**
+     * Sent request
+     * @param {string} method
+     * @param {string} path
+     * @param {Object} params
+     * @param {Object} headers
+     *
+     * @returns {Promise<AxiosResponse<any>>}
+     */
     request(
         method: string,
-        path: any,
+        path: string,
         params = {},
         headers = {}
     ): Promise<AxiosResponse<any>> {
@@ -103,7 +113,11 @@ export class Requestor {
             .catch(this.handleRequestException);
     }
 
-    protected baseUrl() {
+    /**
+     * Return base url
+     * @returns {string}
+     */
+    protected baseUrl(): string {
         if (this.apiBase) {
             return this.apiBase;
         }
@@ -120,6 +134,11 @@ export class Requestor {
         }
     }
 
+    /**
+     * Handle request exception
+     * @param {any} e
+     * @returns {Promise<ApiConnectionError>}
+     */
     protected handleRequestException(e: any) {
         let message = `Request error: ${e.message}`;
         let httpStatusCode = e.response ? e.response.status : null;
@@ -134,10 +153,18 @@ export class Requestor {
         ));
     }
 
+    /**
+     * Return the url
+     * @param {string} path
+     */
     protected url(path = '') {
         return `${this.baseUrl()}/${this.apiVersion}${path}`;
     }
 
+    /**
+     * Return default headers
+     * @returns {Object}
+     */
     protected defaultHeaders() {
         let _default: any = {
             'X-Version': FedaPay.VERSION,

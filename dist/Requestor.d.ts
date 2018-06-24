@@ -17,26 +17,53 @@ export declare class Requestor {
     constructor();
     /**
      * Set the http client isntance
-     * @param client AxiosInstance
+     * @param {AxiosInstance} client
      */
     static setHttpClient(client: AxiosInstance): void;
     /**
-     * @returns
+     * Return the httpClient
+     * @returns {AxiosInstance}
      */
     private httpClient();
     /**
      * Set the http client isntance
-     * @param client AxiosInstance
+     * @param {AxiosInstance} client
      */
     static addRequestInterceptor(interceptor: RequestInterceptor): void;
     /**
      * Apply request interceptor
-     * @param httpClient AxiosInstance
+     * @param {AxiosInstance} httpClient
      */
     private applyRequestInterceptors(httpClient);
-    request(method: string, path: any, params?: {}, headers?: {}): Promise<AxiosResponse<any>>;
+    /**
+     * Sent request
+     * @param {string} method
+     * @param {string} path
+     * @param {Object} params
+     * @param {Object} headers
+     *
+     * @returns {Promise<AxiosResponse<any>>}
+     */
+    request(method: string, path: string, params?: {}, headers?: {}): Promise<AxiosResponse<any>>;
+    /**
+     * Return base url
+     * @returns {string}
+     */
     protected baseUrl(): string;
+    /**
+     * Handle request exception
+     * @param {any} e
+     * @returns {Promise<ApiConnectionError>}
+     */
     protected handleRequestException(e: any): Promise<never>;
+    /**
+     * Return the url
+     * @param {string} path
+     */
     protected url(path?: string): string;
+    /**
+     * Return default headers
+     * @returns {Object}
+     */
     protected defaultHeaders(): any;
 }

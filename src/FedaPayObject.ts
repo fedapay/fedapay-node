@@ -12,6 +12,11 @@ export class FedaPayObject {
         }
     }
 
+    /**
+     * Refresh object from values
+     * @param {any} values
+     * @param {any} opts
+     */
     refreshFrom(values: any, opts: any) {
         for (let k in values) {
             let value = values[k];
@@ -25,6 +30,10 @@ export class FedaPayObject {
         }
     }
 
+    /**
+     * Serialize object
+     * @returns {Object}
+     */
     serializeParameters(): any {
         let params: any = {};
 

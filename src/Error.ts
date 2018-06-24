@@ -20,10 +20,18 @@ export class Base {
         this.fetchErrors();
     }
 
-    hasErrors() {
+    /**
+     * Return true if response has error
+     * @returns {boolean}
+     */
+    hasErrors(): boolean {
         return this.errors !== undefined && this.errors !== null;
     }
 
+    /**
+     * Fetch error from response body
+     * @returns {void}
+     */
     fetchErrors() {
         if (this.httpResponse) {
             let data = this.httpResponse.data;

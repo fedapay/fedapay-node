@@ -17,10 +17,10 @@ var Log = /** @class */ (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     /**
-     * @param params object|null
-     * @param headers object|null
+     * @param {Object|null} params
+     * @param {Object|null} headers
      *
-     * @returns Promise<FedaPayObject>
+     * @returns {Promise<FedaPayObject>}
      */
     Log.all = function (params, headers) {
         if (params === void 0) { params = {}; }
@@ -28,9 +28,9 @@ var Log = /** @class */ (function (_super) {
         return this._all(params, headers);
     };
     /**
-     * @param id string|number
-     * @param headers object|null
-     * @returns Promise<Event>
+     * @param {string|number} id
+     * @param {Object|null} headers
+     * @returns {Promise<Event>}
      */
     Log.retrieve = function (id, headers) {
         if (headers === void 0) { headers = {}; }

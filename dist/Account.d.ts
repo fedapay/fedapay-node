@@ -2,43 +2,43 @@ import { FedaPayObject } from './FedaPayObject';
 import { Resource } from './Resource';
 export declare class Account extends Resource {
     /**
-     * @param id string|number
-     * @param headers object|null
-     * @returns Promise<Account>
+     * @param {string|number} id
+     * @param {Object|null} headers
+     * @returns {Promise<Account>}
      */
     static retrieve(id: any, headers?: {}): Promise<Account>;
     /**
-     * @param params object|null
-     * @param headers object|null
+     * @param {Object|null} params
+     * @param {Object|null} headers
      *
-     * @returns Promise<FedaPayObject>
+     * @returns {Promise<FedaPayObject>}
      */
     static all(params?: {}, headers?: {}): Promise<FedaPayObject>;
     /**
-     * @param params object|null
-     * @param headers object|null
+     * @param {Object|null} params
+     * @param {Object|null} headers
      *
-     * @returns Promise<Account>
+     * @returns {Promise<Account>}
      */
     static create(params?: {}, headers?: {}): Promise<Account>;
     /**
-     * @param id string The ID of the acount to update.
-     * @param params object|null
-     * @param headers object|null
+     * @param {string} id The ID of the acount to update.
+     * @param {Object|null} params
+     * @param {Object|null} headers
      *
-     * @returns Promise<Account>
+     * @returns {Promise<Account>}
      */
     static update(id: any, params?: {}, headers?: {}): Promise<Account>;
     /**
-     * @param array|string|null $headers
+     * @param {Object|string|null} headers
      *
-     * @returns Promise<Account> The saved account.
+     * @returns {Promise<Account>} The saved account.
      */
     save(headers?: {}): Promise<Account>;
     /**
-     * @param array $headers
+     * @param {Object} headers
      *
-     * @returns Account The deleted account.
+     * @returns {<Promise<Account>>} Account The deleted account.
      */
     delete(headers?: {}): Promise<Account>;
 }

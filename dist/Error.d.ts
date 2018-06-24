@@ -6,7 +6,15 @@ export declare class Base {
     errorMessage: any;
     errors: any;
     constructor(message: string, httpStatus?: any, httpRequest?: any, httpResponse?: any);
+    /**
+     * Return true if response has error
+     * @returns {boolean}
+     */
     hasErrors(): boolean;
+    /**
+     * Fetch error from response body
+     * @returns {void}
+     */
     fetchErrors(): void;
 }
 export declare class ApiConnectionError extends Base {

@@ -17,19 +17,19 @@ var Customer = /** @class */ (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     /**
-     * @param id string|number
-     * @param headers object|null
-     * @returns Promise<Customer>
+     * @param {string|number} id The customer id
+     * @param {Object|null} headers
+     * @returns {Promise<Customer>}
      */
     Customer.retrieve = function (id, headers) {
         if (headers === void 0) { headers = {}; }
         return this._retrieve(id, headers);
     };
     /**
-     * @param params object|null
-     * @param headers object|null
+     * @param {Object|null} params
+     * @param {Object|null} headers
      *
-     * @returns Promise<FedaPayObject>
+     * @returns {Promise<FedaPayObject>}
      */
     Customer.all = function (params, headers) {
         if (params === void 0) { params = {}; }
@@ -37,10 +37,10 @@ var Customer = /** @class */ (function (_super) {
         return this._all(params, headers);
     };
     /**
-     * @param params object|null
-     * @param headers object|null
+     * @param {Object|null} params
+     * @param {Object|null} headers
      *
-     * @returns Promise<Customer>
+     * @returns {Promise<Customer>}
      */
     Customer.create = function (params, headers) {
         if (params === void 0) { params = {}; }
@@ -48,11 +48,11 @@ var Customer = /** @class */ (function (_super) {
         return this._create(params, headers);
     };
     /**
-     * @param id string The ID of the customer to update.
-     * @param params object|null
-     * @param headers object|null
+     * @param {string|number} id The ID of the customer to update.
+     * @param {Object|null} params
+     * @param {Object|null} headers
      *
-     * @returns Promise<Customer>
+     * @returns {Promise<Customer>}
      */
     Customer.update = function (id, params, headers) {
         if (params === void 0) { params = {}; }
@@ -60,18 +60,18 @@ var Customer = /** @class */ (function (_super) {
         return this._update(id, params, headers);
     };
     /**
-     * @param array|string|null $headers
+     * @param {Object|null} headers
      *
-     * @returns Promise<Customer> The saved customer.
+     * @returns {Promise<Customer>} The saved customer.
      */
     Customer.prototype.save = function (headers) {
         if (headers === void 0) { headers = {}; }
         return this._save(headers);
     };
     /**
-     * @param array $headers
+     * @param {Object|null} headers
      *
-     * @returns Customer The deleted customer.
+     * @returns {Promise<Customer>} Customer The deleted customer.
      */
     Customer.prototype.delete = function (headers) {
         if (headers === void 0) { headers = {}; }

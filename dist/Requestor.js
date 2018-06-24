@@ -18,13 +18,14 @@ var Requestor = /** @class */ (function () {
     }
     /**
      * Set the http client isntance
-     * @param client AxiosInstance
+     * @param {AxiosInstance} client
      */
     Requestor.setHttpClient = function (client) {
         Requestor.httpClient = client;
     };
     /**
-     * @returns
+     * Return the httpClient
+     * @returns {AxiosInstance}
      */
     Requestor.prototype.httpClient = function () {
         if (!Requestor.httpClient) {
@@ -39,20 +40,29 @@ var Requestor = /** @class */ (function () {
     };
     /**
      * Set the http client isntance
-     * @param client AxiosInstance
+     * @param {AxiosInstance} client
      */
     Requestor.addRequestInterceptor = function (interceptor) {
         this.requestInterceptors.push(interceptor);
     };
     /**
      * Apply request interceptor
-     * @param httpClient AxiosInstance
+     * @param {AxiosInstance} httpClient
      */
     Requestor.prototype.applyRequestInterceptors = function (httpClient) {
         Requestor.requestInterceptors.forEach(function (interceptor) {
             httpClient.interceptors.request.use(interceptor.callback, interceptor.onRejected);
         });
     };
+    /**
+     * Sent request
+     * @param {string} method
+     * @param {string} path
+     * @param {Object} params
+     * @param {Object} headers
+     *
+     * @returns {Promise<AxiosResponse<any>>}
+     */
     Requestor.prototype.request = function (method, path, params, headers) {
         if (params === void 0) { params = {}; }
         if (headers === void 0) { headers = {}; }
@@ -74,6 +84,10 @@ var Requestor = /** @class */ (function () {
         return this.httpClient().request(requestConfig)
             .catch(this.handleRequestException);
     };
+    /**
+     * Return base url
+     * @returns {string}
+     */
     Requestor.prototype.baseUrl = function () {
         if (this.apiBase) {
             return this.apiBase;
@@ -89,6 +103,11 @@ var Requestor = /** @class */ (function () {
                 return this.PRODUCTION_BASE;
         }
     };
+    /**
+     * Handle request exception
+     * @param {any} e
+     * @returns {Promise<ApiConnectionError>}
+     */
     Requestor.prototype.handleRequestException = function (e) {
         var message = "Request error: " + e.message;
         var httpStatusCode = e.response ? e.response.status : null;
@@ -96,10 +115,18 @@ var Requestor = /** @class */ (function () {
         var httpResponse = e.response;
         return Promise.reject(new Error_1.ApiConnectionError(message, httpStatusCode, httpRequest, httpResponse));
     };
+    /**
+     * Return the url
+     * @param {string} path
+     */
     Requestor.prototype.url = function (path) {
         if (path === void 0) { path = ''; }
         return this.baseUrl() + "/" + this.apiVersion + path;
     };
+    /**
+     * Return default headers
+     * @returns {Object}
+     */
     Requestor.prototype.defaultHeaders = function () {
         var _default = {
             'X-Version': FedaPay_1.FedaPay.VERSION,

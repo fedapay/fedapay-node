@@ -8,25 +8,46 @@ import { arrayToFedaPayObject } from './Util';
 export class Resource extends FedaPayObject {
     protected static requestor: Requestor;
 
+    /**
+     * Set requestor
+     * @param {Requestor} req
+     */
     static setRequestor(req: Requestor) {
         Resource.requestor = req;
     }
 
+    /**
+     * Return the requestor
+     * @returns {Requestor}
+     */
     static getRequestor() {
         return Resource.requestor || new Requestor();
     }
 
+    /**
+     * Return class name
+     * @returns {string}
+     */
     static className(): string {
         return this.name.toLowerCase();
     }
 
-    static classPath() {
+    /**
+     * Return the class path
+     * @return {string}
+     */
+    static classPath(): string {
         let base = this.className();
         let plural = pluralize(base);
 
         return `/${plural}`;
     }
 
+    /**
+     * Return the resource path
+     * @param {number|string} id
+     * @returns {string}
+     */
     static resourcePath(id: number | string) {
         if (id === null) {
             let klass = this.className();
@@ -41,23 +62,39 @@ export class Resource extends FedaPayObject {
         return `${base}/${extn}`;
     }
 
+    /**
+     * Return the instance url
+     * @returns {string}
+     */
     instanceUrl() {
         return (<any>this).constructor.resourcePath(this.id);
     }
 
+    /**
+     * Validate params
+     * @param {Object|null} params
+     */
     protected static _validateParams(params = null) {
         if (params && typeof params != 'object') {
             let message = `You must pass an object as the first argument to FedaPay API
             method calls.  (HINT: an example call to create a customer
-            would be: FedaPay.Customer.create({'firstname': toto,
+            would be: Customer.create({'firstname': toto,
             'lastname': 'zoro', 'email': 'admin@gmail.com', 'phone': '66666666'})`;
             throw new InvalidRequest(message);
         }
     }
 
+    /**
+     * Send static request
+     * @param {string} method
+     * @param {string} url
+     * @param {Object|null} params
+     * @param {Object|null} headers
+     * @returns {Promise<AxiosResponse<any>>}
+     */
     protected static _staticRequest(
-        method: any,
-        url: any,
+        method: string,
+        url: string,
         params: any = {},
         headers: any = {}
     ) {
@@ -72,6 +109,11 @@ export class Resource extends FedaPayObject {
             });
     }
 
+    /**
+     * Retrieve resource
+     * @param {string|number} id
+     * @param {Object|null} headers
+     */
     protected static _retrieve(
         id: any,
         headers: any = {}
@@ -87,9 +129,15 @@ export class Resource extends FedaPayObject {
             });
     }
 
+    /**
+     * Send list reource request
+     * @param {Object|null} params
+     * @param {Object|null} headers
+     * @returns {Promise<FedaPayObject|FedaPayObject[]>}
+     */
     protected static _all(
-        params: any = {},
-        headers: any = {}
+        params = {},
+        headers = {}
     ): Promise<FedaPayObject|FedaPayObject[]> {
         this._validateParams(params);
 
@@ -101,6 +149,12 @@ export class Resource extends FedaPayObject {
             })
     }
 
+    /**
+     * Send create resource request
+     * @param {Object|null} params
+     * @param {Object|null} headers
+     * @returns {Promise<FedaPayObject>}
+     */
     protected static _create(
         params: any,
         headers: any
@@ -117,6 +171,13 @@ export class Resource extends FedaPayObject {
             });
     }
 
+    /**
+     * Send create resource request
+     * @param {string|number} id
+     * @param {Object|null} params
+     * @param {Object|null} headers
+     * @returns {Promise<FedaPayObject>}
+     */
     protected static _update(
         id,
         params: any,
@@ -134,6 +195,11 @@ export class Resource extends FedaPayObject {
             });
     }
 
+    /**
+     * Send delete resource request
+     * @param {Object|null} headers
+     * @returns {Promise<FedaPayObject>}
+     */
     protected _delete(headers: any): Promise<FedaPayObject> {
         let url = this.instanceUrl();
         return Resource._staticRequest('delete', url, [], headers)
@@ -142,6 +208,11 @@ export class Resource extends FedaPayObject {
             });
     }
 
+    /**
+     * Send create or update resource request
+     * @param {Object|null} headers
+     * @returns {Promise<FedaPayObject>}
+     */
     protected _save(headers: any): Promise<FedaPayObject> {
         let params = this.serializeParameters();
         let className = Resource.className();

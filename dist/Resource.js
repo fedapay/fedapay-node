@@ -21,20 +21,41 @@ var Resource = /** @class */ (function (_super) {
     function Resource() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
+    /**
+     * Set requestor
+     * @param {Requestor} req
+     */
     Resource.setRequestor = function (req) {
         Resource.requestor = req;
     };
+    /**
+     * Return the requestor
+     * @returns {Requestor}
+     */
     Resource.getRequestor = function () {
         return Resource.requestor || new Requestor_1.Requestor();
     };
+    /**
+     * Return class name
+     * @returns {string}
+     */
     Resource.className = function () {
         return this.name.toLowerCase();
     };
+    /**
+     * Return the class path
+     * @return {string}
+     */
     Resource.classPath = function () {
         var base = this.className();
         var plural = pluralize(base);
         return "/" + plural;
     };
+    /**
+     * Return the resource path
+     * @param {number|string} id
+     * @returns {string}
+     */
     Resource.resourcePath = function (id) {
         if (id === null) {
             var klass = this.className();
@@ -45,16 +66,32 @@ var Resource = /** @class */ (function (_super) {
         var extn = encodeURI("" + id);
         return base + "/" + extn;
     };
+    /**
+     * Return the instance url
+     * @returns {string}
+     */
     Resource.prototype.instanceUrl = function () {
         return this.constructor.resourcePath(this.id);
     };
+    /**
+     * Validate params
+     * @param {Object|null} params
+     */
     Resource._validateParams = function (params) {
         if (params === void 0) { params = null; }
         if (params && typeof params != 'object') {
-            var message = "You must pass an object as the first argument to FedaPay API\n            method calls.  (HINT: an example call to create a customer\n            would be: FedaPay.Customer.create({'firstname': toto,\n            'lastname': 'zoro', 'email': 'admin@gmail.com', 'phone': '66666666'})";
+            var message = "You must pass an object as the first argument to FedaPay API\n            method calls.  (HINT: an example call to create a customer\n            would be: Customer.create({'firstname': toto,\n            'lastname': 'zoro', 'email': 'admin@gmail.com', 'phone': '66666666'})";
             throw new Error_1.InvalidRequest(message);
         }
     };
+    /**
+     * Send static request
+     * @param {string} method
+     * @param {string} url
+     * @param {Object|null} params
+     * @param {Object|null} headers
+     * @returns {Promise<AxiosResponse<any>>}
+     */
     Resource._staticRequest = function (method, url, params, headers) {
         if (params === void 0) { params = {}; }
         if (headers === void 0) { headers = {}; }
@@ -67,6 +104,11 @@ var Resource = /** @class */ (function (_super) {
             return { data: response.data, options: options };
         });
     };
+    /**
+     * Retrieve resource
+     * @param {string|number} id
+     * @param {Object|null} headers
+     */
     Resource._retrieve = function (id, headers) {
         if (headers === void 0) { headers = {}; }
         var url = this.resourcePath(id);
@@ -78,6 +120,12 @@ var Resource = /** @class */ (function (_super) {
             return object[className];
         });
     };
+    /**
+     * Send list reource request
+     * @param {Object|null} params
+     * @param {Object|null} headers
+     * @returns {Promise<FedaPayObject|FedaPayObject[]>}
+     */
     Resource._all = function (params, headers) {
         if (params === void 0) { params = {}; }
         if (headers === void 0) { headers = {}; }
@@ -89,6 +137,12 @@ var Resource = /** @class */ (function (_super) {
             return Util_1.arrayToFedaPayObject(data, options);
         });
     };
+    /**
+     * Send create resource request
+     * @param {Object|null} params
+     * @param {Object|null} headers
+     * @returns {Promise<FedaPayObject>}
+     */
     Resource._create = function (params, headers) {
         this._validateParams(params);
         var url = this.classPath();
@@ -100,6 +154,13 @@ var Resource = /** @class */ (function (_super) {
             return object[className];
         });
     };
+    /**
+     * Send create resource request
+     * @param {string|number} id
+     * @param {Object|null} params
+     * @param {Object|null} headers
+     * @returns {Promise<FedaPayObject>}
+     */
     Resource._update = function (id, params, headers) {
         this._validateParams(params);
         var url = this.resourcePath(id);
@@ -111,6 +172,11 @@ var Resource = /** @class */ (function (_super) {
             return object[className];
         });
     };
+    /**
+     * Send delete resource request
+     * @param {Object|null} headers
+     * @returns {Promise<FedaPayObject>}
+     */
     Resource.prototype._delete = function (headers) {
         var _this = this;
         var url = this.instanceUrl();
@@ -120,6 +186,11 @@ var Resource = /** @class */ (function (_super) {
             return _this;
         });
     };
+    /**
+     * Send create or update resource request
+     * @param {Object|null} headers
+     * @returns {Promise<FedaPayObject>}
+     */
     Resource.prototype._save = function (headers) {
         var _this = this;
         var params = this.serializeParameters();
