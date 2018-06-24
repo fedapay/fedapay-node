@@ -22,22 +22,29 @@ export declare class Transaction extends Resource {
     static retrieve(id: any, headers?: {}): Promise<Transaction>;
     /**
      * @param id string The ID of the transaction to update.
-     * @param params object|null
-     * @param headers object|null
+     * @param {object|null} params
+     * @param {object|null} headers
      *
      * @returns Promise<Transaction>
      */
     static update(id: any, params?: {}, headers?: {}): Promise<Transaction>;
     /**
-     * @param array|string|null $headers
+     * @param {array|string|null} $headers
      *
-     * @returns Promise<Transaction> The saved transaction.
+     * @returns {Promise<Transaction>} The saved transaction.
      */
     save(headers?: {}): Promise<Transaction>;
     /**
-     * @param array $headers
+     * @param {array} $headers
      *
      * @returns Transaction The deleted transaction.
      */
     delete(headers?: {}): Promise<Transaction>;
+    /**
+     * Generate token
+     * @param {Object} params
+     * @param {Object} headers
+     * @returns {Promise<FedaPayObject>}
+     */
+    generateToken(params?: {}, headers?: {}): Promise<FedaPayObject>;
 }

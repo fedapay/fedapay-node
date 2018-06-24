@@ -1,4 +1,5 @@
 import { Resource, FedaPayObject } from '.';
+import { arrayToFedaPayObject } from './Util';
 
 export class Transaction extends Resource {
     /**
@@ -32,8 +33,8 @@ export class Transaction extends Resource {
 
     /**
      * @param id string The ID of the transaction to update.
-     * @param params object|null
-     * @param headers object|null
+     * @param {object|null} params
+     * @param {object|null} headers
      *
      * @returns Promise<Transaction>
      */
@@ -42,20 +43,37 @@ export class Transaction extends Resource {
     }
 
     /**
-     * @param array|string|null $headers
+     * @param {array|string|null} $headers
      *
-     * @returns Promise<Transaction> The saved transaction.
+     * @returns {Promise<Transaction>} The saved transaction.
      */
     save(headers = {}): Promise<Transaction> {
         return <Promise<Transaction>>this._save(headers);
     }
 
     /**
-     * @param array $headers
+     * @param {array} $headers
      *
      * @returns Transaction The deleted transaction.
      */
     delete(headers = {}): Promise<Transaction> {
         return <Promise<Transaction>>this._delete(headers);
+    }
+
+    /**
+     * Generate token
+     * @param {Object} params
+     * @param {Object} headers
+     * @returns {Promise<FedaPayObject>}
+     */
+    generateToken(params = {}, headers = {}) : Promise<FedaPayObject> {
+        const url = this.instanceUrl() + '/token';
+
+        return Transaction._staticRequest('post', url, params, headers)
+            .then(({ data, options }) => {
+                let object = <FedaPayObject>arrayToFedaPayObject(data, options);
+
+                return <FedaPayObject>object;
+            });
     }
 }
