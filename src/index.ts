@@ -9,3 +9,4 @@ export * from './Account';
 export * from './Event';
 export * from './Log';
 export * from './Transaction';
+export * from './Payout';

@@ -11,6 +11,7 @@ export function convertToFedaPayObject(
         'v1/event': require('./Event').Event,
         'v1/log': require('./Log').Log,
         'v1/transaction': require('./Transaction').Transaction,
+        'v1/payout': require('./Payout').Payout,
     };
     let object = new FedaPayObject;
     if (resp['klass']) {
