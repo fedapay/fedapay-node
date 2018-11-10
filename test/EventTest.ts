@@ -29,7 +29,7 @@ describe('EventTest', () => {
         let object = await Event.retrieve(1);
 
         exceptRequest({
-            url: 'https://sdx-api.fedapay.com/v1/events/1',
+            url: 'https://sandbox-api.fedapay.com/v1/events/1',
             method: 'get'
         });
 
@@ -67,7 +67,7 @@ describe('EventTest', () => {
         let object = await Event.all();
 
         exceptRequest({
-            url: 'https://sdx-api.fedapay.com/v1/events',
+            url: 'https://sandbox-api.fedapay.com/v1/events',
             method: 'get'
         });
 

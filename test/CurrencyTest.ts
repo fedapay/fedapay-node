@@ -31,7 +31,7 @@ describe('CurrencyTest', () => {
         let object = await Currency.all();
 
         exceptRequest({
-            url: 'https://sdx-api.fedapay.com/v1/currencies',
+            url: 'https://sandbox-api.fedapay.com/v1/currencies',
             method: 'get'
         });
 
@@ -68,7 +68,7 @@ describe('CurrencyTest', () => {
         let currency = await Currency.retrieve(1);
 
         exceptRequest({
-            url: 'https://sdx-api.fedapay.com/v1/currencies/1',
+            url: 'https://sandbox-api.fedapay.com/v1/currencies/1',
             method: 'get'
         });
 

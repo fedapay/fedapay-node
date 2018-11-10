@@ -23,7 +23,7 @@ describe('RequestorTest', () => {
             expect(e.httpStatus).to.equal(500);
             expect(e.httpResponse).to.not.be.null;
             expect(e.httpRequest).to.not.be.null;
-            expect(e.httpResponse.config.url).to.equal('https://sdx-api.fedapay.com/v1/path');
+            expect(e.httpResponse.config.url).to.equal('https://sandbox-api.fedapay.com/v1/path');
             expect(e.httpResponse.config.params).to.deep.equal({ foo: '2' });
             expect(e.httpResponse.config.method).to.equal('get');
             expect(e.httpRequest.getHeader('Authorization')).to.equal('Bearer sk_test_123');

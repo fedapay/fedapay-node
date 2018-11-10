@@ -31,7 +31,7 @@ describe('CustomerTest', () => {
         let object = await Customer.all();
 
         exceptRequest({
-            url: 'https://sdx-api.fedapay.com/v1/customers',
+            url: 'https://sandbox-api.fedapay.com/v1/customers',
             method: 'get'
         });
         expect(object).to.be.instanceof(FedaPayObject);
@@ -60,7 +60,7 @@ describe('CustomerTest', () => {
             await Customer.create(data);
         } catch (e) {
             exceptRequest({
-                url: 'https://sdx-api.fedapay.com/v1/customers',
+                url: 'https://sandbox-api.fedapay.com/v1/customers',
                 data: JSON.stringify(data),
                 method: 'post'
             });
@@ -99,7 +99,7 @@ describe('CustomerTest', () => {
         let customer = await Customer.create(data);
 
         exceptRequest({
-            url: 'https://sdx-api.fedapay.com/v1/customers',
+            url: 'https://sandbox-api.fedapay.com/v1/customers',
             data: JSON.stringify(data),
             method: 'post'
         });
@@ -139,7 +139,7 @@ describe('CustomerTest', () => {
         let customer = await Customer.retrieve(1);
 
         exceptRequest({
-            url: 'https://sdx-api.fedapay.com/v1/customers/1',
+            url: 'https://sandbox-api.fedapay.com/v1/customers/1',
             method: 'get'
         });
         expect(customer).to.be.instanceof(Customer);
@@ -178,7 +178,7 @@ describe('CustomerTest', () => {
         let customer = await Customer.update(1, data);
 
         exceptRequest({
-            url: 'https://sdx-api.fedapay.com/v1/customers/1',
+            url: 'https://sandbox-api.fedapay.com/v1/customers/1',
             data: JSON.stringify(data),
             method: 'put'
         });
@@ -229,7 +229,7 @@ describe('CustomerTest', () => {
         updateData.firstname = 'First Name'
 
         exceptRequest({
-            url: 'https://sdx-api.fedapay.com/v1/customers/1',
+            url: 'https://sandbox-api.fedapay.com/v1/customers/1',
             data: JSON.stringify(updateData),
             method: 'put'
         });
@@ -269,7 +269,7 @@ describe('CustomerTest', () => {
         await customer.delete();
 
         exceptRequest({
-            url: 'https://sdx-api.fedapay.com/v1/customers/1',
+            url: 'https://sandbox-api.fedapay.com/v1/customers/1',
             method: 'delete'
         });
     });

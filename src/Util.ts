@@ -70,3 +70,22 @@ export function stripApiVersion(key: any, opts: any): string {
 
     return key.replace(apiPart, '');
 }
+
+/**
+ * Check a date falue
+ * @param mixed $date
+ * @return mixed
+ */
+export function toDateString(date: any)
+{
+    if (date instanceof Date) {
+        return date.toISOString();
+    } else if (typeof date == 'string' || typeof date == 'number') {
+        return date;
+    } else {
+        throw new Error(
+            'Invalid datetime argument. Should be a date in string format, ' +
+            ' a timestamp  or an instance of Date.'
+        );
+    }
+}

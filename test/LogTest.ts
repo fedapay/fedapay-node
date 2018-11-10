@@ -36,7 +36,7 @@ describe('LogTests', () => {
         let object = await Log.all();
 
         exceptRequest({
-            url: 'https://sdx-api.fedapay.com/v1/logs',
+            url: 'https://sandbox-api.fedapay.com/v1/logs',
             method: 'get'
         });
 
@@ -85,13 +85,13 @@ describe('LogTests', () => {
         let object = await Log.retrieve(1);
 
         exceptRequest({
-            url: 'https://sdx-api.fedapay.com/v1/logs/1',
+            url: 'https://sandbox-api.fedapay.com/v1/logs/1',
             method: 'get'
         });
 
         expect(object).to.be.instanceof(FedaPayObject);
         expect(object).to.be.instanceof(Log);
-        
+
         expect(object.id).to.equal(1);
         expect(object.klass).to.equal('v1/log');
         expect(object.method).to.equal('GET');

@@ -37,7 +37,7 @@ describe('TransactionTest', () => {
         let object = await Transaction.all();
 
         exceptRequest({
-            url: 'https://sdx-api.fedapay.com/v1/transactions',
+            url: 'https://sandbox-api.fedapay.com/v1/transactions',
             method: 'get'
         });
 
@@ -86,7 +86,7 @@ describe('TransactionTest', () => {
 
         let transaction = await Transaction.retrieve(1);
         exceptRequest({
-            url: 'https://sdx-api.fedapay.com/v1/transactions/1',
+            url: 'https://sandbox-api.fedapay.com/v1/transactions/1',
             method: 'get'
         });
 
@@ -148,7 +148,7 @@ describe('TransactionTest', () => {
         let transaction = await Transaction.create(data);
 
         exceptRequest({
-            url: 'https://sdx-api.fedapay.com/v1/transactions',
+            url: 'https://sandbox-api.fedapay.com/v1/transactions',
             data: JSON.stringify(data),
             method: 'post'
         });
@@ -211,7 +211,7 @@ describe('TransactionTest', () => {
         let transaction = await Transaction.create(data);
 
         exceptRequest({
-            url: 'https://sdx-api.fedapay.com/v1/transactions',
+            url: 'https://sandbox-api.fedapay.com/v1/transactions',
             data: JSON.stringify(data),
             method: 'post'
         });
@@ -223,7 +223,7 @@ describe('TransactionTest', () => {
         await transaction.delete();
 
         exceptRequest({
-            url: 'https://sdx-api.fedapay.com/v1/transactions/1',
+            url: 'https://sandbox-api.fedapay.com/v1/transactions/1',
             method: 'delete'
         });
     });
@@ -268,7 +268,7 @@ describe('TransactionTest', () => {
         let transaction = await Transaction.update(1, data);
 
         exceptRequest({
-            url: 'https://sdx-api.fedapay.com/v1/transactions/1',
+            url: 'https://sandbox-api.fedapay.com/v1/transactions/1',
             data: JSON.stringify(data),
             method: 'put'
         });
@@ -342,7 +342,7 @@ describe('TransactionTest', () => {
         updateData.amount = 18500;
 
         exceptRequest({
-            url: 'https://sdx-api.fedapay.com/v1/transactions/1',
+            url: 'https://sandbox-api.fedapay.com/v1/transactions/1',
             data: JSON.stringify(updateData),
             method: 'put'
         });
@@ -398,7 +398,7 @@ describe('TransactionTest', () => {
         const tokenObject = await transaction.generateToken();
 
         exceptRequest({
-            url: 'https://sdx-api.fedapay.com/v1/transactions/1/token',
+            url: 'https://sandbox-api.fedapay.com/v1/transactions/1/token',
             method: 'post'
         });
 
