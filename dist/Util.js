@@ -1,14 +1,22 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var FedaPayObject_1 = require("./FedaPayObject");
+/**
+ * Convert response to FedaPayObject
+ * @param {any} resp
+ * @param {any} opts
+ */
 function convertToFedaPayObject(resp, opts) {
     var types = {
+        'v1/api_key': require('./ApiKey').ApiKey,
         'v1/account': require('./Account').Account,
         'v1/currency': require('./Currency').Currency,
         'v1/customer': require('./Customer').Customer,
         'v1/event': require('./Event').Event,
         'v1/log': require('./Log').Log,
+        'v1/phone_number': require('./PhoneNumber').PhoneNumber,
         'v1/transaction': require('./Transaction').Transaction,
+        'v1/payout': require('./Payout').Payout,
     };
     var object = new FedaPayObject_1.FedaPayObject;
     if (resp['klass']) {
@@ -21,6 +29,11 @@ function convertToFedaPayObject(resp, opts) {
     return object;
 }
 exports.convertToFedaPayObject = convertToFedaPayObject;
+/**
+ * Convert array response to FedaPayObject
+ * @param {any} array
+ * @param {any} opts
+ */
 function arrayToFedaPayObject(array, opts) {
     if (Array.isArray(array)) {
         var mapped_1 = [];
@@ -34,6 +47,11 @@ function arrayToFedaPayObject(array, opts) {
     }
 }
 exports.arrayToFedaPayObject = arrayToFedaPayObject;
+/**
+ * Strip api version from key
+ * @param {any} key
+ * @param {any} opts
+ */
 function stripApiVersion(key, opts) {
     var apiPart = '';
     if (opts.apiVersion) {
@@ -42,3 +60,21 @@ function stripApiVersion(key, opts) {
     return key.replace(apiPart, '');
 }
 exports.stripApiVersion = stripApiVersion;
+/**
+ * Check a date falue
+ * @param mixed $date
+ * @return mixed
+ */
+function toDateString(date) {
+    if (date instanceof Date) {
+        return date.toISOString();
+    }
+    else if (typeof date == 'string' || typeof date == 'number') {
+        return date;
+    }
+    else {
+        throw new Error('Invalid datetime argument. Should be a date in string format, ' +
+            ' a timestamp  or an instance of Date.');
+    }
+}
+exports.toDateString = toDateString;

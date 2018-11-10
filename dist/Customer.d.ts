@@ -1,5 +1,16 @@
 import { FedaPayObject } from './FedaPayObject';
 import { Resource } from './Resource';
+/**
+ * Class Customer
+ *
+ * @property int $id
+ * @property string $firstname
+ * @property string $lastname
+ * @property string $email
+ * @property string $phone
+ * @property string $created_at
+ * @property string $updated_at
+ */
 export declare class Customer extends Resource {
     /**
      * @param {string|number} id The customer id

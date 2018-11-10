@@ -11,6 +11,17 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var Resource_1 = require("./Resource");
+/**
+ * Class Customer
+ *
+ * @property int $id
+ * @property string $firstname
+ * @property string $lastname
+ * @property string $email
+ * @property string $phone
+ * @property string $created_at
+ * @property string $updated_at
+ */
 var Customer = /** @class */ (function (_super) {
     __extends(Customer, _super);
     function Customer() {

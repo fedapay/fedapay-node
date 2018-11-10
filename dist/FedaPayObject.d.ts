@@ -1,3 +1,6 @@
+/**
+ * Class FedaPayObject
+ */
 export declare class FedaPayObject {
     [key: string]: any;
     constructor(id?: any, opts?: any);

@@ -1,5 +1,8 @@
 import { FedaPayObject } from './FedaPayObject';
 import { Requestor } from './Requestor';
+/**
+ * Class Resource
+ */
 export declare class Resource extends FedaPayObject {
     protected static requestor: Requestor;
     /**

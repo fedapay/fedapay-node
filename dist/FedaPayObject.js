@@ -2,6 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var isPlainObject = require("lodash.isplainobject");
 var Util_1 = require("./Util");
+/**
+ * Class FedaPayObject
+ */
 var FedaPayObject = /** @class */ (function () {
     function FedaPayObject(id, opts) {
         if (id === void 0) { id = null; }

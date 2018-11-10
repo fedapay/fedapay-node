@@ -1,5 +1,18 @@
 import { FedaPayObject } from './FedaPayObject';
 import { Resource } from './Resource';
+/**
+ * Class Currency
+ *
+ * @property int $id
+ * @property string $name
+ * @property string $iso
+ * @property int $code
+ * @property string $prefix
+ * @property string $suffix
+ * @property string $div
+ * @property string $created_at
+ * @property string $updated_at
+ */
 export declare class Currency extends Resource {
     /**
      * @param {string|number} id

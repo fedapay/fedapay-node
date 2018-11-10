@@ -1,3 +1,6 @@
+/**
+ * Class FedaPay
+ */
 export declare class FedaPay {
     static readonly VERSION: string;
     protected static apiKey: string;
