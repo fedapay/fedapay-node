@@ -1,6 +1,19 @@
 import { Resource, FedaPayObject } from '.';
 import { arrayToFedaPayObject } from './Util';
 
+/**
+ * Class Transaction
+ *
+ * @property int $id
+ * @property string $reference
+ * @property string $description
+ * @property string $callback_url
+ * @property string $amount
+ * @property string $status
+ * @property int $transaction_id
+ * @property string $created_at
+ * @property string $updated_at
+ */
 export class Transaction extends Resource {
     /**
      * @param {Object|null} params

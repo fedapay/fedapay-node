@@ -5,6 +5,9 @@ import { FedaPayObject } from './FedaPayObject';
 import { Requestor } from './Requestor';
 import { arrayToFedaPayObject } from './Util';
 
+/**
+ * Class Resource
+ */
 export class Resource extends FedaPayObject {
     protected static requestor: Requestor;
 
