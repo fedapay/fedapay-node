@@ -28,7 +28,7 @@ describe('PayoutTest', () => {
         let body = {
             "v1/payout": {
                 "klass": "v1/payout",
-                "id": 17,
+                "id": 1,
                 "reference": "1540402065678",
                 "amount": data.amount,
                 "status": "pending",
@@ -457,66 +457,211 @@ describe('PayoutTest', () => {
         });
     });
 
-    // it('should schedule a payout', async () => {
-    //     let data = [18];
+    it('should schedule a payout', async () => {
+        const payout = await createPayout();
+        const body = {
+            "v1/payouts": [{
+                'klass': 'v1/payout',
+                'id': 1,
+                'reference': '1540316134325',
+                'amount': 1000,
+                'status': 'started',
+                'customer_id': 1,
+                'currency_id': 1,
+                'mode': 'mtn',
+                'last_error_code': null,
+                'last_error_message': null,
+                'created_at': '2018-10-23T17:35:34.325Z',
+                'updated_at': '2018-10-23T17:36:40.086Z',
+                'scheduled_at': '2018-11-01 18:30:22',
+                'sent_at': null,
+                'started_at': '2018-11-01 18:30:22',
+                'failed_at': null,
+                'deleted_at': null
+            }]
+        };
 
-    //     let body: any = {
-    //         "v1/payouts": [
-    //             {
-    //                 "klass": "v1/payout",
-    //                 "id": 18,
-    //                 "reference": "1540403202860",
-    //                 "amount": 5000,
-    //                 "status": "started",
-    //                 "customer_id": 1,
-    //                 "currency_id": 1,
-    //                 "mode": "mtn",
-    //                 "last_error_code": null,
-    //                 "last_error_message": null,
-    //                 "created_at": "2018-10-24T17:46:42.859Z",
-    //                 "updated_at": "2018-10-24T17:54:20.003Z",
-    //                 "scheduled_at": "2018-10-24T17:54:19.972Z",
-    //                 "sent_at": null,
-    //                 "failed_at": null,
-    //                 "deleted_at": null
-    //             }
-    //         ]
-    //     };
+        nock(/fedapay\.com/)
+            .put('/v1/payouts/start')
+            .reply(200, body);
 
-    //     nock(/fedapay\.com/)
-    //         .put('/v1/payouts/start')
-    //         .reply(200, body);
+        await payout.schedule('2018-11-01 18:30:22');
 
-    //     const object = await Payout.schedule(data);
+        exceptRequest({
+            url: 'https://sandbox-api.fedapay.com/v1/payouts/start',
+            data: JSON.stringify({
+                "payouts": [
+                    {
+                        "id": 1,
+                        "scheduled_at": '2018-11-01 18:30:22'
+                    }
+                ]
+            }),
+            method: 'put'
+        });
 
-    //     exceptRequest({
-    //         url: 'https://sandbox-api.fedapay.com/v1/payouts/start',
-    //         data: JSON.stringify({
-    //             "payouts": [
-    //                 {
-    //                     "id": 18,
-    //                     "send_now": true
-    //                 }
-    //             ]
-    //         }),
-    //         method: 'put'
-    //     });
+        expect(payout.status).to.equal('started');
+        expect(payout.scheduled_at).to.equal('2018-11-01 18:30:22');
+        expect(payout.started_at).to.equal('2018-11-01 18:30:22');
+    });
 
-    //     expect(object).to.be.instanceof(FedaPayObject);
-    //     expect(object.payouts[0]).to.be.instanceof(Payout);
-    //     expect(object.payouts[0].id).to.equal(18);
-    //     expect(object.payouts[0].klass).to.equal('v1/payout');
-    //     expect(object.payouts[0].reference).to.equal('1540403202860');
-    //     expect(object.payouts[0].amount).to.equal(5000);
-    //     expect(object.payouts[0].status).to.equal('started');
-    //     expect(object.payouts[0].customer_id).to.equal(1);
-    //     expect(object.payouts[0].currency_id).to.equal(1);
-    //     expect(object.payouts[0].mode).to.equal('mtn');
-    //     expect(object.payouts[0].created_at).to.equal('2018-10-24T17:46:42.859Z');
-    //     expect(object.payouts[0].updated_at).to.equal('2018-10-24T17:54:20.003Z');
-    //     expect(object.payouts[0].scheduled_at).to.equal('2018-10-24T17:54:19.972Z');
-    //     expect(object.payouts[0].sent_at).to.equal(null);
-    //     expect(object.payouts[0].failed_at).to.equal(null);
-    //     expect(object.payouts[0].deleted_at).to.equal(null);
-    // });
+    it('should fail schedule all payouts', async () => {
+        const data = [{ scheduled_at: '2018-11-01 18:30:22' }];
+
+        try {
+            await Payout.scheduleAll(data);
+        } catch (e) {
+            expect(e).to.be.an.instanceof(Error);
+            expect(e.message).to.equal('Invalid id argument. You must specify payout id.');
+        }
+    });
+
+    it('should schedule all payouts', async () => {
+        const payout = await createPayout();
+        const body = {
+            "v1/payouts": [{
+                'klass': 'v1/payout',
+                'id': 1,
+                'reference': '1540316134325',
+                'amount': 1000,
+                'status': 'started',
+                'customer_id': 1,
+                'currency_id': 1,
+                'mode': 'mtn',
+                'last_error_code': null,
+                'last_error_message': null,
+                'created_at': '2018-10-23T17:35:34.325Z',
+                'updated_at': '2018-10-23T17:36:40.086Z',
+                'scheduled_at': '2018-11-01 18:30:22',
+                'sent_at': null,
+                'started_at': '2018-11-01 18:30:22',
+                'failed_at': null,
+                'deleted_at': null
+            }]
+        };
+
+        nock(/fedapay\.com/)
+            .put('/v1/payouts/start')
+            .reply(200, body);
+
+        const object = await Payout.scheduleAll([{
+            id: payout.id,
+            scheduled_at: '2018-11-01 18:30:22'
+        }]);
+
+        exceptRequest({
+            url: 'https://sandbox-api.fedapay.com/v1/payouts/start',
+            data: JSON.stringify({
+                "payouts": [
+                    {
+                        "id": 1,
+                        "scheduled_at": '2018-11-01 18:30:22'
+                    }
+                ]
+            }),
+            method: 'put'
+        });
+
+        expect(object).to.be.instanceof(FedaPayObject);
+        expect(object.payouts[0]).to.be.instanceof(Payout);
+        expect(object.payouts[0].id).to.equal(1);
+        expect(object.payouts[0].status).to.equal('started');
+        expect(object.payouts[0].scheduled_at).to.equal('2018-11-01 18:30:22');
+        expect(object.payouts[0].started_at).to.equal('2018-11-01 18:30:22');
+    });
+
+    it('should send a payout now', async () => {
+        const payout = await createPayout();
+        const body = {
+            "v1/payouts": [{
+                'klass': 'v1/payout',
+                'id': 1,
+                'reference': '1540316134325',
+                'amount': 1000,
+                'status': 'sent',
+                'customer_id': 1,
+                'currency_id': 1,
+                'mode': 'mtn',
+                'last_error_code': null,
+                'last_error_message': null,
+                'created_at': '2018-10-23T17:35:34.325Z',
+                'updated_at': '2018-10-23T17:36:40.086Z',
+                'scheduled_at': '2018-11-01 18:30:22',
+                'sent_at': '2018-11-01 18:30:22',
+                'started_at': '2018-11-01 18:30:22',
+                'failed_at': null,
+                'deleted_at': null
+            }]
+        };
+
+        nock(/fedapay\.com/)
+            .put('/v1/payouts/start')
+            .reply(200, body);
+
+        await payout.sendNow();
+
+        exceptRequest({
+            url: 'https://sandbox-api.fedapay.com/v1/payouts/start',
+            data: JSON.stringify({
+                "payouts": [
+                    {
+                        "id": 1
+                    }
+                ]
+            }),
+            method: 'put'
+        });
+
+        expect(payout.status).to.equal('sent');
+        expect(payout.sent_at).to.equal('2018-11-01 18:30:22');
+    });
+
+    it('should send all payouts now', async () => {
+        const payout = await createPayout();
+        const body = {
+            "v1/payouts": [{
+                'klass': 'v1/payout',
+                'id': 1,
+                'reference': '1540316134325',
+                'amount': 1000,
+                'status': 'sent',
+                'customer_id': 1,
+                'currency_id': 1,
+                'mode': 'mtn',
+                'last_error_code': null,
+                'last_error_message': null,
+                'created_at': '2018-10-23T17:35:34.325Z',
+                'updated_at': '2018-10-23T17:36:40.086Z',
+                'scheduled_at': '2018-11-01 18:30:22',
+                'sent_at': '2018-11-01 18:30:22',
+                'started_at': '2018-11-01 18:30:22',
+                'failed_at': null,
+                'deleted_at': null
+            }]
+        };
+
+        nock(/fedapay\.com/)
+            .put('/v1/payouts/start')
+            .reply(200, body);
+
+        const object = await Payout.sendAllNow([payout]);
+
+        exceptRequest({
+            url: 'https://sandbox-api.fedapay.com/v1/payouts/start',
+            data: JSON.stringify({
+                "payouts": [
+                    {
+                        "id": 1
+                    }
+                ]
+            }),
+            method: 'put'
+        });
+
+        expect(object).to.be.instanceof(FedaPayObject);
+        expect(object.payouts[0]).to.be.instanceof(Payout);
+        expect(object.payouts[0].id).to.equal(1);
+        expect(object.payouts[0].status).to.equal('sent');
+        expect(object.payouts[0].sent_at).to.equal('2018-11-01 18:30:22');
+    });
 });

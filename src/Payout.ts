@@ -169,7 +169,7 @@ export class Payout extends Resource {
 
         payouts.forEach(payout => {
             let item: any = {};
-            if (payout['id']) {
+            if (!payout['id']) {
                 throw new Error(
                     'Invalid id argument. You must specify payout id.'
                 );
@@ -206,7 +206,7 @@ export class Payout extends Resource {
 
         payouts.forEach(payout => {
             let item: any = {};
-            if (payout['id']) {
+            if (!payout['id']) {
                 throw new Error(
                     'Invalid id argument. You must specify payout id.'
                 );
