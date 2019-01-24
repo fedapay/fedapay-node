@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var path = require("path");
+//var path = require("path");
 var FedaPay = /** @class */ (function () {
     function FedaPay() {
     }
