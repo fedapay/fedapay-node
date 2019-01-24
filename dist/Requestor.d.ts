@@ -24,7 +24,7 @@ export declare class Requestor {
      * Return the httpClient
      * @returns {AxiosInstance}
      */
-    private httpClient();
+    private httpClient;
     /**
      * Set the http client isntance
      * @param {AxiosInstance} client
@@ -34,7 +34,7 @@ export declare class Requestor {
      * Apply request interceptor
      * @param {AxiosInstance} httpClient
      */
-    private applyRequestInterceptors(httpClient);
+    private applyRequestInterceptors;
     /**
      * Sent request
      * @param {string} method

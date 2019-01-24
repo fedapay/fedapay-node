@@ -8,7 +8,7 @@ export interface RequestInterceptor {
 };
 
 export class Requestor {
-    readonly SANDBOX_BASE = 'https://sdx-api.fedapay.com';
+    readonly SANDBOX_BASE = 'https://sandbox-api.fedapay.com';
     readonly PRODUCTION_BASE = 'https://api.fedapay.com';
 
     protected apiKey: string;

@@ -6,7 +6,7 @@ var FedaPay_1 = require("./FedaPay");
 ;
 var Requestor = /** @class */ (function () {
     function Requestor() {
-        this.SANDBOX_BASE = 'https://sdx-api.fedapay.com';
+        this.SANDBOX_BASE = 'https://sandbox-api.fedapay.com';
         this.PRODUCTION_BASE = 'https://api.fedapay.com';
         this.accountId = '';
         this.apiKey = FedaPay_1.FedaPay.getApiKey();

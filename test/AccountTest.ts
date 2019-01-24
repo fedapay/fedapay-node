@@ -29,7 +29,7 @@ describe('AccountTest', () => {
         let object = await Account.all();
 
         exceptRequest({
-            url: 'https://sdx-api.fedapay.com/v1/accounts',
+            url: 'https://sandbox-api.fedapay.com/v1/accounts',
             method: 'get'
         });
 
@@ -64,7 +64,7 @@ describe('AccountTest', () => {
         let account = await Account.retrieve(1);
 
         exceptRequest({
-            url: 'https://sdx-api.fedapay.com/v1/accounts/1',
+            url: 'https://sandbox-api.fedapay.com/v1/accounts/1',
             method: 'get'
         });
 
@@ -100,7 +100,7 @@ describe('AccountTest', () => {
             let account = await Account.create(data);
         } catch (e) {
             exceptRequest({
-                url: 'https://sdx-api.fedapay.com/v1/accounts',
+                url: 'https://sandbox-api.fedapay.com/v1/accounts',
                 data: JSON.stringify(data),
                 method: 'post'
             });
@@ -135,7 +135,7 @@ describe('AccountTest', () => {
         let account = await Account.create(data);
 
         exceptRequest({
-            url: 'https://sdx-api.fedapay.com/v1/accounts',
+            url: 'https://sandbox-api.fedapay.com/v1/accounts',
             data: JSON.stringify(data),
             method: 'post'
         });
@@ -169,7 +169,7 @@ describe('AccountTest', () => {
         let account = await Account.retrieve(1);
 
         exceptRequest({
-            url: 'https://sdx-api.fedapay.com/v1/accounts/1',
+            url: 'https://sandbox-api.fedapay.com/v1/accounts/1',
             method: 'get'
         });
 
@@ -206,7 +206,7 @@ describe('AccountTest', () => {
         let account = await Account.update(1, data);
 
         exceptRequest({
-            url: 'https://sdx-api.fedapay.com/v1/accounts/1',
+            url: 'https://sandbox-api.fedapay.com/v1/accounts/1',
             data: JSON.stringify(data),
             method: 'put'
         });
@@ -244,7 +244,7 @@ describe('AccountTest', () => {
         let account = await Account.create(data);
 
         exceptRequest({
-            url: 'https://sdx-api.fedapay.com/v1/accounts',
+            url: 'https://sandbox-api.fedapay.com/v1/accounts',
             data: JSON.stringify(data),
             method: 'post'
         });
@@ -256,7 +256,7 @@ describe('AccountTest', () => {
         await account.delete();
 
         exceptRequest({
-            url: 'https://sdx-api.fedapay.com/v1/accounts/1',
+            url: 'https://sandbox-api.fedapay.com/v1/accounts/1',
             method: 'delete'
         });
     });
