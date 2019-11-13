@@ -11,6 +11,17 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var Resource_1 = require("./Resource");
+/**
+ * Class Account
+ *
+ * @property int $id
+ * @property string $name
+ * @property string $timezone
+ * @property string $country
+ * @property string $verify
+ * @property string $created_at
+ * @property string $updated_at
+ */
 var Account = /** @class */ (function (_super) {
     __extends(Account, _super);
     function Account() {

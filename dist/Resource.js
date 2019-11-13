@@ -16,6 +16,9 @@ var FedaPay_1 = require("./FedaPay");
 var FedaPayObject_1 = require("./FedaPayObject");
 var Requestor_1 = require("./Requestor");
 var Util_1 = require("./Util");
+/**
+ * Class Resource
+ */
 var Resource = /** @class */ (function (_super) {
     __extends(Resource, _super);
     function Resource() {

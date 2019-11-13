@@ -4,17 +4,13 @@ var axios_1 = require("axios");
 var Error_1 = require("./Error");
 var FedaPay_1 = require("./FedaPay");
 ;
+/**
+* Class Requestor
+*/
 var Requestor = /** @class */ (function () {
     function Requestor() {
         this.SANDBOX_BASE = 'https://sandbox-api.fedapay.com';
         this.PRODUCTION_BASE = 'https://api.fedapay.com';
-        this.accountId = '';
-        this.apiKey = FedaPay_1.FedaPay.getApiKey();
-        this.apiBase = FedaPay_1.FedaPay.getApiBase();
-        this.token = FedaPay_1.FedaPay.getToken();
-        this.environment = FedaPay_1.FedaPay.getEnvironment();
-        this.apiVersion = FedaPay_1.FedaPay.getApiVersion();
-        this.accountId = FedaPay_1.FedaPay.getAccountId();
     }
     /**
      * Set the http client isntance
@@ -89,10 +85,12 @@ var Requestor = /** @class */ (function () {
      * @returns {string}
      */
     Requestor.prototype.baseUrl = function () {
-        if (this.apiBase) {
-            return this.apiBase;
+        var apiBase = FedaPay_1.FedaPay.getApiBase();
+        var environment = FedaPay_1.FedaPay.getEnvironment();
+        if (apiBase) {
+            return apiBase;
         }
-        switch (this.environment) {
+        switch (environment) {
             case 'development':
             case 'sandbox':
             case 'test':
@@ -121,20 +119,22 @@ var Requestor = /** @class */ (function () {
      */
     Requestor.prototype.url = function (path) {
         if (path === void 0) { path = ''; }
-        return this.baseUrl() + "/" + this.apiVersion + path;
+        return this.baseUrl() + "/" + FedaPay_1.FedaPay.getApiVersion() + path;
     };
     /**
      * Return default headers
      * @returns {Object}
      */
     Requestor.prototype.defaultHeaders = function () {
+        var token = FedaPay_1.FedaPay.getApiKey() || FedaPay_1.FedaPay.getToken();
+        var accountId = FedaPay_1.FedaPay.getAccountId();
         var _default = {
             'X-Version': FedaPay_1.FedaPay.VERSION,
             'X-Source': 'FedaPay NodeLib',
-            'Authorization': 'Bearer ' + (this.apiKey || this.token)
+            'Authorization': 'Bearer ' + token
         };
-        if (this.accountId) {
-            _default['FedaPay-Account'] = this.accountId;
+        if (accountId) {
+            _default['FedaPay-Account'] = accountId;
         }
         return _default;
     };

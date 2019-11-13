@@ -11,6 +11,19 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var Resource_1 = require("./Resource");
+/**
+ * Class Currency
+ *
+ * @property int $id
+ * @property string $name
+ * @property string $iso
+ * @property int $code
+ * @property string $prefix
+ * @property string $suffix
+ * @property string $div
+ * @property string $created_at
+ * @property string $updated_at
+ */
 var Currency = /** @class */ (function (_super) {
     __extends(Currency, _super);
     function Currency() {

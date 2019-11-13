@@ -91,7 +91,7 @@ describe('LogTests', () => {
 
         expect(object).to.be.instanceof(FedaPayObject);
         expect(object).to.be.instanceof(Log);
-        
+
         expect(object.id).to.equal(1);
         expect(object.klass).to.equal('v1/log');
         expect(object.method).to.equal('GET');

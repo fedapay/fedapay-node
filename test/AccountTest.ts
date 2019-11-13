@@ -94,8 +94,8 @@ describe('AccountTest', () => {
         nock(/fedapay\.com/)
             .post('/v1/accounts')
             .reply(200, body);
-        
-            
+
+
         try {
             let account = await Account.create(data);
         } catch (e) {
@@ -252,7 +252,7 @@ describe('AccountTest', () => {
         nock(/fedapay\.com/)
             .delete('/v1/accounts/1')
             .reply(200);
-        
+
         await account.delete();
 
         exceptRequest({

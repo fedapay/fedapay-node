@@ -1,6 +1,9 @@
 import * as isPlainObject from 'lodash.isplainobject';
 import { arrayToFedaPayObject, stripApiVersion } from './Util';
 
+/**
+ * Class FedaPayObject
+ */
 export class FedaPayObject {
     [key: string]: any;
 

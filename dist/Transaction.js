@@ -12,6 +12,19 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var _1 = require(".");
 var Util_1 = require("./Util");
+/**
+ * Class Transaction
+ *
+ * @property int $id
+ * @property string $reference
+ * @property string $description
+ * @property string $callback_url
+ * @property string $amount
+ * @property string $status
+ * @property int $transaction_id
+ * @property string $created_at
+ * @property string $updated_at
+ */
 var Transaction = /** @class */ (function (_super) {
     __extends(Transaction, _super);
     function Transaction() {

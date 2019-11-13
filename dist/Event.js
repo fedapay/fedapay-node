@@ -11,6 +11,18 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var _1 = require(".");
+/**
+ * Class Event
+ *
+ * @property int $id
+ * @property string $type
+ * @property string $entity
+ * @property int $object_id
+ * @property int $account_id
+ * @property string $object
+ * @property string $created_at
+ * @property string $updated_at
+ */
 var Event = /** @class */ (function (_super) {
     __extends(Event, _super);
     function Event() {

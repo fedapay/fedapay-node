@@ -3,18 +3,14 @@ export interface RequestInterceptor {
     callback: (value: AxiosRequestConfig) => AxiosRequestConfig | Promise<AxiosRequestConfig>;
     onRejected?: (error: any) => any;
 }
+/**
+* Class Requestor
+*/
 export declare class Requestor {
     readonly SANDBOX_BASE: string;
     readonly PRODUCTION_BASE: string;
-    protected apiKey: string;
-    protected apiBase: string;
-    protected token: string;
-    protected environment: string;
-    protected apiVersion: string;
-    protected accountId: string | number;
     protected static httpClient: AxiosInstance;
     protected static requestInterceptors: RequestInterceptor[];
-    constructor();
     /**
      * Set the http client isntance
      * @param {AxiosInstance} client

@@ -1,5 +1,16 @@
 import { FedaPayObject } from './FedaPayObject';
 import { Resource } from './Resource';
+/**
+ * Class Account
+ *
+ * @property int $id
+ * @property string $name
+ * @property string $timezone
+ * @property string $country
+ * @property string $verify
+ * @property string $created_at
+ * @property string $updated_at
+ */
 export declare class Account extends Resource {
     /**
      * @param {string|number} id

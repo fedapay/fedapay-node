@@ -14,3 +14,4 @@ __export(require("./Account"));
 __export(require("./Event"));
 __export(require("./Log"));
 __export(require("./Transaction"));
+__export(require("./Payout"));
