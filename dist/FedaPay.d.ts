@@ -2,7 +2,7 @@
  * Class FedaPay
  */
 export declare class FedaPay {
-    static readonly VERSION: string;
+    static readonly VERSION = "1.1.1";
     protected static apiKey: string;
     protected static apiBase: string;
     protected static token: string;

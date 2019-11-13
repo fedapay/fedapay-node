@@ -23,3 +23,7 @@ export declare function stripApiVersion(key: any, opts: any): string;
  * @return mixed
  */
 export declare function toDateString(date: any): string | number;
+/**
+   * Secure compare, from https://github.com/freewil/scmp
+   */
+export declare function secureCompare(a: any, b: any): boolean;

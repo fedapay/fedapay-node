@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+var crypto = require("crypto");
 var FedaPayObject_1 = require("./FedaPayObject");
 /**
  * Convert response to FedaPayObject
@@ -78,3 +79,27 @@ function toDateString(date) {
     }
 }
 exports.toDateString = toDateString;
+/**
+   * Secure compare, from https://github.com/freewil/scmp
+   */
+function secureCompare(a, b) {
+    a = Buffer.from(a);
+    b = Buffer.from(b);
+    // return early here if buffer lengths are not equal since timingSafeEqual
+    // will throw if buffer lengths are not equal
+    if (a.length !== b.length) {
+        return false;
+    }
+    // use crypto.timingSafeEqual if available (since Node.js v6.6.0),
+    // otherwise use our own scmp-internal function.
+    if (crypto.timingSafeEqual) {
+        return crypto.timingSafeEqual(a, b);
+    }
+    var len = a.length;
+    var result = 0;
+    for (var i = 0; i < len; ++i) {
+        result |= a[i] ^ b[i];
+    }
+    return result === 0;
+}
+exports.secureCompare = secureCompare;

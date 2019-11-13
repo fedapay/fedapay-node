@@ -21,3 +21,7 @@ export declare class ApiConnectionError extends Base {
 }
 export declare class InvalidRequest extends Base {
 }
+export declare class SignatureVerificationError extends Base {
+    sigHeader: any;
+    constructor(message: string, sigHeader?: any, httpBody?: any);
+}
