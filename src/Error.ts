@@ -1,22 +1,13 @@
 export class Base {
-    message: string;
-    httpStatus: any;
-    httpRequest: any;
-    httpResponse: any;
     errorMessage: any;
     errors: any;
 
     constructor(
-        message: string,
-        httpStatus = null,
-        httpRequest = null,
-        httpResponse = null
+        public message: string,
+        public httpStatus = null,
+        public httpRequest = null,
+        public httpResponse = null
     ) {
-        this.message = message;
-        this.httpStatus = httpStatus;
-        this.httpRequest = httpRequest;
-        this.httpResponse = httpResponse;
-
         this.fetchErrors();
     }
 
@@ -50,3 +41,13 @@ export class Base {
 export class ApiConnectionError extends Base { }
 
 export class InvalidRequest extends Base { }
+
+export class SignatureVerificationError extends Base {
+    constructor(
+        message: string,
+        public sigHeader = null,
+        httpBody = null
+    ) {
+        super(message, null, null, httpBody)
+    }
+}

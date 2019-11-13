@@ -3,8 +3,7 @@ import * as nock from 'nock';
 import {
     Payout,
     FedaPayObject,
-    Customer,
-    Currency
+    Customer
 } from '../src';
 import { exceptRequest, setUp, tearDown } from './utils';
 

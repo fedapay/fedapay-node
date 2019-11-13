@@ -1,7 +1,6 @@
 import { expect } from 'chai';
 import * as nock from 'nock';
-import * as faker from 'faker';
-import { ApiConnectionError, Transaction, FedaPayObject } from '../src';
+import { Transaction, FedaPayObject } from '../src';
 import { exceptRequest, setUp, tearDown } from './utils';
 
 describe('TransactionTest', () => {
