@@ -5,7 +5,7 @@ applications written in server-side JavaScript.
 
 ## Documentation
 
-See the [Node API docs](https://fedapay.com/docs/api/node).
+See the [Node API docs](https://docs.fedapay.com/paiements/transactions).
 
 ## Installation
 
@@ -17,7 +17,7 @@ npm install fedapay --save
 
 ## Usage
 
-The package needs to be configured with your account's secret key which is available in your [Fedapay Dashboard](https://live.fedapay.com/api-keys). Require it with the key's value:
+The package needs to be configured with your account's secret key which is available in your [Fedapay Dashboard](https://live.fedapay.com/api). Require it with the key's value:
 
 ``` js
 import { Customer } from 'fedapay';
