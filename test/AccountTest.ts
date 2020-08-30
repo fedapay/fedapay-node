@@ -1,9 +1,9 @@
+import 'mocha';
 import { expect } from 'chai';
 import * as nock from 'nock';
 import * as faker from 'faker';
 import { ApiConnectionError, Account, FedaPayObject } from '../src';
 import { setUp, tearDown, exceptRequest } from './utils';
-
 
 describe('AccountTest', () => {
     beforeEach(setUp);

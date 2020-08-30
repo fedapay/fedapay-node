@@ -13,6 +13,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.ApiKey = void 0;
 var Resource_1 = require("./Resource");
 /**
  * Class ApiKey

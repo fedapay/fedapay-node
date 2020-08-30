@@ -9,6 +9,7 @@ export interface RequestInterceptor {
 export declare class Requestor {
     readonly SANDBOX_BASE = "https://sandbox-api.fedapay.com";
     readonly PRODUCTION_BASE = "https://api.fedapay.com";
+    readonly DEVELOPMENT_BASE = "https://dev-api.fedapay.com";
     protected static httpClient: AxiosInstance;
     protected static requestInterceptors: RequestInterceptor[];
     /**

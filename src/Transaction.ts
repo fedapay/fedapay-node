@@ -1,6 +1,6 @@
 import { Resource, FedaPayObject } from '.';
+import { InvalidRequest } from './Error';
 import { arrayToFedaPayObject } from './Util';
-
 /**
  * Class Transaction
  *
@@ -15,6 +15,53 @@ import { arrayToFedaPayObject } from './Util';
  * @property string $updated_at
  */
 export class Transaction extends Resource {
+    /**
+     * Available mobile money mode
+     */
+    private static AVAILABLE_MOBILE_MONEY = ['mtn', 'moov', 'mtn_ci', 'moov_tg'];
+
+    private static PAID_STATUS = [
+        'approved', 'transferred', 'refunded',
+        'approved_partially_refunded', 'transferred_partially_refunded'
+    ];
+
+    /**
+     * Check the transaction mode for send now request
+     *
+     * @param {string} mode
+     * @return {boolean}
+     */
+    protected mobileMoneyModeAvailable(mode): boolean {
+        return Transaction.AVAILABLE_MOBILE_MONEY.includes(mode);
+    }
+
+    /**
+     * Check if the transaction was paid
+     *
+     * @return {boolean}
+     */
+    public wasPaid(): boolean {
+        return Transaction.PAID_STATUS.includes(this.status);
+    }
+
+    /**
+     * Check if the transacton was refunded. Status must include refunded.
+     *
+     * @return {boolean}
+     */
+    public wasRefunded() {
+        return this.status.includes('refunded');
+    }
+
+    /**
+     * Check if the transacton was partially refunded. Status must include partially_refunded.
+     *
+     * @return {boolean}
+     */
+    public wasPartiallyRefunded(): boolean {
+        return this.status.includes('partially_refunded');
+    }
+
     /**
      * @param {Object|null} params
      * @param {Object|null} headers
@@ -84,5 +131,48 @@ export class Transaction extends Resource {
 
                 return <FedaPayObject>object;
             });
+    }
+
+    /**
+     * Send Mobile Money request with token
+     * @param {string} mode
+     * @param {string} token
+     * @param {Object} params
+     * @param {Object} headers
+     *
+     * @returns {Promise<FedaPayObject>}
+     */
+    public sendNowWithToken(mode, token, params: any = {}, headers = {}) : Promise<FedaPayObject> {
+        if (!this.mobileMoneyModeAvailable(mode)) {
+            throw new InvalidRequest(
+                `Invalid payment method '${mode}' supplied.
+                You have to use one of the following payment methods
+                [${Transaction.AVAILABLE_MOBILE_MONEY.join(',')}]`
+            );
+        }
+
+        const url = '/' + mode;
+        params.token = token;
+
+        return Transaction._staticRequest('post', url, params, headers)
+            .then(({ data, options }) => {
+                let object = <FedaPayObject>arrayToFedaPayObject(data, options);
+
+                return <FedaPayObject>object;
+            });
+    }
+
+    /**
+     * Send Mobile Money request
+     * @param string mode
+     * @param {Object} params
+     * @param {Object} headers
+     *
+     * @returns {Promise<FedaPayObject>}
+     */
+    public async sendNow(mode, params = {}, headers = {}) : Promise<FedaPayObject> {
+        const tokenObject = await this.generateToken({}, headers);
+
+        return this.sendNowWithToken(mode, tokenObject.token, params, headers);
     }
 }

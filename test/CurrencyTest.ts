@@ -1,3 +1,4 @@
+import 'mocha';
 import { expect } from 'chai';
 import * as nock from 'nock';
 import { ApiConnectionError, Currency, FedaPayObject } from '../src';

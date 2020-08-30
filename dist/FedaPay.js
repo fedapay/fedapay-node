@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.FedaPay = void 0;
 var path = require("path");
 /**
  * Class FedaPay

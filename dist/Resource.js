@@ -13,6 +13,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.Resource = void 0;
 var pluralize = require("pluralize");
 var Error_1 = require("./Error");
 var FedaPay_1 = require("./FedaPay");

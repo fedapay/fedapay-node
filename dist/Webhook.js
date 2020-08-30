@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.WebhookSignature = exports.Webhook = void 0;
 var crypto = require("crypto");
 var Error_1 = require("./Error");
 var Util_1 = require("./Util");

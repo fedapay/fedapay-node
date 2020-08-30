@@ -1,3 +1,4 @@
+import 'mocha';
 import { Log, FedaPayObject } from '../src';
 import { exceptRequest, setUp, tearDown } from './utils';
 import { expect } from 'chai';

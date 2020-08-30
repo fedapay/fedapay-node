@@ -1,3 +1,4 @@
+import 'mocha';
 import { expect } from 'chai';
 import { InvalidRequest } from '../src';
 import { Foo, FooCurrency, FooPerson, FooTest } from './fixtures';

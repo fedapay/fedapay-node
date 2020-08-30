@@ -13,6 +13,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.SignatureVerificationError = exports.InvalidRequest = exports.ApiConnectionError = exports.Base = void 0;
 var Base = /** @class */ (function () {
     function Base(message, httpStatus, httpRequest, httpResponse) {
         if (httpStatus === void 0) { httpStatus = null; }

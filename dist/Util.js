@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.secureCompare = exports.toDateString = exports.stripApiVersion = exports.arrayToFedaPayObject = exports.convertToFedaPayObject = void 0;
 var crypto = require("crypto");
 var FedaPayObject_1 = require("./FedaPayObject");
 /**

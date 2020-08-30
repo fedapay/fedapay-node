@@ -14,6 +14,36 @@ import { Resource, FedaPayObject } from '.';
  */
 export declare class Transaction extends Resource {
     /**
+     * Available mobile money mode
+     */
+    private static AVAILABLE_MOBILE_MONEY;
+    private static PAID_STATUS;
+    /**
+     * Check the transaction mode for send now request
+     *
+     * @param {string} mode
+     * @return {boolean}
+     */
+    protected mobileMoneyModeAvailable(mode: any): boolean;
+    /**
+     * Check if the transaction was paid
+     *
+     * @return {boolean}
+     */
+    wasPaid(): boolean;
+    /**
+     * Check if the transacton was refunded. Status must include refunded.
+     *
+     * @return {boolean}
+     */
+    wasRefunded(): any;
+    /**
+     * Check if the transacton was partially refunded. Status must include partially_refunded.
+     *
+     * @return {boolean}
+     */
+    wasPartiallyRefunded(): boolean;
+    /**
      * @param {Object|null} params
      * @param {Object|null} headers
      * @returns {Promise<Transaction>}
@@ -56,4 +86,23 @@ export declare class Transaction extends Resource {
      * @returns {Promise<FedaPayObject>}
      */
     generateToken(params?: {}, headers?: {}): Promise<FedaPayObject>;
+    /**
+     * Send Mobile Money request with token
+     * @param {string} mode
+     * @param {string} token
+     * @param {Object} params
+     * @param {Object} headers
+     *
+     * @returns {Promise<FedaPayObject>}
+     */
+    sendNowWithToken(mode: any, token: any, params?: any, headers?: {}): Promise<FedaPayObject>;
+    /**
+     * Send Mobile Money request
+     * @param string mode
+     * @param {Object} params
+     * @param {Object} headers
+     *
+     * @returns {Promise<FedaPayObject>}
+     */
+    sendNow(mode: any, params?: {}, headers?: {}): Promise<FedaPayObject>;
 }

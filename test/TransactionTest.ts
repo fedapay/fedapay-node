@@ -1,3 +1,4 @@
+import 'mocha';
 import { expect } from 'chai';
 import * as nock from 'nock';
 import { Transaction, FedaPayObject } from '../src';
@@ -404,5 +405,120 @@ describe('TransactionTest', () => {
         expect(tokenObject).to.be.instanceof(FedaPayObject);
         expect(tokenObject.token).to.equal('PAYEMENT_TOKEN');
         expect(tokenObject.url).to.equal('https://process.fedapay.com/PAYEMENT_TOKEN');
+    });
+
+    it('should send transaction now with token', async () => {
+        let data = {
+            'customer': {
+                'id': 1
+            },
+            'currency': {
+                'iso': 'XOF'
+            },
+            'description': 'description',
+            'callback_url': 'http://e-shop.com',
+            'amount': 1000,
+            'include': 'customer,currency'
+        };
+
+        let body: any = {
+            'v1/transaction': {
+                'id': 1,
+                'klass': 'v1/transaction',
+                'transaction_key': '0KJAU01',
+                'reference': '109329828',
+                'amount': data.amount,
+                'description': data.description,
+                'callback_url': data.callback_url,
+                'status': 'pending',
+                'customer_id': data.customer.id,
+                'currency_id': 1,
+                'mode': 'mtn',
+                'created_at': '2018-03-12T09:09:03.969Z',
+                'updated_at': '2018-03-12T09:09:03.969Z',
+                'paid_at': '2018-03-12T09:09:03.969Z'
+            }
+        };
+
+        nock(/fedapay\.com/)
+            .post('/v1/transactions')
+            .reply(200, body);
+
+        let transaction = await Transaction.create(data);
+
+        body = { 'message': 'success' };
+        nock(/fedapay\.com/)
+            .post('/v1/mtn')
+            .reply(200, body);
+
+        const object = await transaction.sendNowWithToken('mtn', 'PAYEMENT_TOKEN');
+
+        exceptRequest({
+            url: 'https://sandbox-api.fedapay.com/v1/mtn',
+            method: 'post'
+        });
+
+        expect(object).to.be.instanceof(FedaPayObject);
+        expect(object.message).to.equal('success');
+    });
+
+    it('should send transaction now by generating token', async () => {
+        let data = {
+            'customer': {
+                'id': 1
+            },
+            'currency': {
+                'iso': 'XOF'
+            },
+            'description': 'description',
+            'callback_url': 'http://e-shop.com',
+            'amount': 1000,
+            'include': 'customer,currency'
+        };
+
+        let body: any = {
+            'v1/transaction': {
+                'id': 1,
+                'klass': 'v1/transaction',
+                'transaction_key': '0KJAU01',
+                'reference': '109329828',
+                'amount': data.amount,
+                'description': data.description,
+                'callback_url': data.callback_url,
+                'status': 'pending',
+                'customer_id': data.customer.id,
+                'currency_id': 1,
+                'mode': 'mtn',
+                'created_at': '2018-03-12T09:09:03.969Z',
+                'updated_at': '2018-03-12T09:09:03.969Z',
+                'paid_at': '2018-03-12T09:09:03.969Z'
+            }
+        };
+
+        nock(/fedapay\.com/)
+            .post('/v1/transactions')
+            .reply(200, body);
+
+        let transaction = await Transaction.create(data);
+
+        body = { 'token': 'PAYEMENT_TOKEN' };
+        nock(/fedapay\.com/)
+            .post('/v1/transactions/1/token')
+            .reply(200, body);
+
+        body = { 'message': 'success' };
+        nock(/fedapay\.com/)
+            .post('/v1/mtn')
+            .reply(200, body);
+
+        const object = await transaction.sendNow('mtn');
+
+        exceptRequest({
+            url: 'https://sandbox-api.fedapay.com/v1/mtn',
+            method: 'post'
+        });
+
+        expect(object).to.be.instanceof(FedaPayObject);
+        expect(object.message).to.equal('success');
     });
 });

@@ -52,8 +52,8 @@ export declare class Resource extends FedaPayObject {
     protected static _staticRequest(method: string, url: string, params?: any, headers?: any): Promise<{
         data: any;
         options: {
-            'apiVersion': string;
-            'environment': string;
+            apiVersion: string;
+            environment: string;
         };
     }>;
     /**

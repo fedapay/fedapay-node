@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.Requestor = void 0;
 var axios_1 = require("axios");
 var Error_1 = require("./Error");
 var FedaPay_1 = require("./FedaPay");
@@ -11,6 +12,7 @@ var Requestor = /** @class */ (function () {
     function Requestor() {
         this.SANDBOX_BASE = 'https://sandbox-api.fedapay.com';
         this.PRODUCTION_BASE = 'https://api.fedapay.com';
+        this.DEVELOPMENT_BASE = 'https://dev-api.fedapay.com';
     }
     /**
      * Set the http client isntance
@@ -92,6 +94,8 @@ var Requestor = /** @class */ (function () {
         }
         switch (environment) {
             case 'development':
+            case 'dev':
+                return this.DEVELOPMENT_BASE;
             case 'sandbox':
             case 'test':
             case null:

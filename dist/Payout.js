@@ -13,6 +13,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.Payout = void 0;
 var _1 = require(".");
 var Util_1 = require("./Util");
 /**

@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.FedaPayObject = void 0;
 var isPlainObject = require("lodash.isplainobject");
 var Util_1 = require("./Util");
 /**
