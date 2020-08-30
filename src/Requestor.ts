@@ -13,6 +13,7 @@ export interface RequestInterceptor {
 export class Requestor {
     readonly SANDBOX_BASE = 'https://sandbox-api.fedapay.com';
     readonly PRODUCTION_BASE = 'https://api.fedapay.com';
+    readonly DEVELOPMENT_BASE = 'https://dev-api.fedapay.com';
 
     protected static httpClient: AxiosInstance;
     protected static requestInterceptors: RequestInterceptor[] = [];
@@ -115,6 +116,8 @@ export class Requestor {
 
         switch (environment) {
             case 'development':
+            case 'dev':
+                return this.DEVELOPMENT_BASE;
             case 'sandbox':
             case 'test':
             case null:
