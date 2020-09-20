@@ -25,4 +25,12 @@ export declare class Event extends Resource {
      * @returns {Promise<FedaPayObject>}
      */
     static all(params?: {}, headers?: {}): Promise<FedaPayObject>;
+    /**
+     * Subscribe to events flow
+     * @param {Object} params
+     * @param {Object} headers
+     *
+     * @returns {Promise<FedaPayObject>}
+     */
+    static subscribe(params?: {}, headers?: {}): Promise<FedaPayObject>;
 }

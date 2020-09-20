@@ -30,4 +30,12 @@ export declare class Log extends Resource {
      * @returns {Promise<Event>}
      */
     static retrieve(id: any, headers?: {}): Promise<Log>;
+    /**
+     * Subscribe to logs flow
+     * @param {Object} params
+     * @param {Object} headers
+     *
+     * @returns {Promise<FedaPayObject>}
+     */
+    static subscribe(params?: {}, headers?: {}): Promise<FedaPayObject>;
 }
