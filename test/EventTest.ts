@@ -83,4 +83,24 @@ describe('EventTest', () => {
         expect(object.events[0].created_at).to.equal('2018-03-12T09:09:03.969Z');
         expect(object.events[0].updated_at).to.equal('2018-03-12T09:09:03.969Z');
     });
+
+    it('should send seubscribe request', async () => {
+        let body = {
+            'foo': 'bar'
+        };
+
+        nock(/fedapay\.com/)
+            .post('/v1/events/subscribe')
+            .reply(200, body);
+
+        let object = await Event.subscribe();
+
+        exceptRequest({
+            url: 'https://sandbox-api.fedapay.com/v1/events/subscribe',
+            method: 'post'
+        });
+
+        expect(object).to.be.instanceof(FedaPayObject);
+        expect(object.foo).to.equal('bar');
+    });
 });

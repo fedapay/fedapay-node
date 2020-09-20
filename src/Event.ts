@@ -41,7 +41,8 @@ export class Event extends Resource{
      * @returns {Promise<FedaPayObject>}
      */
     static async subscribe(params = {}, headers = {}) : Promise<FedaPayObject> {
-        return Event._staticRequest('post', '/subscribe', params, headers)
+        const url = this.classPath() + '/subscribe';
+        return this._staticRequest('post', url, params, headers)
             .then(({ data, options }) => {
                 let object = <FedaPayObject>arrayToFedaPayObject(data, options);
 
