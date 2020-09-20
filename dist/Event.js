@@ -100,8 +100,10 @@ var Event = /** @class */ (function (_super) {
         if (params === void 0) { params = {}; }
         if (headers === void 0) { headers = {}; }
         return __awaiter(this, void 0, void 0, function () {
+            var url;
             return __generator(this, function (_a) {
-                return [2 /*return*/, Event._staticRequest('post', '/subscribe', params, headers)
+                url = this.classPath() + '/subscribe';
+                return [2 /*return*/, this._staticRequest('post', url, params, headers)
                         .then(function (_a) {
                         var data = _a.data, options = _a.options;
                         var object = Util_1.arrayToFedaPayObject(data, options);
