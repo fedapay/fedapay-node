@@ -142,7 +142,7 @@ export class Transaction extends Resource {
      *
      * @returns {Promise<FedaPayObject>}
      */
-    public sendNowWithToken(mode, token, params: any = {}, headers = {}) : Promise<FedaPayObject> {
+    sendNowWithToken(mode, token, params: any = {}, headers = {}) : Promise<FedaPayObject> {
         if (!this.mobileMoneyModeAvailable(mode)) {
             throw new InvalidRequest(
                 `Invalid payment method '${mode}' supplied.
@@ -170,7 +170,7 @@ export class Transaction extends Resource {
      *
      * @returns {Promise<FedaPayObject>}
      */
-    public async sendNow(mode, params = {}, headers = {}) : Promise<FedaPayObject> {
+    async sendNow(mode, params = {}, headers = {}) : Promise<FedaPayObject> {
         const tokenObject = await this.generateToken({}, headers);
 
         return this.sendNowWithToken(mode, tokenObject.token, params, headers);

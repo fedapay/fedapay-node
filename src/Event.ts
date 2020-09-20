@@ -1,4 +1,5 @@
 import { Resource, FedaPayObject } from '.';
+import { arrayToFedaPayObject } from './Util';
 
 /**
  * Class Event
@@ -30,5 +31,21 @@ export class Event extends Resource{
      */
     static all(params = {}, headers = {}): Promise<FedaPayObject> {
         return <Promise<FedaPayObject>>this._all(params, headers);
+    }
+
+    /**
+     * Subscribe to events flow
+     * @param {Object} params
+     * @param {Object} headers
+     *
+     * @returns {Promise<FedaPayObject>}
+     */
+    static async subscribe(params = {}, headers = {}) : Promise<FedaPayObject> {
+        return Event._staticRequest('post', '/subscribe', params, headers)
+            .then(({ data, options }) => {
+                let object = <FedaPayObject>arrayToFedaPayObject(data, options);
+
+                return <FedaPayObject>object;
+            });
     }
 }

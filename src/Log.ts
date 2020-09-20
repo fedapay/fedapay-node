@@ -1,4 +1,5 @@
 import { Resource, FedaPayObject, } from '.';
+import { arrayToFedaPayObject } from './Util';
 
 /**
  * Class Log
@@ -35,5 +36,21 @@ export class Log extends Resource {
      */
     static retrieve(id, headers = {}): Promise<Log> {
         return <Promise<Log>>this._retrieve(id, headers);
+    }
+
+    /**
+     * Subscribe to logs flow
+     * @param {Object} params
+     * @param {Object} headers
+     *
+     * @returns {Promise<FedaPayObject>}
+     */
+    static async subscribe(params = {}, headers = {}) : Promise<FedaPayObject> {
+        return Log._staticRequest('post', '/subscribe', params, headers)
+            .then(({ data, options }) => {
+                let object = <FedaPayObject>arrayToFedaPayObject(data, options);
+
+                return <FedaPayObject>object;
+            });
     }
 }
