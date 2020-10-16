@@ -10,3 +10,4 @@ export * from './Event';
 export * from './Log';
 export * from './Transaction';
 export * from './Payout';
+export * from './Webhook';

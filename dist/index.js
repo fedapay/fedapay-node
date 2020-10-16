@@ -22,3 +22,4 @@ __exportStar(require("./Event"), exports);
 __exportStar(require("./Log"), exports);
 __exportStar(require("./Transaction"), exports);
 __exportStar(require("./Payout"), exports);
+__exportStar(require("./Webhook"), exports);
