@@ -20,6 +20,7 @@ export function convertToFedaPayObject(
         'v1/phone_number': require('./PhoneNumber').PhoneNumber,
         'v1/transaction': require('./Transaction').Transaction,
         'v1/payout': require('./Payout').Payout,
+        'v1/webhook': require('./Webhook').Webhook,
     };
     let object = new FedaPayObject;
     if (resp['klass']) {

@@ -1,244 +1,304 @@
 import 'mocha';
 import { expect } from 'chai';
-import { Webhook, WebhookSignature } from '../src/Webhook';
+import * as nock from 'nock';
+import { Webhook, FedaPayObject } from '../src';
+import { exceptRequest, setUp, tearDown } from './utils';
 
-const EVENT_PAYLOAD = {
-    id: 'evt_test_webhook',
-    object: 'event',
-};
-const EVENT_PAYLOAD_STRING = JSON.stringify(EVENT_PAYLOAD, null, 2);
-const SECRET = 'whsec_test_secret';
+describe('WebhookTest', () => {
 
-describe('Webhooks', () => {
-    describe('.generateTestHeaderString', () => {
-        it('should throw when no opts are passed', () => {
-            expect(() => {
-                Webhook.generateTestHeaderString();
-            }).to.throw();
+    beforeEach(setUp);
+    afterEach(tearDown);
+
+    it('should return webhook', async () => {
+        let body = {
+            'v1/webhooks': [{
+                'id': 1,
+                'klass': 'v1/webhook',
+                'url': 'http://e-shop.com',
+                'created_at': '2018-03-12T09:09:03.969Z',
+                'updated_at': '2018-03-12T09:09:03.969Z',
+            }],
+            'meta': { 'page': 1 }
+        };
+
+        nock(/fedapay\.com/)
+            .get('/v1/webhooks')
+            .reply(200, body);
+
+        let object = await Webhook.all();
+
+        exceptRequest({
+            url: 'https://sandbox-api.fedapay.com/v1/webhooks',
+            method: 'get'
         });
 
-        it('should correctly construct a webhook header', () => {
-            const header = Webhook.generateTestHeaderString({
-                payload: EVENT_PAYLOAD_STRING,
-                secret: SECRET,
-            });
+        expect(object).to.be.instanceof(FedaPayObject);
+        expect(object.meta).to.be.instanceof(FedaPayObject);
+        expect(object.webhooks[0]).to.be.instanceof(Webhook);
+        expect(object.webhooks[0].id).to.equal(1);
+        expect(object.webhooks[0].klass).to.equal('v1/webhook');
+        expect(object.webhooks[0].url).to.equal('http://e-shop.com');
+        expect(object.webhooks[0].created_at).to.equal('2018-03-12T09:09:03.969Z');
+        expect(object.webhooks[0].updated_at).to.equal('2018-03-12T09:09:03.969Z');
+    });
 
-            expect(header).to.not.be.undefined;
-            expect(header.split(',')).to.have.lengthOf(2);
+    it('should retrieve a webhook', async () => {
+        let body = {
+            'v1/webhook': {
+                'id': 1,
+                'klass': 'v1/webhook',
+                'url': 'http://e-shop.com',
+                'created_at': '2018-03-12T09:09:03.969Z',
+                'updated_at': '2018-03-12T09:09:03.969Z',
+            }
+        };
+
+        nock(/fedapay\.com/)
+            .get('/v1/webhooks/1')
+            .reply(200, body);
+
+        let webhook = await Webhook.retrieve(1);
+        exceptRequest({
+            url: 'https://sandbox-api.fedapay.com/v1/webhooks/1',
+            method: 'get'
+        });
+
+        expect(webhook).to.be.instanceof(FedaPayObject);
+        expect(webhook).to.be.instanceof(Webhook);
+        expect(webhook.id).to.equal(1);
+        expect(webhook.klass).to.equal('v1/webhook');
+        expect(webhook.url).to.equal('http://e-shop.com');
+        expect(webhook.created_at).to.equal('2018-03-12T09:09:03.969Z');
+        expect(webhook.updated_at).to.equal('2018-03-12T09:09:03.969Z');
+    });
+
+    it('should create webhook', async () => {
+        let data = {
+            'url': 'http://e-shop.com'
+        };
+
+        let body = {
+            'v1/webhook': {
+                'id': 1,
+                'klass': 'v1/webhook',
+                'url': 'http://e-shop.com',
+                'created_at': '2018-03-12T09:09:03.969Z',
+                'updated_at': '2018-03-12T09:09:03.969Z',
+            }
+        };
+
+        nock(/fedapay\.com/)
+            .post('/v1/webhooks')
+            .reply(200, body);
+
+        let webhook = await Webhook.create(data);
+
+        exceptRequest({
+            url: 'https://sandbox-api.fedapay.com/v1/webhooks',
+            data: JSON.stringify(data),
+            method: 'post'
+        });
+
+        expect(webhook).to.be.instanceof(FedaPayObject);
+        expect(webhook).to.be.instanceof(Webhook);
+        expect(webhook.id).to.equal(1);
+        expect(webhook.klass).to.equal('v1/webhook');
+        expect(webhook.url).to.equal('http://e-shop.com');
+        expect(webhook.created_at).to.equal('2018-03-12T09:09:03.969Z');
+        expect(webhook.updated_at).to.equal('2018-03-12T09:09:03.969Z');
+    });
+
+    it('should delete webhook', async () => {
+        let data = {
+            'url': 'http://e-shop.com'
+        };
+
+        let body = {
+            'v1/webhook': {
+                'id': 1,
+                'klass': 'v1/webhook',
+                'url': 'http://e-shop.com',
+                'created_at': '2018-03-12T09:09:03.969Z',
+                'updated_at': '2018-03-12T09:09:03.969Z',
+            }
+        };
+
+        nock(/fedapay\.com/)
+            .post('/v1/webhooks')
+            .reply(200, body);
+
+        let webhook = await Webhook.create(data);
+
+        exceptRequest({
+            url: 'https://sandbox-api.fedapay.com/v1/webhooks',
+            data: JSON.stringify(data),
+            method: 'post'
+        });
+
+        nock(/fedapay\.com/)
+            .delete('/v1/webhooks/1')
+            .reply(200);
+
+        await webhook.delete();
+
+        exceptRequest({
+            url: 'https://sandbox-api.fedapay.com/v1/webhooks/1',
+            method: 'delete'
         });
     });
 
-    describe('.constructEvent', () => {
-        it('should return an Event instance from a valid JSON payload and valid signature header', () => {
-            const header = Webhook.generateTestHeaderString({
-                payload: EVENT_PAYLOAD_STRING,
-                secret: SECRET,
-            });
+    it('should update webhook', async () => {
+        let data = {
+            'url': 'http://e-shop.com'
+        };
 
-            const event = Webhook.constructEvent(
-                EVENT_PAYLOAD_STRING,
-                header,
-                SECRET
-            );
+        let body = {
+            'v1/webhook': {
+                'id': 1,
+                'klass': 'v1/webhook',
+                'url': 'http://e-shop.com',
+                'created_at': '2018-03-12T09:09:03.969Z',
+                'updated_at': '2018-03-12T09:09:03.969Z',
+            }
+        };
 
-            expect(event.id).to.equal(EVENT_PAYLOAD.id);
+        nock(/fedapay\.com/)
+            .put('/v1/webhooks/1')
+            .reply(200, body);
+
+        let webhook = await Webhook.update(1, data);
+
+        exceptRequest({
+            url: 'https://sandbox-api.fedapay.com/v1/webhooks/1',
+            data: JSON.stringify(data),
+            method: 'put'
         });
 
-        it('should raise a JSON error from invalid JSON payload', () => {
-            const header = Webhook.generateTestHeaderString({
-                payload: '} I am not valid JSON; 123][',
-                secret: SECRET,
-            });
-            expect(() => {
-                Webhook.constructEvent(
-                    '} I am not valid JSON; 123][',
-                    header,
-                    SECRET
-                );
-            }).to.throw(/Unexpected token/);
-            expect(() => {
-                Webhook.constructEvent(
-                    '} I am not valid JSON; 123][',
-                    header,
-                    SECRET
-                );
-            }).to.throw(/Unexpected token/);
-        });
+        expect(webhook).to.be.instanceof(FedaPayObject);
+        expect(webhook).to.be.instanceof(Webhook);
+        expect(webhook.id).to.equal(1);
+        expect(webhook.klass).to.equal('v1/webhook');
+        expect(webhook.url).to.equal('http://e-shop.com');
+        expect(webhook.created_at).to.equal('2018-03-12T09:09:03.969Z');
+        expect(webhook.updated_at).to.equal('2018-03-12T09:09:03.969Z');
+    });
 
-        it('should raise a SignatureVerificationError from a valid JSON payload and an invalid signature header', () => {
-            const header = 'bad_header';
+    it('should update webhook with save', async () => {
+        let data = {
+            'url': 'http://e-shop.com'
+        };
 
-            expect(() => {
-                Webhook.constructEvent(EVENT_PAYLOAD_STRING, header, SECRET);
-            }).to.throw(/Unable to extract timestamp and signatures from header/);
+        let body = {
+            'v1/webhook': {
+                'id': 1,
+                'klass': 'v1/webhook',
+                'url': 'http://e-shop.com',
+                'created_at': '2018-03-12T09:09:03.969Z',
+                'updated_at': '2018-03-12T09:09:03.969Z'
+            }
+        };
+
+        nock(/fedapay\.com/)
+            .post('/v1/webhooks')
+            .reply(200, body);
+
+        let webhook = await Webhook.create(data);
+        let updateData = webhook.serializeParameters();
+
+        webhook.amount = 18500;
+
+        nock(/fedapay\.com/)
+            .put('/v1/webhooks/1')
+            .reply(200, body);
+
+        await webhook.save();
+
+        updateData.amount = 18500;
+
+        exceptRequest({
+            url: 'https://sandbox-api.fedapay.com/v1/webhooks/1',
+            data: JSON.stringify(updateData),
+            method: 'put'
         });
     });
 
-    describe('.verifySignatureHeader', () => {
-        it('should raise a SignatureVerificationError when the header does not have the expected format', () => {
-            const header = "I'm not even a real signature header";
+    it('should a stub event', async () => {
+        let data = {
+            'url': 'http://e-shop.com'
+        };
 
-            const expectedMessage = /Unable to extract timestamp and signatures from header/;
-
-            expect(() => {
-                WebhookSignature.verifyHeader(
-                    EVENT_PAYLOAD_STRING,
-                    header,
-                    SECRET
-                );
-            }).to.throw(expectedMessage);
-
-            expect(() => {
-                WebhookSignature.verifyHeader(
-                    EVENT_PAYLOAD_STRING,
-                    null,
-                    SECRET
-                );
-            }).to.throw(expectedMessage);
-
-            expect(() => {
-                WebhookSignature.verifyHeader(
-                    EVENT_PAYLOAD_STRING,
-                    undefined,
-                    SECRET
-                );
-            }).to.throw(expectedMessage);
-
-            expect(() => {
-                WebhookSignature.verifyHeader(
-                    EVENT_PAYLOAD_STRING,
-                    '',
-                    SECRET
-                );
-            }).to.throw(expectedMessage);
-        });
-
-        it('should raise a SignatureVerificationError when there are no signatures with the expected scheme', () => {
-            const header = Webhook.generateTestHeaderString({
-                payload: EVENT_PAYLOAD_STRING,
-                secret: SECRET,
-                scheme: 'v0',
-            });
-
-            expect(() => {
-                WebhookSignature.verifyHeader(
-                    EVENT_PAYLOAD_STRING,
-                    header,
-                    SECRET
-                );
-            }).to.throw(/No signatures found with expected scheme/);
-        });
-
-        it('should raise a SignatureVerificationError when there are no valid signatures for the payload', () => {
-            const header = Webhook.generateTestHeaderString({
-                payload: EVENT_PAYLOAD_STRING,
-                secret: SECRET,
-                signature: 'bad_signature',
-            });
-
-            expect(() => {
-                WebhookSignature.verifyHeader(
-                    EVENT_PAYLOAD_STRING,
-                    header,
-                    SECRET
-                );
-            }).to.throw(
-                /No signatures found matching the expected signature for payload/
-            );
-        });
-
-        it('should raise a SignatureVerificationError when the timestamp is not within the tolerance', () => {
-            const header = Webhook.generateTestHeaderString({
-                timestamp: Date.now() / 1000 - 15,
-                payload: EVENT_PAYLOAD_STRING,
-                secret: SECRET,
-            });
-
-            expect(() => {
-                WebhookSignature.verifyHeader(
-                    EVENT_PAYLOAD_STRING,
-                    header,
-                    SECRET,
-                    10
-                );
-            }).to.throw(/Timestamp outside the tolerance zone/);
-        });
-
-        it(
-            'should return true when the header contains a valid signature and ' +
-                'the timestamp is within the tolerance',
-            () => {
-                const header = Webhook.generateTestHeaderString({
-                    timestamp: Date.now() / 1000,
-                    payload: EVENT_PAYLOAD_STRING,
-                    secret: SECRET,
-                });
-
-                expect(
-                    WebhookSignature.verifyHeader(
-                        EVENT_PAYLOAD_STRING,
-                        header,
-                        SECRET,
-                        10
-                    )
-                ).to.equal(true);
+        let body: any = {
+            'v1/webhook': {
+                'id': 1,
+                'klass': 'v1/webhook',
+                'url': 'http://e-shop.com',
+                'created_at': '2018-03-12T09:09:03.969Z',
+                'updated_at': '2018-03-12T09:09:03.969Z'
             }
-        );
+        };
 
-        it('should return true when the header contains at least one valid signature', () => {
-            let header = Webhook.generateTestHeaderString({
-                timestamp: Date.now() / 1000,
-                payload: EVENT_PAYLOAD_STRING,
-                secret: SECRET,
-            });
+        nock(/fedapay\.com/)
+            .post('/v1/webhooks')
+            .reply(200, body);
 
-            header += ',v1=potato';
+        let webhook = await Webhook.create(data);
 
-            expect(
-                WebhookSignature.verifyHeader(
-                    EVENT_PAYLOAD_STRING,
-                    header,
-                    SECRET,
-                    10
-                )
-            ).to.equal(true);
+        body = {
+            'name': 'transaction.create',
+            'entity': {}
+        };
+        nock(/fedapay\.com/)
+            .post('/v1/webhooks/stub_event')
+            .reply(200, body);
+
+        const tokenObject = await Webhook.stubEvent({ event: 'transaction.create' });
+
+        exceptRequest({
+            url: 'https://sandbox-api.fedapay.com/v1/webhooks/stub_event',
+            method: 'post'
         });
 
-        it(
-            'should return true when the header contains a valid signature ' +
-                'and the timestamp is off but no tolerance is provided',
-            () => {
-                const header = Webhook.generateTestHeaderString({
-                    timestamp: 12345,
-                    payload: EVENT_PAYLOAD_STRING,
-                    secret: SECRET,
-                });
+        expect(tokenObject).to.be.instanceof(FedaPayObject);
+        expect(tokenObject.name).to.equal('transaction.create');
+    });
 
-                expect(
-                    WebhookSignature.verifyHeader(
-                        EVENT_PAYLOAD_STRING,
-                        header,
-                        SECRET
-                    )
-                ).to.equal(true);
+    it('should a send stub event', async () => {
+        let data = {
+            'url': 'http://e-shop.com'
+        };
+
+        let body: any = {
+            'v1/webhook': {
+                'id': 1,
+                'klass': 'v1/webhook',
+                'url': 'http://e-shop.com',
+                'created_at': '2018-03-12T09:09:03.969Z',
+                'updated_at': '2018-03-12T09:09:03.969Z'
             }
-        );
+        };
 
-        it('should accept Buffer instances for the payload and header', () => {
-            const header = Webhook.generateTestHeaderString({
-                timestamp: Date.now() / 1000,
-                payload: EVENT_PAYLOAD_STRING,
-                secret: SECRET,
-            });
+        nock(/fedapay\.com/)
+            .post('/v1/webhooks')
+            .reply(200, body);
 
-            expect(
-                WebhookSignature.verifyHeader(
-                    Buffer.from(EVENT_PAYLOAD_STRING),
-                    Buffer.from(header),
-                    SECRET,
-                    10
-                )
-            ).to.equal(true);
+        let webhook = await Webhook.create(data);
+
+        body = {
+            'name': 'transaction.create',
+            'entity': {}
+        };
+        nock(/fedapay\.com/)
+            .post('/v1/webhooks/1/send_event')
+            .reply(200, body);
+
+        const tokenObject = await webhook.sendEvent({ event: 'transaction.create' });
+
+        exceptRequest({
+            url: 'https://sandbox-api.fedapay.com/v1/webhooks/1/send_event',
+            method: 'post'
         });
+
+        expect(tokenObject).to.be.instanceof(FedaPayObject);
+        expect(tokenObject.name).to.equal('transaction.create');
     });
 });

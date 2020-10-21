@@ -1,8 +1,17 @@
 import * as crypto from 'crypto';
+import { Resource, FedaPayObject } from '.';
 import { Base as ErrorBase, SignatureVerificationError } from './Error';
-import { secureCompare } from './Util';
+import { secureCompare, arrayToFedaPayObject } from './Util';
 
-export class Webhook {
+/**
+ * Class Webhook
+ *
+ * @property int $id
+ * @property string $url
+ * @property string $created_at
+ * @property string $updated_at
+ */
+export class Webhook extends Resource {
     static DEFAULT_TOLERANCE = 300; // 5 minutes
 
     static constructEvent(payload, header, secret, tolerance?) {
@@ -50,6 +59,94 @@ export class Webhook {
 
         return generatedHeader;
     }
+
+    /**
+     * @param {Object|null} params
+     * @param {Object|null} headers
+     * @returns {Promise<Webhook>}
+     */
+    static create(params = {}, headers = {}): Promise<Webhook> {
+        return <Promise<Webhook>>this._create(params, headers);
+    }
+
+    /**
+     * @param {Object|null} params
+     * @param {Object|null} headers
+     * @returns {Promise<FedaPayObject>}
+     */
+    static all(params = {}, headers = {}): Promise<FedaPayObject> {
+        return <Promise<FedaPayObject>> this._all(params, headers);
+    }
+
+    /**
+     * @param {string|number} id
+     * @param {Object|null} headers
+     * @returns {Promise<Webhook>}
+     */
+    static retrieve(id, headers = {}): Promise<Webhook> {
+        return <Promise<Webhook>> this._retrieve(id, headers);
+    }
+
+    /**
+     * @param {string|number} id string The ID of the transaction to update.
+     * @param {object|null} params
+     * @param {object|null} headers
+     *
+     * @returns {Promise<Webhook>}
+     */
+    static update(id, params = {}, headers = {}): Promise<Webhook> {
+        return <Promise<Webhook>>this._update(id, params, headers);
+    }
+
+    /**
+     * @param {array|string|null} $headers
+     * @returns {Promise<Webhook>} The saved transaction.
+     */
+    save(headers = {}): Promise<Webhook> {
+        return <Promise<Webhook>>this._save(headers);
+    }
+
+    /**
+     * @param {array} $headers
+     * @returns Webhook The deleted transaction.
+     */
+    delete(headers = {}): Promise<Webhook> {
+        return <Promise<Webhook>>this._delete(headers);
+    }
+
+    /**
+     * Stub Event
+     * @param {Object} params
+     * @param {Object} headers
+     * @returns {Promise<FedaPayObject>}
+     */
+    static stubEvent(params = {}, headers = {}) : Promise<FedaPayObject> {
+        const url = this.classPath() + '/stub_event';
+        return Webhook._staticRequest('post', url, params, headers)
+            .then(({ data, options }) => {
+                let object = <FedaPayObject>arrayToFedaPayObject(data, options);
+
+                return <FedaPayObject>object;
+            });
+    }
+
+    /**
+     * Send astubbed event to the webhook
+     * @param {Object} params
+     * @param {Object} headers
+     * @returns {Promise<FedaPayObject>}
+     */
+    sendEvent(params = {}, headers = {}) : Promise<FedaPayObject> {
+        const url = this.instanceUrl() + '/send_event';
+
+        return Webhook._staticRequest('post', url, params, headers)
+            .then(({ data, options }) => {
+                let object = <FedaPayObject>arrayToFedaPayObject(data, options);
+
+                return <FedaPayObject>object;
+            });
+    }
+
 }
 
 export class WebhookSignature {
