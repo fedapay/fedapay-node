@@ -226,6 +226,32 @@ var Transaction = /** @class */ (function (_super) {
         });
     };
     /**
+     * Send fees request
+     * @param string mode
+     * @param {Object} params
+     * @param {Object} headers
+     *
+     * @returns {Promise<FedaPayObject>}
+     */
+    Transaction.prototype.getFees = function (token, mode, params, headers) {
+        if (params === void 0) { params = {}; }
+        if (headers === void 0) { headers = {}; }
+        return __awaiter(this, void 0, void 0, function () {
+            var url;
+            return __generator(this, function (_a) {
+                url = Transaction.classPath() + '/fees';
+                params.token = token;
+                params.mode = mode;
+                return [2 /*return*/, Transaction._staticRequest('get', url, params, headers)
+                        .then(function (_a) {
+                        var data = _a.data, options = _a.options;
+                        var object = Util_1.arrayToFedaPayObject(data, options);
+                        return object;
+                    })];
+            });
+        });
+    };
+    /**
      * Available mobile money mode
      */
     Transaction.AVAILABLE_MOBILE_MONEY = ['mtn', 'moov', 'mtn_ci', 'moov_tg'];

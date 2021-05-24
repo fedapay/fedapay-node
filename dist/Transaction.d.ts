@@ -95,7 +95,7 @@ export declare class Transaction extends Resource {
      *
      * @returns {Promise<FedaPayObject>}
      */
-    sendNowWithToken(mode: any, token: any, params?: any, headers?: {}): Promise<FedaPayObject>;
+    sendNowWithToken(mode: string, token: string, params?: any, headers?: {}): Promise<FedaPayObject>;
     /**
      * Send Mobile Money request
      * @param string mode
@@ -104,5 +104,14 @@ export declare class Transaction extends Resource {
      *
      * @returns {Promise<FedaPayObject>}
      */
-    sendNow(mode: any, params?: {}, headers?: {}): Promise<FedaPayObject>;
+    sendNow(mode: string, params?: {}, headers?: {}): Promise<FedaPayObject>;
+    /**
+     * Send fees request
+     * @param string mode
+     * @param {Object} params
+     * @param {Object} headers
+     *
+     * @returns {Promise<FedaPayObject>}
+     */
+    getFees(token: string, mode: string, params?: any, headers?: {}): Promise<FedaPayObject>;
 }

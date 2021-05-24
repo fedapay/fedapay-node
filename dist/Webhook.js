@@ -1,11 +1,35 @@
 "use strict";
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.WebhookSignature = exports.Webhook = void 0;
 var crypto = require("crypto");
+var _1 = require(".");
 var Error_1 = require("./Error");
 var Util_1 = require("./Util");
-var Webhook = /** @class */ (function () {
+/**
+ * Class Webhook
+ *
+ * @property int $id
+ * @property string $url
+ * @property string $created_at
+ * @property string $updated_at
+ */
+var Webhook = /** @class */ (function (_super) {
+    __extends(Webhook, _super);
     function Webhook() {
+        return _super !== null && _super.apply(this, arguments) || this;
     }
     Webhook.constructEvent = function (payload, header, secret, tolerance) {
         WebhookSignature.verifyHeader(payload, header, secret, tolerance || Webhook.DEFAULT_TOLERANCE);
@@ -38,9 +62,100 @@ var Webhook = /** @class */ (function () {
         ].join(',');
         return generatedHeader;
     };
+    /**
+     * @param {Object|null} params
+     * @param {Object|null} headers
+     * @returns {Promise<Webhook>}
+     */
+    Webhook.create = function (params, headers) {
+        if (params === void 0) { params = {}; }
+        if (headers === void 0) { headers = {}; }
+        return this._create(params, headers);
+    };
+    /**
+     * @param {Object|null} params
+     * @param {Object|null} headers
+     * @returns {Promise<FedaPayObject>}
+     */
+    Webhook.all = function (params, headers) {
+        if (params === void 0) { params = {}; }
+        if (headers === void 0) { headers = {}; }
+        return this._all(params, headers);
+    };
+    /**
+     * @param {string|number} id
+     * @param {Object|null} headers
+     * @returns {Promise<Webhook>}
+     */
+    Webhook.retrieve = function (id, headers) {
+        if (headers === void 0) { headers = {}; }
+        return this._retrieve(id, headers);
+    };
+    /**
+     * @param {string|number} id string The ID of the transaction to update.
+     * @param {object|null} params
+     * @param {object|null} headers
+     *
+     * @returns {Promise<Webhook>}
+     */
+    Webhook.update = function (id, params, headers) {
+        if (params === void 0) { params = {}; }
+        if (headers === void 0) { headers = {}; }
+        return this._update(id, params, headers);
+    };
+    /**
+     * @param {array|string|null} $headers
+     * @returns {Promise<Webhook>} The saved transaction.
+     */
+    Webhook.prototype.save = function (headers) {
+        if (headers === void 0) { headers = {}; }
+        return this._save(headers);
+    };
+    /**
+     * @param {array} $headers
+     * @returns Webhook The deleted transaction.
+     */
+    Webhook.prototype.delete = function (headers) {
+        if (headers === void 0) { headers = {}; }
+        return this._delete(headers);
+    };
+    /**
+     * Stub Event
+     * @param {Object} params
+     * @param {Object} headers
+     * @returns {Promise<FedaPayObject>}
+     */
+    Webhook.stubEvent = function (params, headers) {
+        if (params === void 0) { params = {}; }
+        if (headers === void 0) { headers = {}; }
+        var url = this.classPath() + '/stub_event';
+        return Webhook._staticRequest('post', url, params, headers)
+            .then(function (_a) {
+            var data = _a.data, options = _a.options;
+            var object = Util_1.arrayToFedaPayObject(data, options);
+            return object;
+        });
+    };
+    /**
+     * Send astubbed event to the webhook
+     * @param {Object} params
+     * @param {Object} headers
+     * @returns {Promise<FedaPayObject>}
+     */
+    Webhook.prototype.sendEvent = function (params, headers) {
+        if (params === void 0) { params = {}; }
+        if (headers === void 0) { headers = {}; }
+        var url = this.instanceUrl() + '/send_event';
+        return Webhook._staticRequest('post', url, params, headers)
+            .then(function (_a) {
+            var data = _a.data, options = _a.options;
+            var object = Util_1.arrayToFedaPayObject(data, options);
+            return object;
+        });
+    };
     Webhook.DEFAULT_TOLERANCE = 300; // 5 minutes
     return Webhook;
-}());
+}(_1.Resource));
 exports.Webhook = Webhook;
 var WebhookSignature = /** @class */ (function () {
     function WebhookSignature() {

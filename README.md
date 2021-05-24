@@ -22,6 +22,6 @@ The package needs to be configured with your account's secret key which is avail
 ``` js
 import { Customer } from 'fedapay';
 
-let currencies = await Customer.all();
+let customers = await Customer.all();
 
 ```

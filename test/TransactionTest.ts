@@ -521,4 +521,69 @@ describe('TransactionTest', () => {
         expect(object).to.be.instanceof(FedaPayObject);
         expect(object.message).to.equal('success');
     });
+
+    it('should send transaction fees request', async () => {
+        let data = {
+            'customer': {
+                'id': 1
+            },
+            'currency': {
+                'iso': 'XOF'
+            },
+            'description': 'description',
+            'callback_url': 'http://e-shop.com',
+            'amount': 1000,
+            'include': 'customer,currency'
+        };
+
+        let body: any = {
+            'v1/transaction': {
+                'id': 1,
+                'klass': 'v1/transaction',
+                'transaction_key': '0KJAU01',
+                'reference': '109329828',
+                'amount': data.amount,
+                'description': data.description,
+                'callback_url': data.callback_url,
+                'status': 'pending',
+                'customer_id': data.customer.id,
+                'currency_id': 1,
+                'mode': 'mtn',
+                'created_at': '2018-03-12T09:09:03.969Z',
+                'updated_at': '2018-03-12T09:09:03.969Z',
+                'paid_at': '2018-03-12T09:09:03.969Z'
+            }
+        };
+
+        nock(/fedapay\.com/)
+            .post('/v1/transactions')
+            .reply(200, body);
+
+        let transaction = await Transaction.create(data);
+
+        body = {
+            amount_debited: 51020,
+            amount_transferred: 50000,
+            apply_fees_to_merchant: false,
+            commission: 0.02,
+            fees: 1020,
+            fixed_commission: 0,
+            message: "{fees} de frais supplémentaires sont appliqués sur votre paiement."
+        };
+        nock(/fedapay\.com/)
+            .get('/v1/transactions/fees?token=token&mode=mtn')
+            .reply(200, body);
+
+        const object = await transaction.getFees('token', 'mtn');
+
+        exceptRequest({
+            url: 'https://sandbox-api.fedapay.com/v1/transactions/fees',
+            method: 'get'
+        });
+
+        expect(object).to.be.instanceof(FedaPayObject);
+        expect(object.amount_debited).to.equal(51020);
+        expect(object.amount_transferred).to.equal(50000);
+        expect(object.apply_fees_to_merchant).to.false;
+    });
 });

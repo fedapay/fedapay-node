@@ -142,7 +142,7 @@ export class Transaction extends Resource {
      *
      * @returns {Promise<FedaPayObject>}
      */
-    sendNowWithToken(mode, token, params: any = {}, headers = {}) : Promise<FedaPayObject> {
+    sendNowWithToken(mode: string, token: string, params: any = {}, headers = {}) : Promise<FedaPayObject> {
         if (!this.mobileMoneyModeAvailable(mode)) {
             throw new InvalidRequest(
                 `Invalid payment method '${mode}' supplied.
@@ -170,9 +170,30 @@ export class Transaction extends Resource {
      *
      * @returns {Promise<FedaPayObject>}
      */
-    async sendNow(mode, params = {}, headers = {}) : Promise<FedaPayObject> {
+    async sendNow(mode: string, params = {}, headers = {}) : Promise<FedaPayObject> {
         const tokenObject = await this.generateToken({}, headers);
 
         return this.sendNowWithToken(mode, tokenObject.token, params, headers);
+    }
+
+    /**
+     * Send fees request
+     * @param string mode
+     * @param {Object} params
+     * @param {Object} headers
+     *
+     * @returns {Promise<FedaPayObject>}
+     */
+    async getFees(token: string, mode: string, params: any = {}, headers = {}) : Promise<FedaPayObject> {
+        const url = Transaction.classPath() + '/fees';
+        params.token = token;
+        params.mode = mode;
+
+        return Transaction._staticRequest('get', url, params, headers)
+            .then(({ data, options }) => {
+                let object = <FedaPayObject>arrayToFedaPayObject(data, options);
+
+                return <FedaPayObject>object;
+            });
     }
 }
