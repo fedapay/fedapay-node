@@ -21,6 +21,7 @@ export function convertToFedaPayObject(
         'v1/transaction': require('./Transaction').Transaction,
         'v1/payout': require('./Payout').Payout,
         'v1/webhook': require('./Webhook').Webhook,
+        'v1/balance': require('./Balance').Balance,
     };
     let object = new FedaPayObject;
     if (resp['klass']) {
