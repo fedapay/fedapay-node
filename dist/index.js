@@ -23,3 +23,4 @@ __exportStar(require("./Log"), exports);
 __exportStar(require("./Transaction"), exports);
 __exportStar(require("./Payout"), exports);
 __exportStar(require("./Webhook"), exports);
+__exportStar(require("./Balance"), exports);
