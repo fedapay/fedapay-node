@@ -42,11 +42,12 @@ export class Payout extends Resource {
 
     /**
      * @param {string|number} id
+     * @param {Object|null} params
      * @param {Object|null} headers
      * @returns {Promise<Payout>}
      */
-    static retrieve(id: string | number, headers: object | null = {}): Promise<Payout> {
-        return <Promise<Payout>>this._retrieve(id, headers);
+    static retrieve(id: string | number, params: object | null = {}, headers: object | null = {}): Promise<Payout> {
+        return <Promise<Payout>>this._retrieve(id, params, headers);
     }
 
     /**

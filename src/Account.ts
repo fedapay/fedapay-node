@@ -15,11 +15,12 @@ import { Resource } from './Resource';
 export class Account extends Resource {
     /**
      * @param {string|number} id
+     * @param {Object|null} params
      * @param {Object|null} headers
      * @returns {Promise<Account>}
      */
-    static retrieve(id, headers = {}): Promise<Account> {
-        return <Promise<Account>> this._retrieve(id, headers);
+    static retrieve(id, params = {}, headers = {}): Promise<Account> {
+        return <Promise<Account>> this._retrieve(id, params, headers);
     }
 
     /**

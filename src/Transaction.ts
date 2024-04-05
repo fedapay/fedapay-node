@@ -82,11 +82,12 @@ export class Transaction extends Resource {
 
     /**
      * @param {string|number} id
+     * @param {Object|null} params
      * @param {Object|null} headers
      * @returns {Promise<Transaction>}
      */
-    static retrieve(id, headers = {}): Promise<Transaction> {
-        return <Promise<Transaction>> this._retrieve(id, headers);
+    static retrieve(id, params = {}, headers = {}): Promise<Transaction> {
+        return <Promise<Transaction>> this._retrieve(id, params, headers);
     }
 
     /**

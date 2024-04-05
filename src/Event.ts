@@ -16,11 +16,12 @@ import { arrayToFedaPayObject } from './Util';
 export class Event extends Resource{
     /**
      * @param {string|number} id The event id
+     * @param {Object|null} params
      * @param {Object|null} headers
      * @returns {Promise<Event>}
      */
-    static retrieve(id: string|number, headers = {}): Promise<Event> {
-        return <Promise<Event>>this._retrieve(id, headers);
+    static retrieve(id: string|number, params = {}, headers = {}): Promise<Event> {
+        return <Promise<Event>>this._retrieve(id, params, headers);
     }
 
     /**

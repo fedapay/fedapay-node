@@ -119,12 +119,13 @@ export class Resource extends FedaPayObject {
      */
     protected static _retrieve(
         id: any,
+        params: any = {},
         headers: any = {}
     ): Promise<FedaPayObject> {
         let url = this.resourcePath(id);
         let className = this.className();
 
-        return this._staticRequest('get', url, null, headers)
+        return this._staticRequest('get', url, params, headers)
             .then(({ data, options }) => {
                 let object = <FedaPayObject>arrayToFedaPayObject(data, options);
 
