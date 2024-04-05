@@ -14,10 +14,11 @@ import { Resource } from './Resource';
 export declare class Account extends Resource {
     /**
      * @param {string|number} id
+     * @param {Object|null} params
      * @param {Object|null} headers
      * @returns {Promise<Account>}
      */
-    static retrieve(id: any, headers?: {}): Promise<Account>;
+    static retrieve(id: any, params?: {}, headers?: {}): Promise<Account>;
     /**
      * @param {Object|null} params
      * @param {Object|null} headers

@@ -126,12 +126,14 @@ var Transaction = /** @class */ (function (_super) {
     };
     /**
      * @param {string|number} id
+     * @param {Object|null} params
      * @param {Object|null} headers
      * @returns {Promise<Transaction>}
      */
-    Transaction.retrieve = function (id, headers) {
+    Transaction.retrieve = function (id, params, headers) {
+        if (params === void 0) { params = {}; }
         if (headers === void 0) { headers = {}; }
-        return this._retrieve(id, headers);
+        return this._retrieve(id, params, headers);
     };
     /**
      * @param {string|number} id string The ID of the transaction to update.

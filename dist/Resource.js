@@ -116,11 +116,12 @@ var Resource = /** @class */ (function (_super) {
      * @param {string|number} id
      * @param {Object|null} headers
      */
-    Resource._retrieve = function (id, headers) {
+    Resource._retrieve = function (id, params, headers) {
+        if (params === void 0) { params = {}; }
         if (headers === void 0) { headers = {}; }
         var url = this.resourcePath(id);
         var className = this.className();
-        return this._staticRequest('get', url, null, headers)
+        return this._staticRequest('get', url, params, headers)
             .then(function (_a) {
             var data = _a.data, options = _a.options;
             var object = Util_1.arrayToFedaPayObject(data, options);

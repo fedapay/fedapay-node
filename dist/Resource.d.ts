@@ -61,7 +61,7 @@ export declare class Resource extends FedaPayObject {
      * @param {string|number} id
      * @param {Object|null} headers
      */
-    protected static _retrieve(id: any, headers?: any): Promise<FedaPayObject>;
+    protected static _retrieve(id: any, params?: any, headers?: any): Promise<FedaPayObject>;
     /**
      * Send list reource request
      * @param {Object|null} params

@@ -33,12 +33,14 @@ var Account = /** @class */ (function (_super) {
     }
     /**
      * @param {string|number} id
+     * @param {Object|null} params
      * @param {Object|null} headers
      * @returns {Promise<Account>}
      */
-    Account.retrieve = function (id, headers) {
+    Account.retrieve = function (id, params, headers) {
+        if (params === void 0) { params = {}; }
         if (headers === void 0) { headers = {}; }
-        return this._retrieve(id, headers);
+        return this._retrieve(id, params, headers);
     };
     /**
      * @param {Object|null} params

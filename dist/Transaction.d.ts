@@ -57,10 +57,11 @@ export declare class Transaction extends Resource {
     static all(params?: {}, headers?: {}): Promise<FedaPayObject>;
     /**
      * @param {string|number} id
+     * @param {Object|null} params
      * @param {Object|null} headers
      * @returns {Promise<Transaction>}
      */
-    static retrieve(id: any, headers?: {}): Promise<Transaction>;
+    static retrieve(id: any, params?: {}, headers?: {}): Promise<Transaction>;
     /**
      * @param {string|number} id string The ID of the transaction to update.
      * @param {object|null} params

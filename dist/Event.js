@@ -71,12 +71,14 @@ var Event = /** @class */ (function (_super) {
     }
     /**
      * @param {string|number} id The event id
+     * @param {Object|null} params
      * @param {Object|null} headers
      * @returns {Promise<Event>}
      */
-    Event.retrieve = function (id, headers) {
+    Event.retrieve = function (id, params, headers) {
+        if (params === void 0) { params = {}; }
         if (headers === void 0) { headers = {}; }
-        return this._retrieve(id, headers);
+        return this._retrieve(id, params, headers);
     };
     /**
      * @param {Object|null} params

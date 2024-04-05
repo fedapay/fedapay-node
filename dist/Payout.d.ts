@@ -34,10 +34,11 @@ export declare class Payout extends Resource {
     static all(params?: object | null, headers?: object | null): Promise<FedaPayObject>;
     /**
      * @param {string|number} id
+     * @param {Object|null} params
      * @param {Object|null} headers
      * @returns {Promise<Payout>}
      */
-    static retrieve(id: string | number, headers?: object | null): Promise<Payout>;
+    static retrieve(id: string | number, params?: object | null, headers?: object | null): Promise<Payout>;
     /**
      * @param {string|number} id string The ID of the Payout to update.
      * @param {object|null} params
