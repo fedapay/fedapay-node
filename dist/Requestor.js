@@ -111,7 +111,7 @@ var Requestor = /** @class */ (function () {
      * @returns {Promise<ApiConnectionError>}
      */
     Requestor.prototype.handleRequestException = function (e) {
-        var message = "Request error: " + e.message;
+        var message = "Request error: ".concat(e.message);
         var httpStatusCode = e.response ? e.response.status : null;
         var httpRequest = e.request;
         var httpResponse = e.response;
@@ -123,7 +123,7 @@ var Requestor = /** @class */ (function () {
      */
     Requestor.prototype.url = function (path) {
         if (path === void 0) { path = ''; }
-        return this.baseUrl() + "/" + FedaPay_1.FedaPay.getApiVersion() + path;
+        return "".concat(this.baseUrl(), "/").concat(FedaPay_1.FedaPay.getApiVersion()).concat(path);
     };
     /**
      * Return default headers

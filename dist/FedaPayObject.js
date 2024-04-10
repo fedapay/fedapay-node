@@ -26,8 +26,8 @@ var FedaPayObject = /** @class */ (function () {
         for (var k in values) {
             var value = values[k];
             if (isPlainObject(value) || Array.isArray(value)) {
-                k = Util_1.stripApiVersion(k, opts);
-                this[k] = Util_1.arrayToFedaPayObject(value, opts);
+                k = (0, Util_1.stripApiVersion)(k, opts);
+                this[k] = (0, Util_1.arrayToFedaPayObject)(value, opts);
             }
             else {
                 this[k] = value;

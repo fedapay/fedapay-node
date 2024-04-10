@@ -3,10 +3,12 @@ var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
     return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -112,7 +114,7 @@ var Payout = /** @class */ (function (_super) {
         return Payout._staticRequest('put', path, params, headers)
             .then(function (_a) {
             var data = _a.data, options = _a.options;
-            var object = Util_1.arrayToFedaPayObject(data, options);
+            var object = (0, Util_1.arrayToFedaPayObject)(data, options);
             _this.refreshFrom(object['payouts'][0], options);
             return _this;
         });
@@ -128,7 +130,7 @@ var Payout = /** @class */ (function (_super) {
         return this._staticRequest('put', path, params, headers)
             .then(function (_a) {
             var data = _a.data, options = _a.options;
-            return Util_1.arrayToFedaPayObject(data, options);
+            return (0, Util_1.arrayToFedaPayObject)(data, options);
         });
     };
     /**
@@ -161,7 +163,7 @@ var Payout = /** @class */ (function (_super) {
     Payout.prototype.schedule = function (scheduled_at, params, headers) {
         if (params === void 0) { params = {}; }
         if (headers === void 0) { headers = {}; }
-        scheduled_at = Util_1.toDateString(scheduled_at);
+        scheduled_at = (0, Util_1.toDateString)(scheduled_at);
         var _params = {
             payouts: [{
                     id: this.id,
@@ -192,7 +194,7 @@ var Payout = /** @class */ (function (_super) {
             }
             item['id'] = payout['id'];
             if (payout['scheduled_at']) {
-                item['scheduled_at'] = Util_1.toDateString(payout['scheduled_at']);
+                item['scheduled_at'] = (0, Util_1.toDateString)(payout['scheduled_at']);
             }
             items.push(item);
         });

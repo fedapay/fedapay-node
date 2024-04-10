@@ -3,10 +3,12 @@ var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
     return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -132,7 +134,7 @@ var Webhook = /** @class */ (function (_super) {
         return Webhook._staticRequest('post', url, params, headers)
             .then(function (_a) {
             var data = _a.data, options = _a.options;
-            var object = Util_1.arrayToFedaPayObject(data, options);
+            var object = (0, Util_1.arrayToFedaPayObject)(data, options);
             return object;
         });
     };
@@ -149,7 +151,7 @@ var Webhook = /** @class */ (function (_super) {
         return Webhook._staticRequest('post', url, params, headers)
             .then(function (_a) {
             var data = _a.data, options = _a.options;
-            var object = Util_1.arrayToFedaPayObject(data, options);
+            var object = (0, Util_1.arrayToFedaPayObject)(data, options);
             return object;
         });
     };
@@ -191,9 +193,9 @@ var WebhookSignature = /** @class */ (function () {
         if (!details.signatures.length) {
             throw new Error_1.SignatureVerificationError('No signatures found with expected scheme', header, payload);
         }
-        var expectedSignature = this.computeSignature(details.timestamp + "." + payload, secret);
+        var expectedSignature = this.computeSignature("".concat(details.timestamp, ".").concat(payload), secret);
         var signatureFound = !!details.signatures
-            .find(function (v) { return Util_1.secureCompare(v, expectedSignature); });
+            .find(function (v) { return (0, Util_1.secureCompare)(v, expectedSignature); });
         if (!signatureFound) {
             throw new Error_1.SignatureVerificationError('No signatures found matching the expected signature for payload.' +
                 ' Are you passing the raw request body you received from FedaPay?' +

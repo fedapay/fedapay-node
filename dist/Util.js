@@ -59,7 +59,7 @@ exports.arrayToFedaPayObject = arrayToFedaPayObject;
 function stripApiVersion(key, opts) {
     var apiPart = '';
     if (opts.apiVersion) {
-        apiPart = opts.apiVersion + "/";
+        apiPart = "".concat(opts.apiVersion, "/");
     }
     return key.replace(apiPart, '');
 }

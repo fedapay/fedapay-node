@@ -3,10 +3,12 @@ var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
     return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -56,7 +58,7 @@ var Resource = /** @class */ (function (_super) {
     Resource.classPath = function () {
         var base = this.className();
         var plural = pluralize(base);
-        return "/" + plural;
+        return "/".concat(plural);
     };
     /**
      * Return the resource path
@@ -66,12 +68,12 @@ var Resource = /** @class */ (function (_super) {
     Resource.resourcePath = function (id) {
         if (id === null) {
             var klass = this.className();
-            var message = "Could not determine which URL to request: " + klass + " instance has invalid ID: " + id;
+            var message = "Could not determine which URL to request: ".concat(klass, " instance has invalid ID: ").concat(id);
             throw new Error_1.InvalidRequest(message);
         }
         var base = this.classPath();
-        var extn = encodeURI("" + id);
-        return base + "/" + extn;
+        var extn = encodeURI("".concat(id));
+        return "".concat(base, "/").concat(extn);
     };
     /**
      * Return the instance url
@@ -124,7 +126,7 @@ var Resource = /** @class */ (function (_super) {
         return this._staticRequest('get', url, params, headers)
             .then(function (_a) {
             var data = _a.data, options = _a.options;
-            var object = Util_1.arrayToFedaPayObject(data, options);
+            var object = (0, Util_1.arrayToFedaPayObject)(data, options);
             return object[className];
         });
     };
@@ -142,7 +144,7 @@ var Resource = /** @class */ (function (_super) {
         return this._staticRequest('get', path, params, headers)
             .then(function (_a) {
             var data = _a.data, options = _a.options;
-            return Util_1.arrayToFedaPayObject(data, options);
+            return (0, Util_1.arrayToFedaPayObject)(data, options);
         });
     };
     /**
@@ -158,7 +160,7 @@ var Resource = /** @class */ (function (_super) {
         return this._staticRequest('post', url, params, headers)
             .then(function (_a) {
             var data = _a.data, options = _a.options;
-            var object = Util_1.arrayToFedaPayObject(data, options);
+            var object = (0, Util_1.arrayToFedaPayObject)(data, options);
             return object[className];
         });
     };
@@ -176,7 +178,7 @@ var Resource = /** @class */ (function (_super) {
         return this._staticRequest('put', url, params, headers)
             .then(function (_a) {
             var data = _a.data, options = _a.options;
-            var object = Util_1.arrayToFedaPayObject(data, options);
+            var object = (0, Util_1.arrayToFedaPayObject)(data, options);
             return object[className];
         });
     };
@@ -207,7 +209,7 @@ var Resource = /** @class */ (function (_super) {
         return Resource._staticRequest('PUT', url, params, headers)
             .then(function (_a) {
             var data = _a.data, options = _a.options;
-            var klass = options.apiVersion + " / " + className;
+            var klass = "".concat(options.apiVersion, " / ").concat(className);
             var json = data[klass];
             _this.refreshFrom(json, options);
             return _this;
