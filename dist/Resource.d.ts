@@ -5,6 +5,7 @@ import { Requestor } from './Requestor';
  */
 export declare class Resource extends FedaPayObject {
     protected static requestor: Requestor;
+    protected static ressourceName: string;
     /**
      * Set requestor
      * @param {Requestor} req

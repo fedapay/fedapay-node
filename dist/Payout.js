@@ -232,6 +232,7 @@ var Payout = /** @class */ (function (_super) {
         params = Object.assign(_params, params);
         return this._startAll(params, headers);
     };
+    Payout.ressourceName = 'payout';
     return Payout;
 }(_1.Resource));
 exports.Payout = Payout;

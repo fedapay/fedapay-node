@@ -17,6 +17,7 @@ import { Resource, FedaPayObject } from '.';
  * @property string $updated_at
  */
 export declare class Log extends Resource {
+    protected static ressourceName: string;
     /**
      * @param {Object|null} params
      * @param {Object|null} headers

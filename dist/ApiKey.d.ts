@@ -9,4 +9,5 @@ import { Resource } from './Resource';
  * @property string $updated_at
  */
 export declare class ApiKey extends Resource {
+    protected static ressourceName: string;
 }

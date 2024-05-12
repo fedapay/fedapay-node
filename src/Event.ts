@@ -13,7 +13,9 @@ import { arrayToFedaPayObject } from './Util';
  * @property string $created_at
  * @property string $updated_at
  */
-export class Event extends Resource{
+export class Event extends Resource {
+    protected static ressourceName = 'event';
+
     /**
      * @param {string|number} id The event id
      * @param {Object|null} params

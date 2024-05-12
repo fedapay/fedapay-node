@@ -57,6 +57,7 @@ var Currency = /** @class */ (function (_super) {
         if (headers === void 0) { headers = {}; }
         return this._all(params, headers);
     };
+    Currency.ressourceName = 'currency';
     return Currency;
 }(Resource_1.Resource));
 exports.Currency = Currency;

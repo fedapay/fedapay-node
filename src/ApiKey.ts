@@ -10,4 +10,5 @@ import { Resource } from './Resource';
  * @property string $updated_at
  */
 export class ApiKey extends Resource {
+    protected static ressourceName = 'api_key';
 }

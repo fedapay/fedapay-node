@@ -19,6 +19,7 @@ import { Resource, FedaPayObject } from '.';
  * @property string $deleted_at
  */
 export declare class Payout extends Resource {
+    protected static ressourceName: string;
     /**
      * Create a payout
      *

@@ -155,6 +155,7 @@ var Webhook = /** @class */ (function (_super) {
             return object;
         });
     };
+    Webhook.ressourceName = 'webhook';
     Webhook.DEFAULT_TOLERANCE = 300; // 5 minutes
     return Webhook;
 }(_1.Resource));

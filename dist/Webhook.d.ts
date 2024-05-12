@@ -8,6 +8,7 @@ import { Resource, FedaPayObject } from '.';
  * @property string $updated_at
  */
 export declare class Webhook extends Resource {
+    protected static ressourceName: string;
     static DEFAULT_TOLERANCE: number;
     static constructEvent(payload: any, header: any, secret: any, tolerance?: any): any;
     /**

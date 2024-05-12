@@ -255,6 +255,7 @@ var Transaction = /** @class */ (function (_super) {
             });
         });
     };
+    Transaction.ressourceName = 'transaction';
     /**
      * Available mobile money mode
      */

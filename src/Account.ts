@@ -13,6 +13,8 @@ import { Resource } from './Resource';
  * @property string $updated_at
  */
 export class Account extends Resource {
+    protected static ressourceName = 'account';
+
     /**
      * @param {string|number} id
      * @param {Object|null} params

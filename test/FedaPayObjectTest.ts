@@ -45,5 +45,15 @@ describe('FedaPayObjectTest', () => {
 
         expect(params.foo).to.equals('value');
         expect(params.id).to.be.undefined;
-    })
+    });
+
+    it('should return resource name', () => {
+        let object = new FedaPayObject();
+        object.refreshFrom({ 'foo': 'value', 'id': 2 }, null);
+
+        let params = object.serializeParameters();
+
+        expect(params.foo).to.equals('value');
+        expect(params.id).to.be.undefined;
+    });
 });

@@ -96,6 +96,7 @@ var Customer = /** @class */ (function (_super) {
         if (headers === void 0) { headers = {}; }
         return this._delete(headers);
     };
+    Customer.ressourceName = 'customer';
     return Customer;
 }(Resource_1.Resource));
 exports.Customer = Customer;

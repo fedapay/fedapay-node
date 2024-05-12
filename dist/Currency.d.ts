@@ -14,6 +14,7 @@ import { Resource } from './Resource';
  * @property string $updated_at
  */
 export declare class Currency extends Resource {
+    protected static ressourceName: string;
     /**
      * @param {string|number} id
      * @param {Object|null} params

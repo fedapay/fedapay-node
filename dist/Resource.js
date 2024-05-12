@@ -49,7 +49,7 @@ var Resource = /** @class */ (function (_super) {
      * @returns {string}
      */
     Resource.className = function () {
-        return this.name.toLowerCase();
+        return this.ressourceName.toLowerCase();
     };
     /**
      * Return the class path
@@ -215,6 +215,7 @@ var Resource = /** @class */ (function (_super) {
             return _this;
         });
     };
+    Resource.ressourceName = 'Resource';
     return Resource;
 }(FedaPayObject_1.FedaPayObject));
 exports.Resource = Resource;

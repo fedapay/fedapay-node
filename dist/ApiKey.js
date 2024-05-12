@@ -31,6 +31,7 @@ var ApiKey = /** @class */ (function (_super) {
     function ApiKey() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
+    ApiKey.ressourceName = 'api_key';
     return ApiKey;
 }(Resource_1.Resource));
 exports.ApiKey = ApiKey;

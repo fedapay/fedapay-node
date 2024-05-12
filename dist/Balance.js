@@ -56,6 +56,7 @@ var Balance = /** @class */ (function (_super) {
         if (headers === void 0) { headers = {}; }
         return this._all(params, headers);
     };
+    Balance.ressourceName = 'balance';
     return Balance;
 }(Resource_1.Resource));
 exports.Balance = Balance;

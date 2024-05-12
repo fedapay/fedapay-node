@@ -6,14 +6,14 @@ import { Foo, FooCurrency, FooPerson, FooTest } from './fixtures';
 describe('ResourceTest', () => {
     it('should return class name', () => {
         expect(Foo.className()).to.equal('foo');
-        expect(FooTest.className()).to.equal('footest');
+        expect(FooTest.className()).to.equal('foo_test');
     });
 
     it('should return Class url', () => {
         expect(Foo.classPath()).to.equal('/foos');
-        expect(FooTest.classPath()).to.equal('/footests');
-        expect(FooPerson.classPath()).to.equal('/foopeople');
-        expect(FooCurrency.classPath()).to.equal('/foocurrencies');
+        expect(FooTest.classPath()).to.equal('/foo_tests');
+        expect(FooPerson.classPath()).to.equal('/foo_people');
+        expect(FooCurrency.classPath()).to.equal('/foo_currencies');
     });
 
     it('should throw invalid request exception', () => {

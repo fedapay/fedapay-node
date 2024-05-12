@@ -96,6 +96,7 @@ var Account = /** @class */ (function (_super) {
         if (headers === void 0) { headers = {}; }
         return this._delete(headers);
     };
+    Account.ressourceName = 'account';
     return Account;
 }(Resource_1.Resource));
 exports.Account = Account;

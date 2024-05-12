@@ -33,6 +33,7 @@ var PhoneNumber = /** @class */ (function (_super) {
     function PhoneNumber() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
+    PhoneNumber.ressourceName = 'phone_number';
     return PhoneNumber;
 }(Resource_1.Resource));
 exports.PhoneNumber = PhoneNumber;

@@ -116,6 +116,7 @@ var Event = /** @class */ (function (_super) {
             });
         });
     };
+    Event.ressourceName = 'event';
     return Event;
 }(_1.Resource));
 exports.Event = Event;

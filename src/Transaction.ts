@@ -15,6 +15,8 @@ import { arrayToFedaPayObject } from './Util';
  * @property string $updated_at
  */
 export class Transaction extends Resource {
+    protected static ressourceName = 'transaction';
+
     /**
      * Available mobile money mode
      */

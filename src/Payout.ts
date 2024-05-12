@@ -21,6 +21,8 @@ import { arrayToFedaPayObject, toDateString } from './Util';
  * @property string $deleted_at
  */
 export class Payout extends Resource {
+    protected static ressourceName = 'payout';
+
     /**
      * Create a payout
      *

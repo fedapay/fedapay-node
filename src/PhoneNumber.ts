@@ -12,4 +12,5 @@ import { Resource } from './Resource';
  * @package FedaPay
  */
 export class PhoneNumber extends Resource {
+    protected static ressourceName = 'phone_number';
 }

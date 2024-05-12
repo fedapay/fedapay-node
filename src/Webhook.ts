@@ -12,6 +12,8 @@ import { secureCompare, arrayToFedaPayObject } from './Util';
  * @property string $updated_at
  */
 export class Webhook extends Resource {
+    protected static ressourceName = 'webhook';
+
     static DEFAULT_TOLERANCE = 300; // 5 minutes
 
     static constructEvent(payload, header, secret, tolerance?) {

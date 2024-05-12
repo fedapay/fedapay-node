@@ -12,6 +12,7 @@ import { Resource, FedaPayObject } from '.';
  * @property string $updated_at
  */
 export declare class Event extends Resource {
+    protected static ressourceName: string;
     /**
      * @param {string|number} id The event id
      * @param {Object|null} params

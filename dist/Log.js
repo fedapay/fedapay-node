@@ -119,6 +119,7 @@ var Log = /** @class */ (function (_super) {
             });
         });
     };
+    Log.ressourceName = 'log';
     return Log;
 }(_1.Resource));
 exports.Log = Log;

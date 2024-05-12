@@ -10,6 +10,7 @@ import { arrayToFedaPayObject } from './Util';
  */
 export class Resource extends FedaPayObject {
     protected static requestor: Requestor;
+    protected static ressourceName = 'Resource';
 
     /**
      * Set requestor
@@ -32,7 +33,7 @@ export class Resource extends FedaPayObject {
      * @returns {string}
      */
     static className(): string {
-        return this.name.toLowerCase();
+        return this.ressourceName.toLowerCase();
     }
 
     /**
