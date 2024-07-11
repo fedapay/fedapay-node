@@ -259,7 +259,9 @@ var Transaction = /** @class */ (function (_super) {
     /**
      * Available mobile money mode
      */
-    Transaction.AVAILABLE_MOBILE_MONEY = ['mtn', 'moov', 'mtn_ci', 'moov_tg'];
+    Transaction.AVAILABLE_MOBILE_MONEY = [
+        'mtn', 'moov', 'mtn_ci', 'moov_tg', 'togocel', 'mtn_open'
+    ];
     Transaction.PAID_STATUS = [
         'approved', 'transferred', 'refunded',
         'approved_partially_refunded', 'transferred_partially_refunded'

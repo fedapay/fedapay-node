@@ -20,7 +20,9 @@ export class Transaction extends Resource {
     /**
      * Available mobile money mode
      */
-    private static AVAILABLE_MOBILE_MONEY = ['mtn', 'moov', 'mtn_ci', 'moov_tg'];
+    private static AVAILABLE_MOBILE_MONEY = [
+        'mtn', 'moov', 'mtn_ci', 'moov_tg', 'togocel', 'mtn_open'
+    ];
 
     private static PAID_STATUS = [
         'approved', 'transferred', 'refunded',
