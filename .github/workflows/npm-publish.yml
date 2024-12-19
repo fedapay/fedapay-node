@@ -39,7 +39,7 @@ jobs:
         run: node -v
 
       - name: Install packages
-        run: npm run install
+        run: npm install
 
       - name: Test
         run: npm run test
