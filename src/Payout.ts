@@ -121,12 +121,15 @@ export class Payout extends Resource {
      *
      * @returns {Promise<Payout>} The saved Payout.
      */
-    sendNow(params = {}, headers = {}): Promise<Payout> {
-        const _params = {
-            payouts: [{
-                id: this.id
-            }]
-        };
+    sendNow(params: any = {}, headers: any = {}): Promise<Payout> {
+        let payout_params: any = { id: this.id };
+
+        if (params.phone_number) {
+            payout_params.phone_number = params.phone_number;
+            delete params.phone_number; // Remove phone_number from params
+        }
+
+        const _params = { payouts: [payout_params] };
 
         params = Object.assign(_params, params);
 
@@ -141,16 +144,18 @@ export class Payout extends Resource {
      *
      * @returns {Promise<Payout>} The saved Payout.
      */
-    schedule(scheduled_at, params = {}, headers = {})
+    schedule(scheduled_at, params: any = {}, headers: any = {})
     {
         scheduled_at = toDateString(scheduled_at);
 
-        const _params = {
-            payouts: [{
-                id: this.id,
-                scheduled_at: scheduled_at
-            }]
-        };
+        let payout_params: any = { id: this.id, scheduled_at: scheduled_at };
+
+        if (params.phone_number) {
+            payout_params.phone_number = params.phone_number;
+            delete params.phone_number; // Remove phone_number from params
+        }
+
+        const _params = { payouts: [payout_params] };
 
         params = Object.assign(_params, params);
 
@@ -166,11 +171,11 @@ export class Payout extends Resource {
      *
      * @returns {Promise<FedaPayObject>}
      */
-    static scheduleAll(payouts = [], params = {}, headers = {})
+    static scheduleAll(payouts: any[] = [], params = {}, headers = {})
     {
         let items = [];
 
-        payouts.forEach(payout => {
+        payouts.forEach((payout: any, index: number) => {
             let item: any = {};
             if (!payout['id']) {
                 throw new Error(
@@ -181,6 +186,11 @@ export class Payout extends Resource {
 
             if (payout['scheduled_at']) {
                 item['scheduled_at'] = toDateString(payout['scheduled_at']);
+            }
+
+            if (params[index] && params[index]['phone_number']) {
+              item['phone_number'] = params[index]['phone_number'];
+              delete params[index]['phone_number']; // Remove phone_number from params
             }
 
             items.push(item);
@@ -203,11 +213,11 @@ export class Payout extends Resource {
      *
      * @returns {Promise<FedaPayObject>}
      */
-    static sendAllNow(payouts = [], params = {}, headers = {})
+    static sendAllNow(payouts: any[] = [], params = {}, headers = {})
     {
         let items = [];
 
-        payouts.forEach(payout => {
+        payouts.forEach((payout: any, index: number) => {
             let item: any = {};
             if (!payout['id']) {
                 throw new Error(
@@ -216,12 +226,18 @@ export class Payout extends Resource {
             }
             item['id'] = payout['id'];
 
+            if (params[index] && params[index]['phone_number']) {
+                item['phone_number'] = params[index]['phone_number'];
+                delete params[index]['phone_number']; // Remove phone_number from params
+            }
+
             items.push(item);
         });
 
         const _params = {
             payouts: items
         };
+        console.log(params);
         params = Object.assign(_params, params);
 
         return this._startAll(params, headers);

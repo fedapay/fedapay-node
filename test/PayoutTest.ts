@@ -505,6 +505,60 @@ describe('PayoutTest', () => {
         expect(payout.started_at).to.equal('2018-11-01 18:30:22');
     });
 
+    it('should schedule a payout with phone number', async () => {
+        const payout = await createPayout();
+        const body = {
+            "v1/payouts": [{
+                'klass': 'v1/payout',
+                'id': 1,
+                'reference': '1540316134325',
+                'amount': 1000,
+                'status': 'started',
+                'customer_id': 1,
+                'currency_id': 1,
+                'mode': 'mtn',
+                'last_error_code': null,
+                'last_error_message': null,
+                'created_at': '2018-10-23T17:35:34.325Z',
+                'updated_at': '2018-10-23T17:36:40.086Z',
+                'scheduled_at': '2018-11-01 18:30:22',
+                'sent_at': null,
+                'started_at': '2018-11-01 18:30:22',
+                'failed_at': null,
+                'deleted_at': null
+            }]
+        };
+
+        nock(/fedapay\.com/)
+            .put('/v1/payouts/start')
+            .reply(200, body);
+
+        await payout.schedule(
+          '2018-11-01 18:30:22',
+          { phone_number: { number: '66000001', country: 'BJ' } }
+        );
+
+        exceptRequest({
+            url: 'https://sandbox-api.fedapay.com/v1/payouts/start',
+            data: JSON.stringify({
+                "payouts": [
+                    {
+                        "id": 1,
+                        "scheduled_at": '2018-11-01 18:30:22',
+                        "phone_number": {
+                          "number": '66000001', "country": 'BJ'
+                        }
+                    }
+                ]
+            }),
+            method: 'put'
+        });
+
+        expect(payout.status).to.equal('started');
+        expect(payout.scheduled_at).to.equal('2018-11-01 18:30:22');
+        expect(payout.started_at).to.equal('2018-11-01 18:30:22');
+    });
+
     it('should fail schedule all payouts', async () => {
         const data = [{ scheduled_at: '2018-11-01 18:30:22' }];
 
@@ -616,6 +670,55 @@ describe('PayoutTest', () => {
         expect(payout.sent_at).to.equal('2018-11-01 18:30:22');
     });
 
+    it('should send a payout now with phone number', async () => {
+        const payout = await createPayout();
+        const body = {
+            "v1/payouts": [{
+                'klass': 'v1/payout',
+                'id': 1,
+                'reference': '1540316134325',
+                'amount': 1000,
+                'status': 'sent',
+                'customer_id': 1,
+                'currency_id': 1,
+                'mode': 'mtn',
+                'last_error_code': null,
+                'last_error_message': null,
+                'created_at': '2018-10-23T17:35:34.325Z',
+                'updated_at': '2018-10-23T17:36:40.086Z',
+                'scheduled_at': '2018-11-01 18:30:22',
+                'sent_at': '2018-11-01 18:30:22',
+                'started_at': '2018-11-01 18:30:22',
+                'failed_at': null,
+                'deleted_at': null
+            }]
+        };
+
+        nock(/fedapay\.com/)
+            .put('/v1/payouts/start')
+            .reply(200, body);
+
+        await payout.sendNow({
+          phone_number: { number: '66000001', country: 'BJ' }
+        });
+
+        exceptRequest({
+            url: 'https://sandbox-api.fedapay.com/v1/payouts/start',
+            data: JSON.stringify({
+                "payouts": [
+                    {
+                        "id": 1,
+                        "phone_number": { "number": '66000001', "country": 'BJ' }
+                    }
+                ]
+            }),
+            method: 'put'
+        });
+
+        expect(payout.status).to.equal('sent');
+        expect(payout.sent_at).to.equal('2018-11-01 18:30:22');
+    });
+
     it('should send all payouts now', async () => {
         const payout = await createPayout();
         const body = {
@@ -664,4 +767,57 @@ describe('PayoutTest', () => {
         expect(object.payouts[0].status).to.equal('sent');
         expect(object.payouts[0].sent_at).to.equal('2018-11-01 18:30:22');
     });
+
+    it('should send all payouts now with phone number', async () => {
+      const payout = await createPayout();
+      const body = {
+          "v1/payouts": [{
+              'klass': 'v1/payout',
+              'id': 1,
+              'reference': '1540316134325',
+              'amount': 1000,
+              'status': 'sent',
+              'customer_id': 1,
+              'currency_id': 1,
+              'mode': 'mtn',
+              'last_error_code': null,
+              'last_error_message': null,
+              'created_at': '2018-10-23T17:35:34.325Z',
+              'updated_at': '2018-10-23T17:36:40.086Z',
+              'scheduled_at': '2018-11-01 18:30:22',
+              'sent_at': '2018-11-01 18:30:22',
+              'started_at': '2018-11-01 18:30:22',
+              'failed_at': null,
+              'deleted_at': null
+          }]
+      };
+
+      nock(/fedapay\.com/)
+          .put('/v1/payouts/start')
+          .reply(200, body);
+
+      const object = await Payout.sendAllNow([payout], [
+        { phone_number: { number: '66000001', country: 'BJ' } }
+      ]);
+
+      exceptRequest({
+          url: 'https://sandbox-api.fedapay.com/v1/payouts/start',
+          data: JSON.stringify({
+              "0": {},
+              "payouts": [
+                  {
+                      "id": 1,
+                      "phone_number": { "number": '66000001', "country": 'BJ' }
+                  }
+              ]
+          }),
+          method: 'put'
+      });
+
+      expect(object).to.be.instanceof(FedaPayObject);
+      expect(object.payouts[0]).to.be.instanceof(Payout);
+      expect(object.payouts[0].id).to.equal(1);
+      expect(object.payouts[0].status).to.equal('sent');
+      expect(object.payouts[0].sent_at).to.equal('2018-11-01 18:30:22');
+  });
 });
