@@ -144,11 +144,12 @@ var Payout = /** @class */ (function (_super) {
     Payout.prototype.sendNow = function (params, headers) {
         if (params === void 0) { params = {}; }
         if (headers === void 0) { headers = {}; }
-        var _params = {
-            payouts: [{
-                    id: this.id
-                }]
-        };
+        var payout_params = { id: this.id };
+        if (params.phone_number) {
+            payout_params.phone_number = params.phone_number;
+            delete params.phone_number; // Remove phone_number from params
+        }
+        var _params = { payouts: [payout_params] };
         params = Object.assign(_params, params);
         return this._start(params, headers);
     };
@@ -164,15 +165,16 @@ var Payout = /** @class */ (function (_super) {
         if (params === void 0) { params = {}; }
         if (headers === void 0) { headers = {}; }
         scheduled_at = (0, Util_1.toDateString)(scheduled_at);
-        var _params = {
-            payouts: [{
-                    id: this.id,
-                    scheduled_at: scheduled_at
-                }]
-        };
+        var payout_params = { id: this.id, scheduled_at: scheduled_at };
+        if (params.phone_number) {
+            payout_params.phone_number = params.phone_number;
+            delete params.phone_number; // Remove phone_number from params
+        }
+        var _params = { payouts: [payout_params] };
         params = Object.assign(_params, params);
         return this._start(params, headers);
     };
+
     /**
      * Start a scheduled payout
      *
@@ -187,7 +189,7 @@ var Payout = /** @class */ (function (_super) {
         if (params === void 0) { params = {}; }
         if (headers === void 0) { headers = {}; }
         var items = [];
-        payouts.forEach(function (payout) {
+        payouts.forEach(function (payout, index) {
             var item = {};
             if (!payout['id']) {
                 throw new Error('Invalid id argument. You must specify payout id.');
@@ -195,6 +197,10 @@ var Payout = /** @class */ (function (_super) {
             item['id'] = payout['id'];
             if (payout['scheduled_at']) {
                 item['scheduled_at'] = (0, Util_1.toDateString)(payout['scheduled_at']);
+            }
+            if (params[index] && params[index]['phone_number']) {
+                item['phone_number'] = params[index]['phone_number'];
+                delete params[index]['phone_number']; // Remove phone_number from params
             }
             items.push(item);
         });
@@ -218,17 +224,22 @@ var Payout = /** @class */ (function (_super) {
         if (params === void 0) { params = {}; }
         if (headers === void 0) { headers = {}; }
         var items = [];
-        payouts.forEach(function (payout) {
+        payouts.forEach(function (payout, index) {
             var item = {};
             if (!payout['id']) {
                 throw new Error('Invalid id argument. You must specify payout id.');
             }
             item['id'] = payout['id'];
+            if (params[index] && params[index]['phone_number']) {
+                item['phone_number'] = params[index]['phone_number'];
+                delete params[index]['phone_number']; // Remove phone_number from params
+            }
             items.push(item);
         });
         var _params = {
             payouts: items
         };
+        console.log(params);
         params = Object.assign(_params, params);
         return this._startAll(params, headers);
     };

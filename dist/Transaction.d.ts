@@ -14,18 +14,7 @@ import { Resource, FedaPayObject } from '.';
  */
 export declare class Transaction extends Resource {
     protected static ressourceName: string;
-    /**
-     * Available mobile money mode
-     */
-    private static AVAILABLE_MOBILE_MONEY;
     private static PAID_STATUS;
-    /**
-     * Check the transaction mode for send now request
-     *
-     * @param {string} mode
-     * @return {boolean}
-     */
-    protected mobileMoneyModeAvailable(mode: any): boolean;
     /**
      * Check if the transaction was paid
      *

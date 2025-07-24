@@ -17,28 +17,10 @@ import { arrayToFedaPayObject } from './Util';
 export class Transaction extends Resource {
     protected static ressourceName = 'transaction';
 
-    /**
-     * Available mobile money mode
-     */
-    private static AVAILABLE_MOBILE_MONEY = [
-        'mtn', 'moov', 'mtn_ci', 'moov_tg', 'mtn_open', 'airtel_ne', 'free_sn',
-        'togocel', 'mtn_ecw', 'mtn_open_ci', 'wave_direct_ci'
-    ];
-
     private static PAID_STATUS = [
         'approved', 'transferred', 'refunded',
         'approved_partially_refunded', 'transferred_partially_refunded'
     ];
-
-    /**
-     * Check the transaction mode for send now request
-     *
-     * @param {string} mode
-     * @return {boolean}
-     */
-    protected mobileMoneyModeAvailable(mode): boolean {
-        return Transaction.AVAILABLE_MOBILE_MONEY.includes(mode);
-    }
 
     /**
      * Check if the transaction was paid
@@ -149,14 +131,6 @@ export class Transaction extends Resource {
      * @returns {Promise<FedaPayObject>}
      */
     sendNowWithToken(mode: string, token: string, params: any = {}, headers = {}) : Promise<FedaPayObject> {
-        if (!this.mobileMoneyModeAvailable(mode)) {
-            throw new InvalidRequest(
-                `Invalid payment method '${mode}' supplied.
-                You have to use one of the following payment methods
-                [${Transaction.AVAILABLE_MOBILE_MONEY.join(',')}]`
-            );
-        }
-
         const url = '/' + mode;
         params.token = token;
 

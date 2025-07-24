@@ -80,7 +80,7 @@ export declare class Payout extends Resource {
      *
      * @returns {Promise<Payout>} The saved Payout.
      */
-    sendNow(params?: {}, headers?: {}): Promise<Payout>;
+    sendNow(params?: any, headers?: any): Promise<Payout>;
     /**
      * Start the payout
      * @param {Date|string|number} scheduled_at
@@ -89,7 +89,7 @@ export declare class Payout extends Resource {
      *
      * @returns {Promise<Payout>} The saved Payout.
      */
-    schedule(scheduled_at: any, params?: {}, headers?: {}): Promise<Payout>;
+    schedule(scheduled_at: any, params?: any, headers?: any): Promise<Payout>;
     /**
      * Start a scheduled payout
      *

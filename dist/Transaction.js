@@ -53,7 +53,6 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Transaction = void 0;
 var _1 = require(".");
-var Error_1 = require("./Error");
 var Util_1 = require("./Util");
 /**
  * Class Transaction
@@ -73,15 +72,6 @@ var Transaction = /** @class */ (function (_super) {
     function Transaction() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
-    /**
-     * Check the transaction mode for send now request
-     *
-     * @param {string} mode
-     * @return {boolean}
-     */
-    Transaction.prototype.mobileMoneyModeAvailable = function (mode) {
-        return Transaction.AVAILABLE_MOBILE_MONEY.includes(mode);
-    };
     /**
      * Check if the transaction was paid
      *
@@ -194,9 +184,6 @@ var Transaction = /** @class */ (function (_super) {
     Transaction.prototype.sendNowWithToken = function (mode, token, params, headers) {
         if (params === void 0) { params = {}; }
         if (headers === void 0) { headers = {}; }
-        if (!this.mobileMoneyModeAvailable(mode)) {
-            throw new Error_1.InvalidRequest("Invalid payment method '".concat(mode, "' supplied.\n                You have to use one of the following payment methods\n                [").concat(Transaction.AVAILABLE_MOBILE_MONEY.join(','), "]"));
-        }
         var url = '/' + mode;
         params.token = token;
         return Transaction._staticRequest('post', url, params, headers)
@@ -256,12 +243,6 @@ var Transaction = /** @class */ (function (_super) {
         });
     };
     Transaction.ressourceName = 'transaction';
-    /**
-     * Available mobile money mode
-     */
-    Transaction.AVAILABLE_MOBILE_MONEY = [
-        'mtn', 'moov', 'mtn_ci', 'moov_tg', 'togocel', 'mtn_open'
-    ];
     Transaction.PAID_STATUS = [
         'approved', 'transferred', 'refunded',
         'approved_partially_refunded', 'transferred_partially_refunded'
