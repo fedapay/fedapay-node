@@ -62,7 +62,7 @@ describe('RequestorTest', () => {
             expect(e.httpRequest.getHeader('X-Version')).to.equal(FedaPay.VERSION);
             expect(e.httpRequest.getHeader('X-Source')).to.equal('FedaPay NodeLib');
             expect(e.httpRequest.getHeader('X-Custom')).to.equal('foo');
-            expect(e.httpRequest.getHeader('FedaPay-Account')).to.equal(898);
+            expect(e.httpRequest.getHeader('FedaPay-Account')).to.equal('898');
         }
     });
 
