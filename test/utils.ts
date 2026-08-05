@@ -1,13 +1,13 @@
-import { AxiosRequestConfig } from 'axios';
+import { AxiosRequestConfig, InternalAxiosRequestConfig } from 'axios';
 import { expect } from 'chai';
 import { FedaPay, Requestor } from '../src';
 
 const API_KEY = 'sk_test_123';
 const OAUTH_TOKEN = 'oauth_test_token_123';
-let lastRequestConfig: AxiosRequestConfig;
+let lastRequestConfig: InternalAxiosRequestConfig;
 
 Requestor.addRequestInterceptor({
-    callback: (config: AxiosRequestConfig) =>  {
+    callback: (config: InternalAxiosRequestConfig) =>  {
         lastRequestConfig = config
         return config;
     }
